@@ -1,4 +1,4 @@
-package LLD.LiskovSubstitutionPrinciple.problematicCode;
+package LLD.LiskovSubstitutionPrinciple.BetterCode;
 
 public abstract class CreditCard {
     private String ccNumber;
@@ -28,7 +28,6 @@ public abstract class CreditCard {
 
     public abstract void mandatePayments();
 
-    public abstract void upiPayments();
 
     public void CreditCardDetails() {
         System.out.println("CC Number:" + this.ccNumber + ", with owner name:" + this.ownerName);
