@@ -33,7 +33,7 @@ public class TodoController {
   getTodos(@RequestParam(required = false,defaultValue = "true") boolean isCompleted) {
     // return ResponseEntity.status(HttpStatus.OK).body(todoList); //this ok
     // will return status ok only
-    System.out.println("Incoming query params: " + isCompleted +" "+ this.todoService.doSomething());
+//    System.out.println("Incoming query params: " + isCompleted +" "+ this.todoService.doSomething());
     System.out.println(this.todoService2.doSomething());
     return ResponseEntity.ok(todoList); // we can use any of them
   }

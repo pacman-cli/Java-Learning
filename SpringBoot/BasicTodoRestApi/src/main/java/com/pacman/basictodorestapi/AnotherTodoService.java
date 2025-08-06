@@ -7,8 +7,9 @@ import org.springframework.stereotype.Service;
 //of them as primary this will prioritise that one first
 @Service("anotherTodoService") // to do all the business logic
 public class AnotherTodoService implements TodoService {
-  @Override
-  public String doSomething() {
-    return "Do something in AnotherTodoService";
+    @TimeMonitor
+    public String doSomething() {
+        for (long i=0; i<10000000000L; i++) {}
+        return "Do something in AnotherTodoService";
   }
 }
