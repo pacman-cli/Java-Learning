@@ -15,18 +15,18 @@ import java.util.Date;
 @MappedSuperclass // ✅ Tells JPA to include fields in child entities
 public abstract class BaseModel {//this class will have all the bare minimum properties that any other class will be requiring //making abstract class because by doing this you cannot instantiate object out of it.
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
 
     //this is to store  time and date both for that TIMESTAMP and because spring is going to take the works for that we don't have to pass this. this is the type of value I want to store
     @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @CreatedDate //->this annotation tells spring that only handle it for object creatio
     protected Date cratedAt;
 
     //this is to store  time and date both for that TIMESTAMP and because spring is going to take the works for that we don't have to pass this. this is the type of value I want to store
     @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     @LastModifiedDate //->this annotation tells spring that only handle it for object update
     protected Date updatedAt;
 }

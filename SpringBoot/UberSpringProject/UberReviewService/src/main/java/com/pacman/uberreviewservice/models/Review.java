@@ -15,7 +15,9 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "bookingReview")//only work for database
+@Table(name = "bookingReview")
+//only work for database //@Inheritance(strategy = InheritanceType.SINGLE_TABLE) //-> this will make single table all together //@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS) //-> different tables for each class.this creates data redundancy.
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Review extends BaseModel {
 
 
