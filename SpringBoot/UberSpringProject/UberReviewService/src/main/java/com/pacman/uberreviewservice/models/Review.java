@@ -8,37 +8,21 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Date;
 
-
+//-> @Entity will work for java logic if you give some name in entity without using @Table(name = "bookingReview") than it will show that name other wise @Table(name = "bookingReview") overrides @entity name
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EntityListeners(AuditingEntityListener.class)
-@Entity //-> this will work for java logic
+@Entity
 @Table(name = "bookingReview")//only work for database
-public class Review {
+public class Review extends BaseModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    Long id;
 
     @Column(nullable = false) //->this column will never be null
     String content;
 
     Double rating;
-
-    //this is to store  time and date both for that TIMESTAMP and because spring is going to take the works for that we don't have to pass this. this is the type of value I want to store
-    @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @CreatedDate //->this annotation tells spring that only handle it for object creation
-            Date cratedAt;
-
-    //this is to store  time and date both for that TIMESTAMP and because spring is going to take the works for that we don't have to pass this. this is the type of value I want to store
-    @Column(nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    @LastModifiedDate //->this annotation tells spring that only handle it for object update
-            Date updatedAt;
 
     public String toString() {
         return "Review:" + this.content + " " + this.rating + " " + this.cratedAt + " " + this.updatedAt;
