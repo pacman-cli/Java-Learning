@@ -1,7 +1,8 @@
 package com.pacman.uberreviewservice.services;
 
-import com.pacman.uberreviewservice.models.Booking;
+import com.pacman.uberreviewservice.models.Driver;
 import com.pacman.uberreviewservice.repositories.BookingRepository;
+import com.pacman.uberreviewservice.repositories.DriverRepository;
 import com.pacman.uberreviewservice.repositories.ReviewRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
@@ -12,10 +13,12 @@ import java.util.Optional;
 public class ReviewServices implements CommandLineRunner {
     private final ReviewRepository reviewRepository;
     private final BookingRepository bookingRepository;
+    private final DriverRepository driverRepository;
 
-    public ReviewServices(ReviewRepository reviewRepository, BookingRepository bookingRepository) {
+    public ReviewServices(ReviewRepository reviewRepository, BookingRepository bookingRepository, DriverRepository driverRepository) {
         this.reviewRepository = reviewRepository;
         this.bookingRepository = bookingRepository;
+        this.driverRepository = driverRepository;
     }
 
     @Override
@@ -41,10 +44,31 @@ public class ReviewServices implements CommandLineRunner {
 //            System.out.println("Title:" + r.getContent() + " Rating:" + r.getRating());
 //        }
 //        reviewRepository.deleteById(2L);
-        Optional<Booking> booking = bookingRepository.findById(3L);
-        if (booking.isPresent()) {
-            bookingRepository.delete(booking.get());
+//        Optional<Booking> booking = bookingRepository.findById(3L);
+//        if (booking.isPresent()) {
+//            bookingRepository.delete(booking.get());
+//        }
+//        Optional<Driver> drivers = driverRepository.findByIdAndLicenceNumber(2L, "HU34848JJ");
+//        Optional<Driver> drivers = driverRepository.findById(1L);
+//
+//        if (drivers.isPresent()) {
+//            System.out.println(drivers.get().getName());
+//            List<Booking> b = drivers.get().getBookings();
+////            List<Booking> bookingList = bookingRepository.findAllByDriverId(1L);
+//            for (Booking bookings : b) {
+//                System.out.println(bookings.getId());
+//            }
+//        }
+//        Optional<Booking> bookings = bookingRepository.findById(1L);
+
+
+//        Optional<Driver> d = driverRepository.rawFindByIdAndLicenceNumber(1L, "HY3848JJ");
+//        System.out.println(d.get().getName());
+
+        Optional<Driver> driver = driverRepository.hibernatefindByIdAndLicenceNumber(1L, "HY3848JJ");
+        if (driver.isPresent()) {
+            System.out.println(driver.get().getName() + " " + driver.get().getId() + " " + driver.get().getCratedAt());
         }
-        
+
     }
 }

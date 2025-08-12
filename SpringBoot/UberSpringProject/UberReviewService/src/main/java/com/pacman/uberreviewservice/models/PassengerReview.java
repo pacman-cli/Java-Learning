@@ -8,11 +8,11 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-//@PrimaryKeyJoinColumn(name = "passanger_review_id")
-public class PassangerReview extends Review {
+//@PrimaryKeyJoinColumn(name = "passenger_review_id")
+public class PassengerReview extends Review {
     @Column(nullable = false)
-    private String passangerReviewContent;
+    private String passengerReviewContent;
 
     @Column(nullable = false)
-    private String passangerRating;
+    private String passengerRating;
 }

@@ -28,4 +28,14 @@ public class Booking extends BaseModel {
     private Date endTime;
 
     private Long totalTime;
+
+    @ManyToOne
+    private Driver driver;
+
+    @ManyToOne
+    private Passenger passenger;
 }
+//1 to 1 --> default is Eager-->(if immediately need your data point is not eager make it eager)
+//1 to many --> default is Lazy-->(if immediately not need ,your data point is not lazy make it lazy)
+//many to many --> default is Lazy
+//many to 1 --> default is Eager
