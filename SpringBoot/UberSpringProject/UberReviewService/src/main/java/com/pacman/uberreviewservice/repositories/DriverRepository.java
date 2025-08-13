@@ -16,8 +16,8 @@ public interface DriverRepository extends JpaRepository<Driver, Long> {
     Optional<Driver> rawFindByIdAndLicenceNumber(Long id, String licenceNumber);
 
     //Hibernate way
-    @Query("SELECT d FROM Driver d WHERE d.id=:id AND d.licenceNumber=:ln")
-    Optional<Driver> hibernatefindByIdAndLicenceNumber(Long id, String ln);
+    @Query("SELECT d FROM Driver d WHERE d.id=:id AND d.licenceNumber=:licence")
+    Optional<Driver> hibernatefindByIdAndLicenceNumber(Long id, String licence);
 
 }
-//3 ways..
+//3 ways.
