@@ -2,22 +2,23 @@ package com.pacman.uberreviewservice.repositories;
 
 import com.pacman.uberreviewservice.models.Driver;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface DriverRepository extends JpaRepository<Driver, Long> {
     //On the top of default functions, we can make custom methods like findByIdAndLicenceNumber which will work like defaults one.
     Optional<Driver> findByIdAndLicenceNumber(Long id, String licenceNumber);//we have defined a signature spring is smart enough to execute queries understanding the methods.
 
-    //we can execute raw querries by writing raw querry in @Quarry --> this is one way
-    @Query(nativeQuery = true, value = "SELECT * FROM driver WHERE id=:id AND licence_number=:licenceNumber")
-    //-> in raw my sql querries you have to give 'licence_number'->column name as it is.
-    Optional<Driver> rawFindByIdAndLicenceNumber(Long id, String licenceNumber);
+    //we can execute raw queries by writing raw query in @Quarry --> this is one way
+//    @Query(nativeQuery = true, value = "SELECT * FROM driver WHERE id=:id AND licence_number=:licenceNumber")
+    //-> in raw my sql queries you have to give 'licence_number'->column name as it is.
+//    Optional<Driver> rawFindByIdAndLicenceNumber(Long id, String licenceNumber);
 
     //Hibernate way
-    @Query("SELECT d FROM Driver d WHERE d.id=:id AND d.licenceNumber=:licence")
-    Optional<Driver> hibernatefindByIdAndLicenceNumber(Long id, String licence);
+//    @Query("SELECT d FROM Driver d WHERE d.id=:id AND d.licenceNumber=:licence")
+//    Optional<Driver> hibernatedByIdAndLicenceNumber(Long id, String licence);
 
+    List<Driver> findAllByIdIn(List<Long> driverIds);
 }
 //3 ways.

@@ -33,6 +33,11 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    
+    implementation("org.flywaydb:flyway-core:8.5.13")
+    implementation("org.flywaydb:flyway-mysql:8.5.13")
+
 }
 
 tasks.named('test') {

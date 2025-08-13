@@ -1,13 +1,17 @@
 package com.pacman.uberreviewservice.services;
 
+import com.pacman.uberreviewservice.models.Booking;
 import com.pacman.uberreviewservice.models.Driver;
 import com.pacman.uberreviewservice.repositories.BookingRepository;
 import com.pacman.uberreviewservice.repositories.DriverRepository;
 import com.pacman.uberreviewservice.repositories.ReviewRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class ReviewServices implements CommandLineRunner {
@@ -22,6 +26,7 @@ public class ReviewServices implements CommandLineRunner {
     }
 
     @Override
+    @Transactional
     public void run(String... args) throws Exception {
         System.out.println("***************");
 //        Review review = Review.builder()  //code to create plain java object
@@ -65,10 +70,19 @@ public class ReviewServices implements CommandLineRunner {
 //        Optional<Driver> d = driverRepository.rawFindByIdAndLicenceNumber(1L, "HY3848JJ");
 //        System.out.println(d.get().getName());
 
-        Optional<Driver> driver = driverRepository.hibernatefindByIdAndLicenceNumber(1L, "HY3848JJ");
-        if (driver.isPresent()) {
-            System.out.println(driver.get().getName() + " " + driver.get().getId() + " " + driver.get().getCratedAt());
-        }
+//        Optional<Driver> driver = driverRepository.hibernatedByIdAndLicenceNumber(1L, "HY3848JJ");
+//        if (driver.isPresent()) {
+//            System.out.println(driver.get().getName() + " " + driver.get().getId() + " " + driver.get().getCratedAt());
+//        }
 
+        List<Long> driverIds = new ArrayList<>(Arrays.asList(1L, 2L, 3L, 4L, 5L, 6L, 7L, 8L));
+        List<Driver> drivers = driverRepository.findAllByIdIn(driverIds);
+
+//        List<Booking> bookings = bookingRepository.findAllByDriverIn(drivers); //N+1 problems solution 1 given by spring
+        //N+1 times
+        for (Driver driver : drivers) {
+            List<Booking> bookings = driver.getBookings();
+            bookings.forEach(booking -> System.out.println(booking.getId()));
+        }
     }
 }
