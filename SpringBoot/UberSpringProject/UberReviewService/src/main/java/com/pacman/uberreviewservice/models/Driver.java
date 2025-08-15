@@ -23,6 +23,7 @@ public class Driver extends BaseModel {
     @Column(nullable = false, unique = true)
     private String licenceNumber;
 
+    private String phoneNumber;
     //1 driver can have many bookings so this relationship would be 1:n ////this is driver class so one part is driver many part is booking
     @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY)
     @Fetch(FetchMode.SUBSELECT) //executing nested query not doing one by one query solves N+1 query problem

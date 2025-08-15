@@ -2,10 +2,12 @@ package com.pacman.uberreviewservice.repositories;
 
 import com.pacman.uberreviewservice.models.Driver;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public interface DriverRepository extends JpaRepository<Driver, Long> {
     //On the top of default functions, we can make custom methods like findByIdAndLicenceNumber which will work like defaults one.
     Optional<Driver> findByIdAndLicenceNumber(Long id, String licenceNumber);//we have defined a signature spring is smart enough to execute queries understanding the methods.
