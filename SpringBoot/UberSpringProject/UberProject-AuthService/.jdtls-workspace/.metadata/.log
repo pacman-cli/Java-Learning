@@ -1,0 +1,402 @@
+!SESSION 2025-08-23 01:05:35.820 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=24
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=aarch64, WS=cocoa, NL=en_US
+Command-line arguments:  -data /Users/puspo/JavaCourse/SpringBoot/UberProject-AuthService/.jdtls-workspace
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:36.725
+!MESSAGE class org.eclipse.jdt.ls.core.internal.JavaLanguageServerPlugin is started
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:36.754
+!MESSAGE Started org.eclipse.buildship.core 20ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:36.755
+!MESSAGE Started org.eclipse.m2e.core 0ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:36.840
+!MESSAGE Main thread is waiting
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:36.871
+!MESSAGE >> initialize
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:36.872
+!MESSAGE Initializing Java Language Server 1.49.0.202507311558
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:37.215
+!MESSAGE ProjectRegistryRefreshJob finished 460ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:37.237
+!MESSAGE Static Commands: []
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:37.237
+!MESSAGE Non-Static Commands: [java.project.import, java.project.changeImportedProjects, java.navigate.openTypeHierarchy, java.project.resolveStackTraceLocation, java.edit.handlePasteEvent, java.edit.stringFormatting, java.project.getSettings, java.project.resolveWorkspaceSymbol, java.project.upgradeGradle, java.project.createModuleInfo, java.vm.getAllInstalls, java.edit.organizeImports, java.project.refreshDiagnostics, java.project.removeFromSourcePath, java.project.listSourcePaths, java.project.updateSettings, java.project.getAll, java.reloadBundles, java.project.isTestFile, java.project.resolveText, java.project.getClasspaths, java.navigate.resolveTypeHierarchy, java.edit.smartSemicolonDetection, java.project.updateSourceAttachment, java.project.updateClassPaths, java.decompile, java.protobuf.generateSources, java.project.resolveSourceAttachment, java.project.updateJdk, java.project.addToSourcePath, java.completion.onDidSelect]
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:37.250
+!MESSAGE >> initialized
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:37.276
+!MESSAGE RepositoryRegistryUpdateJob finished 25ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:37.286
+!MESSAGE Importing Gradle project(s)
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:37.368
+!MESSAGE Default VM Install changed from  null to com.oracle.java.jdk-/Library/Java/JavaVirtualMachines/jdk-24.jdk/Contents/Home
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:37.876
+!MESSAGE No previous Gradle project at /Users/puspo/JavaCourse/SpringBoot/UberProject-AuthService, it must be synchronized
+
+!ENTRY org.eclipse.buildship.core 2 1 2025-08-23 01:05:37.896
+!MESSAGE Synchronize project UberProject-AuthService failed due to an error while importing the root project.
+!STACK 0
+org.eclipse.buildship.core.internal.ImportRootProjectException: org.eclipse.buildship.core.internal.GradlePluginsRuntimeException: org.eclipse.core.internal.resources.ResourceException: Invalid project description for project 'UberProject-AuthService' at 'file:/Users/puspo/JavaCourse/SpringBoot/UberProject-AuthService' 
+	at org.eclipse.buildship.core.internal.workspace.ImportRootProjectOperation.run(ImportRootProjectOperation.java:53)
+	at org.eclipse.buildship.core.internal.DefaultGradleBuild$SynchronizeOperation.runInToolingApi(DefaultGradleBuild.java:230)
+	at org.eclipse.buildship.core.internal.operation.DefaultToolingApiOperationManager$WorkspaceRunnableAdapter.run(DefaultToolingApiOperationManager.java:58)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2505)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2533)
+	at org.eclipse.buildship.core.internal.operation.DefaultToolingApiOperationManager.run(DefaultToolingApiOperationManager.java:39)
+	at org.eclipse.buildship.core.internal.DefaultGradleBuild$SynchronizeOperation.run(DefaultGradleBuild.java:197)
+	at org.eclipse.buildship.core.internal.DefaultGradleBuild.synchronize(DefaultGradleBuild.java:105)
+	at org.eclipse.buildship.core.internal.DefaultGradleBuild.synchronize(DefaultGradleBuild.java:86)
+	at org.eclipse.jdt.ls.core.internal.managers.GradleProjectImporter.startSynchronization(GradleProjectImporter.java:491)
+	at org.eclipse.jdt.ls.core.internal.managers.GradleProjectImporter.importDir(GradleProjectImporter.java:367)
+	at org.eclipse.jdt.ls.core.internal.managers.GradleProjectImporter.importToWorkspace(GradleProjectImporter.java:240)
+	at org.eclipse.jdt.ls.core.internal.managers.ProjectsManager.importProjects(ProjectsManager.java:164)
+	at org.eclipse.jdt.ls.core.internal.managers.ProjectsManager.initializeProjects(ProjectsManager.java:126)
+	at org.eclipse.jdt.ls.core.internal.handlers.InitHandler$1.runInWorkspace(InitHandler.java:263)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:43)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: org.eclipse.buildship.core.internal.GradlePluginsRuntimeException: org.eclipse.core.internal.resources.ResourceException: Invalid project description for project 'UberProject-AuthService' at 'file:/Users/puspo/JavaCourse/SpringBoot/UberProject-AuthService' 
+	at org.eclipse.buildship.core.internal.workspace.DefaultWorkspaceOperations.createProject(DefaultWorkspaceOperations.java:128)
+	at org.eclipse.buildship.core.internal.workspace.ImportRootProjectOperation.importRootProject(ImportRootProjectOperation.java:95)
+	at org.eclipse.buildship.core.internal.workspace.ImportRootProjectOperation$1.run(ImportRootProjectOperation.java:68)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2505)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2528)
+	at org.eclipse.buildship.core.internal.workspace.ImportRootProjectOperation.runInWorkspace(ImportRootProjectOperation.java:58)
+	at org.eclipse.buildship.core.internal.workspace.ImportRootProjectOperation.run(ImportRootProjectOperation.java:51)
+	... 16 more
+Caused by: org.eclipse.core.internal.resources.ResourceException: Invalid project description for project 'UberProject-AuthService' at 'file:/Users/puspo/JavaCourse/SpringBoot/UberProject-AuthService' 
+	at org.eclipse.core.internal.resources.Project.checkDescription(Project.java:219)
+	at org.eclipse.core.internal.resources.Project.assertCreateRequirements(Project.java:95)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:316)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:302)
+	at org.eclipse.buildship.core.internal.workspace.DefaultWorkspaceOperations.createProject(DefaultWorkspaceOperations.java:113)
+	... 22 more
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:37.902
+!MESSAGE No previous Gradle project at /Users/puspo/JavaCourse/SpringBoot/UberProject-AuthService, it must be synchronized
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:37.903
+!MESSAGE Workspace initialized in 652ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:37.910
+!MESSAGE >> initialization job finished
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:37.927
+!MESSAGE Creating the Java project jdt.ls-java-project
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:37.936
+!MESSAGE >> build jobs finished
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:37.937
+!MESSAGE >> registerWatchers'
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:37.939
+!MESSAGE >> registerFeature 'workspace/didChangeWatchedFiles'
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:37.942
+!MESSAGE Unable to locate JDK types through index. Attempting to rebuild all indexes.
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:37.956
+!MESSAGE Finished creating the Java project jdt.ls-java-project
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:38.709
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:39.337
+!MESSAGE begin problem for /AuthController.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:39.338
+!MESSAGE 1 problems reported for /AuthController.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:05:39.340
+!MESSAGE Validated 1. Took 29 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:53:50.762
+!MESSAGE >> shutdown
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:55:07.413
+!MESSAGE >> exit
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:55:07.427
+!MESSAGE Shutdown received... waking up main thread
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 01:55:07.438
+!MESSAGE class org.eclipse.jdt.ls.core.internal.JavaLanguageServerPlugin is stopping:
+!SESSION 2025-08-23 10:27:31.709 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=24
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=aarch64, WS=cocoa, NL=en_US
+Command-line arguments:  -data /Users/puspo/JavaCourse/SpringBoot/UberSpringProject/UberProject-AuthService/.jdtls-workspace
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 10:27:32.634
+!MESSAGE class org.eclipse.jdt.ls.core.internal.JavaLanguageServerPlugin is started
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 10:27:32.659
+!MESSAGE Started org.eclipse.buildship.core 17ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 10:27:32.659
+!MESSAGE Started org.eclipse.m2e.core 0ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 10:27:32.725
+!MESSAGE Main thread is waiting
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 10:27:32.742
+!MESSAGE >> initialize
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 10:27:32.743
+!MESSAGE Initializing Java Language Server 1.49.0.202507311558
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 10:27:33.099
+!MESSAGE ProjectRegistryRefreshJob finished 439ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 10:27:33.153
+!MESSAGE Static Commands: []
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 10:27:33.153
+!MESSAGE Non-Static Commands: [java.project.import, java.project.changeImportedProjects, java.navigate.openTypeHierarchy, java.project.resolveStackTraceLocation, java.edit.handlePasteEvent, java.edit.stringFormatting, java.project.getSettings, java.project.resolveWorkspaceSymbol, java.project.upgradeGradle, java.project.createModuleInfo, java.vm.getAllInstalls, java.edit.organizeImports, java.project.refreshDiagnostics, java.project.removeFromSourcePath, java.project.listSourcePaths, java.project.updateSettings, java.project.getAll, java.reloadBundles, java.project.isTestFile, java.project.resolveText, java.project.getClasspaths, java.navigate.resolveTypeHierarchy, java.edit.smartSemicolonDetection, java.project.updateSourceAttachment, java.project.updateClassPaths, java.decompile, java.protobuf.generateSources, java.project.resolveSourceAttachment, java.project.updateJdk, java.project.addToSourcePath, java.completion.onDidSelect]
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 10:27:33.172
+!MESSAGE >> initialized
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 10:27:33.193
+!MESSAGE RepositoryRegistryUpdateJob finished 23ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 10:27:33.205
+!MESSAGE Importing Gradle project(s)
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 10:27:33.869
+!MESSAGE No previous Gradle project at /Users/puspo/JavaCourse/SpringBoot/UberSpringProject/UberProject-AuthService, it must be synchronized
+
+!ENTRY org.eclipse.buildship.core 2 1 2025-08-23 10:27:33.890
+!MESSAGE Synchronize project UberProject-AuthService failed due to an error while importing the root project.
+!STACK 0
+org.eclipse.buildship.core.internal.ImportRootProjectException: org.eclipse.buildship.core.internal.GradlePluginsRuntimeException: org.eclipse.core.internal.resources.ResourceException: Invalid project description for project 'UberProject-AuthService' at 'file:/Users/puspo/JavaCourse/SpringBoot/UberSpringProject/UberProject-AuthService' 
+	at org.eclipse.buildship.core.internal.workspace.ImportRootProjectOperation.run(ImportRootProjectOperation.java:53)
+	at org.eclipse.buildship.core.internal.DefaultGradleBuild$SynchronizeOperation.runInToolingApi(DefaultGradleBuild.java:230)
+	at org.eclipse.buildship.core.internal.operation.DefaultToolingApiOperationManager$WorkspaceRunnableAdapter.run(DefaultToolingApiOperationManager.java:58)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2505)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2533)
+	at org.eclipse.buildship.core.internal.operation.DefaultToolingApiOperationManager.run(DefaultToolingApiOperationManager.java:39)
+	at org.eclipse.buildship.core.internal.DefaultGradleBuild$SynchronizeOperation.run(DefaultGradleBuild.java:197)
+	at org.eclipse.buildship.core.internal.DefaultGradleBuild.synchronize(DefaultGradleBuild.java:105)
+	at org.eclipse.buildship.core.internal.DefaultGradleBuild.synchronize(DefaultGradleBuild.java:86)
+	at org.eclipse.jdt.ls.core.internal.managers.GradleProjectImporter.startSynchronization(GradleProjectImporter.java:491)
+	at org.eclipse.jdt.ls.core.internal.managers.GradleProjectImporter.importDir(GradleProjectImporter.java:367)
+	at org.eclipse.jdt.ls.core.internal.managers.GradleProjectImporter.importToWorkspace(GradleProjectImporter.java:240)
+	at org.eclipse.jdt.ls.core.internal.managers.ProjectsManager.importProjects(ProjectsManager.java:164)
+	at org.eclipse.jdt.ls.core.internal.managers.ProjectsManager.initializeProjects(ProjectsManager.java:126)
+	at org.eclipse.jdt.ls.core.internal.handlers.InitHandler$1.runInWorkspace(InitHandler.java:263)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:43)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: org.eclipse.buildship.core.internal.GradlePluginsRuntimeException: org.eclipse.core.internal.resources.ResourceException: Invalid project description for project 'UberProject-AuthService' at 'file:/Users/puspo/JavaCourse/SpringBoot/UberSpringProject/UberProject-AuthService' 
+	at org.eclipse.buildship.core.internal.workspace.DefaultWorkspaceOperations.createProject(DefaultWorkspaceOperations.java:128)
+	at org.eclipse.buildship.core.internal.workspace.ImportRootProjectOperation.importRootProject(ImportRootProjectOperation.java:95)
+	at org.eclipse.buildship.core.internal.workspace.ImportRootProjectOperation$1.run(ImportRootProjectOperation.java:68)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2505)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2528)
+	at org.eclipse.buildship.core.internal.workspace.ImportRootProjectOperation.runInWorkspace(ImportRootProjectOperation.java:58)
+	at org.eclipse.buildship.core.internal.workspace.ImportRootProjectOperation.run(ImportRootProjectOperation.java:51)
+	... 16 more
+Caused by: org.eclipse.core.internal.resources.ResourceException: Invalid project description for project 'UberProject-AuthService' at 'file:/Users/puspo/JavaCourse/SpringBoot/UberSpringProject/UberProject-AuthService' 
+	at org.eclipse.core.internal.resources.Project.checkDescription(Project.java:219)
+	at org.eclipse.core.internal.resources.Project.assertCreateRequirements(Project.java:95)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:316)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:302)
+	at org.eclipse.buildship.core.internal.workspace.DefaultWorkspaceOperations.createProject(DefaultWorkspaceOperations.java:113)
+	... 22 more
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 10:27:33.905
+!MESSAGE No previous Gradle project at /Users/puspo/JavaCourse/SpringBoot/UberSpringProject/UberProject-AuthService, it must be synchronized
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 10:27:33.905
+!MESSAGE Workspace initialized in 736ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 10:27:33.911
+!MESSAGE >> initialization job finished
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 10:27:33.964
+!MESSAGE >> build jobs finished
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 10:27:33.964
+!MESSAGE >> registerWatchers'
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 10:27:33.968
+!MESSAGE >> registerFeature 'workspace/didChangeWatchedFiles'
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 10:27:34.831
+!MESSAGE Reconciled 1. Took 3 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 10:27:35.455
+!MESSAGE begin problem for /AuthController.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 10:27:35.456
+!MESSAGE 1 problems reported for /AuthController.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 10:27:35.458
+!MESSAGE Validated 1. Took 23 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:55:44.921
+!MESSAGE >> shutdown
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:55:44.968
+!MESSAGE >> exit
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:55:44.996
+!MESSAGE Shutdown received... waking up main thread
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:55:45.009
+!MESSAGE class org.eclipse.jdt.ls.core.internal.JavaLanguageServerPlugin is stopping:
+!SESSION 2025-08-23 11:55:58.324 -----------------------------------------------
+eclipse.buildId=unknown
+java.version=24
+java.vendor=Oracle Corporation
+BootLoader constants: OS=macosx, ARCH=aarch64, WS=cocoa, NL=en_US
+Command-line arguments:  -data /Users/puspo/JavaCourse/SpringBoot/UberSpringProject/UberProject-AuthService/.jdtls-workspace
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:55:59.254
+!MESSAGE class org.eclipse.jdt.ls.core.internal.JavaLanguageServerPlugin is started
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:55:59.280
+!MESSAGE Started org.eclipse.buildship.core 17ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:55:59.280
+!MESSAGE Started org.eclipse.m2e.core 0ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:55:59.347
+!MESSAGE Main thread is waiting
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:55:59.364
+!MESSAGE >> initialize
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:55:59.365
+!MESSAGE Initializing Java Language Server 1.49.0.202507311558
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:55:59.715
+!MESSAGE ProjectRegistryRefreshJob finished 434ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:55:59.770
+!MESSAGE Static Commands: []
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:55:59.770
+!MESSAGE Non-Static Commands: [java.project.import, java.project.changeImportedProjects, java.navigate.openTypeHierarchy, java.project.resolveStackTraceLocation, java.edit.handlePasteEvent, java.edit.stringFormatting, java.project.getSettings, java.project.resolveWorkspaceSymbol, java.project.upgradeGradle, java.project.createModuleInfo, java.vm.getAllInstalls, java.edit.organizeImports, java.project.refreshDiagnostics, java.project.removeFromSourcePath, java.project.listSourcePaths, java.project.updateSettings, java.project.getAll, java.reloadBundles, java.project.isTestFile, java.project.resolveText, java.project.getClasspaths, java.navigate.resolveTypeHierarchy, java.edit.smartSemicolonDetection, java.project.updateSourceAttachment, java.project.updateClassPaths, java.decompile, java.protobuf.generateSources, java.project.resolveSourceAttachment, java.project.updateJdk, java.project.addToSourcePath, java.completion.onDidSelect]
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:55:59.781
+!MESSAGE >> initialized
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:55:59.791
+!MESSAGE RepositoryRegistryUpdateJob finished 13ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:55:59.801
+!MESSAGE Importing Gradle project(s)
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:56:00.357
+!MESSAGE No previous Gradle project at /Users/puspo/JavaCourse/SpringBoot/UberSpringProject/UberProject-AuthService, it must be synchronized
+
+!ENTRY org.eclipse.buildship.core 2 1 2025-08-23 11:56:00.376
+!MESSAGE Synchronize project UberProject-AuthService failed due to an error while importing the root project.
+!STACK 0
+org.eclipse.buildship.core.internal.ImportRootProjectException: org.eclipse.buildship.core.internal.GradlePluginsRuntimeException: org.eclipse.core.internal.resources.ResourceException: Invalid project description for project 'UberProject-AuthService' at 'file:/Users/puspo/JavaCourse/SpringBoot/UberSpringProject/UberProject-AuthService' 
+	at org.eclipse.buildship.core.internal.workspace.ImportRootProjectOperation.run(ImportRootProjectOperation.java:53)
+	at org.eclipse.buildship.core.internal.DefaultGradleBuild$SynchronizeOperation.runInToolingApi(DefaultGradleBuild.java:230)
+	at org.eclipse.buildship.core.internal.operation.DefaultToolingApiOperationManager$WorkspaceRunnableAdapter.run(DefaultToolingApiOperationManager.java:58)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2505)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2533)
+	at org.eclipse.buildship.core.internal.operation.DefaultToolingApiOperationManager.run(DefaultToolingApiOperationManager.java:39)
+	at org.eclipse.buildship.core.internal.DefaultGradleBuild$SynchronizeOperation.run(DefaultGradleBuild.java:197)
+	at org.eclipse.buildship.core.internal.DefaultGradleBuild.synchronize(DefaultGradleBuild.java:105)
+	at org.eclipse.buildship.core.internal.DefaultGradleBuild.synchronize(DefaultGradleBuild.java:86)
+	at org.eclipse.jdt.ls.core.internal.managers.GradleProjectImporter.startSynchronization(GradleProjectImporter.java:491)
+	at org.eclipse.jdt.ls.core.internal.managers.GradleProjectImporter.importDir(GradleProjectImporter.java:367)
+	at org.eclipse.jdt.ls.core.internal.managers.GradleProjectImporter.importToWorkspace(GradleProjectImporter.java:240)
+	at org.eclipse.jdt.ls.core.internal.managers.ProjectsManager.importProjects(ProjectsManager.java:164)
+	at org.eclipse.jdt.ls.core.internal.managers.ProjectsManager.initializeProjects(ProjectsManager.java:126)
+	at org.eclipse.jdt.ls.core.internal.handlers.InitHandler$1.runInWorkspace(InitHandler.java:263)
+	at org.eclipse.core.internal.resources.InternalWorkspaceJob.run(InternalWorkspaceJob.java:43)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+Caused by: org.eclipse.buildship.core.internal.GradlePluginsRuntimeException: org.eclipse.core.internal.resources.ResourceException: Invalid project description for project 'UberProject-AuthService' at 'file:/Users/puspo/JavaCourse/SpringBoot/UberSpringProject/UberProject-AuthService' 
+	at org.eclipse.buildship.core.internal.workspace.DefaultWorkspaceOperations.createProject(DefaultWorkspaceOperations.java:128)
+	at org.eclipse.buildship.core.internal.workspace.ImportRootProjectOperation.importRootProject(ImportRootProjectOperation.java:95)
+	at org.eclipse.buildship.core.internal.workspace.ImportRootProjectOperation$1.run(ImportRootProjectOperation.java:68)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2505)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2528)
+	at org.eclipse.buildship.core.internal.workspace.ImportRootProjectOperation.runInWorkspace(ImportRootProjectOperation.java:58)
+	at org.eclipse.buildship.core.internal.workspace.ImportRootProjectOperation.run(ImportRootProjectOperation.java:51)
+	... 16 more
+Caused by: org.eclipse.core.internal.resources.ResourceException: Invalid project description for project 'UberProject-AuthService' at 'file:/Users/puspo/JavaCourse/SpringBoot/UberSpringProject/UberProject-AuthService' 
+	at org.eclipse.core.internal.resources.Project.checkDescription(Project.java:219)
+	at org.eclipse.core.internal.resources.Project.assertCreateRequirements(Project.java:95)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:316)
+	at org.eclipse.core.internal.resources.Project.create(Project.java:302)
+	at org.eclipse.buildship.core.internal.workspace.DefaultWorkspaceOperations.createProject(DefaultWorkspaceOperations.java:113)
+	... 22 more
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:56:00.387
+!MESSAGE No previous Gradle project at /Users/puspo/JavaCourse/SpringBoot/UberSpringProject/UberProject-AuthService, it must be synchronized
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:56:00.388
+!MESSAGE Workspace initialized in 610ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:56:00.398
+!MESSAGE >> initialization job finished
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:56:00.429
+!MESSAGE >> build jobs finished
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:56:00.430
+!MESSAGE >> registerWatchers'
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:56:00.431
+!MESSAGE >> registerFeature 'workspace/didChangeWatchedFiles'
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:56:01.170
+!MESSAGE Reconciled 1. Took 0 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:56:01.808
+!MESSAGE begin problem for /SpringSecurity.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:56:01.810
+!MESSAGE 1 problems reported for /SpringSecurity.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:56:01.812
+!MESSAGE Validated 1. Took 40 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:56:14.893
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:56:15.181
+!MESSAGE Reconciled 1. Took 1 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:56:15.595
+!MESSAGE begin problem for /SpringSecurity.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:56:15.595
+!MESSAGE 1 problems reported for /SpringSecurity.java
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:56:15.595
+!MESSAGE Validated 1. Took 9 ms
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:57:40.863
+!MESSAGE >> shutdown
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:57:40.916
+!MESSAGE >> exit
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:57:40.926
+!MESSAGE Shutdown received... waking up main thread
+
+!ENTRY org.eclipse.jdt.ls.core 1 0 2025-08-23 11:57:40.933
+!MESSAGE class org.eclipse.jdt.ls.core.internal.JavaLanguageServerPlugin is stopping:
