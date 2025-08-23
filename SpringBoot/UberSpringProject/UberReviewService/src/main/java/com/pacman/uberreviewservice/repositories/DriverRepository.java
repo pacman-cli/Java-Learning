@@ -22,5 +22,12 @@ public interface DriverRepository extends JpaRepository<Driver, Long> {
 //    Optional<Driver> hibernatedByIdAndLicenceNumber(Long id, String licence);
 
     List<Driver> findAllByIdIn(List<Long> driverIds);
+    
+    // Additional methods needed by DriverController
+    Optional<Driver> findByLicenceNumber(String licenceNumber);
+    
+    List<Driver> findByNameContainingIgnoreCase(String name);
+    
+    long countByPhoneNumberIsNotNull();//-> this is a custom method that will count the number of drivers with phone number not null.
 }
 //3 ways.

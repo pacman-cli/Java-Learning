@@ -1,22 +1,24 @@
 package com.pacman.uberreviewservice.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class Passenger extends BaseModel {
     private String name;
 
-    //here 1 passenger has a lot of bookings and booking boilings to passenger
-    @OneToMany(mappedBy = "passenger")
-    List<Booking> bookings = new ArrayList<>();
+    @OneToMany(mappedBy = "passenger", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Booking> bookings;
 }

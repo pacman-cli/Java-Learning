@@ -1,11 +1,13 @@
 package com.pacman.uberreviewservice.adapter;
 
-import com.pacman.uberreviewservice.dtos.BookingDto;
-import com.pacman.uberreviewservice.models.Booking;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
+
 import org.springframework.stereotype.Component;
+
+import com.pacman.uberreviewservice.dtos.BookingDto;
+import com.pacman.uberreviewservice.models.Booking;
 
 // toBookingDto,toEntity
 @Component

@@ -1,8 +1,13 @@
 package com.pacman.uberreviewservice.dtos;
 
-import lombok.*;
-
 import java.time.LocalDateTime;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Data
 @Getter
@@ -11,10 +16,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReviewDto {
-    private Long id;
-    private String content;
-    private Double rating;
-    private Long bookingId;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+  private Long id;
+  private String content;
+  private Double rating;
+  private Long bookingId;
+  private LocalDateTime createdAt;
+  private LocalDateTime updatedAt;
 }

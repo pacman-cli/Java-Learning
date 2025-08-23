@@ -1,9 +1,18 @@
 package com.pacman.uberreviewservice.models;
 
-import jakarta.persistence.*;
-import lombok.*;
-
 import java.util.Date;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
@@ -13,29 +22,27 @@ import java.util.Date;
 @AllArgsConstructor
 public class Booking extends BaseModel {
 
-    //->CascadeType.ALL propagates all operations — including Hibernate-specific ones — from a parent to a child entity.
-    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
-    private Review review;//we have defined a 1:1 relationship between booking and review
+  // ->this tells this is an enum and type which is stored in the database as String.
+  @Enumerated(value = EnumType.STRING)
+  private BookingStatus
+      bookingStatus; // ->BookingStatus is enum {pending,canceled,approved} there can be multiple
 
-    @Enumerated(value = EnumType.STRING)
-//->this tells this is an enum and type which is stored in the database as String.
-    private BookingStatus bookingStatus; //->BookingStatus is enum {pending,canceled,approved} there can be multiple booking status.
+  // booking status.
 
-    @Temporal(value = TemporalType.TIMESTAMP)
-    private Date startTime;
+  @Temporal(value = TemporalType.TIMESTAMP)
+  private Date startTime;
 
-    @Temporal(value = TemporalType.TIMESTAMP)
-    private Date endTime;
+  @Temporal(value = TemporalType.TIMESTAMP)
+  private Date endTime;
 
-    private Long totalTime;
+  private Long totalTime;
 
-    @ManyToOne
-    private Driver driver;
+  @ManyToOne private Driver driver;
 
-    @ManyToOne
-    private Passenger passenger;
+  @ManyToOne private Passenger passenger;
 }
-//1 to 1 --> default is Eager-->(if immediately need your data point is not eager make it eager)
-//1 to many --> default is Lazy-->(if immediately not need ,your data point is not lazy make it lazy)
-//many to many --> default is Lazy
-//many to 1 --> default is Eager
+// 1 to 1 --> default is Eager-->(if immediately need your data point is not eager make it eager)
+// 1 to many --> default is Lazy-->(if immediately not need ,your data point is not lazy make it
+// lazy)
+// many to many --> default is Lazy
+// many to 1 --> default is Eager
