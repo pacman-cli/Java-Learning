@@ -3,8 +3,8 @@ package com.pacman.uberprojectauthservice.controllers;
 import com.pacman.uberprojectauthservice.dto.PassengerDto;
 import com.pacman.uberprojectauthservice.dto.PassengerSignupRequestDto;
 import com.pacman.uberprojectauthservice.services.AuthService;
+
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,16 +16,17 @@ public class AuthController {
     public AuthController(AuthService authService) {
         this.authService = authService;
     }
-    //sign up creation
+
+    // sign up creation
     @PostMapping("/signup/passenger")
-    public ResponseEntity<PassengerDto> signUp(@RequestBody PassengerSignupRequestDto passengerSignupRequestDto){
-        PassengerDto response =authService.toSignedInPassengerDto(passengerSignupRequestDto);
+    public ResponseEntity<PassengerDto> signUp(@RequestBody PassengerSignupRequestDto passengerSignupRequestDto) {
+        PassengerDto response = authService.toSignedInPassengerDto(passengerSignupRequestDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    //sign in creation
+    // sign in creation
     @GetMapping("/signing/passenger")
-    public ResponseEntity<?> signIn(){
+    public ResponseEntity<?> signIn() {
         return new ResponseEntity<>(10, HttpStatus.CREATED);
     }
 }

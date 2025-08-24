@@ -14,22 +14,25 @@ import org.springframework.stereotype.Service;
 public class AuthService {
     private final PassengerRepository passengerRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
     public AuthService(PassengerRepository passengerRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.passengerRepository = passengerRepository;
 
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public PassengerDto toSignedInPassengerDto(PassengerSignupRequestDto passengerSignupRequestDto){
-        Passenger passenger= Passenger.builder()
+    public PassengerDto toSignedInPassengerDto(PassengerSignupRequestDto passengerSignupRequestDto) {
+        Passenger passenger = Passenger.builder()
                 .email(passengerSignupRequestDto.getEmail())
-                .password(bCryptPasswordEncoder.encode(passengerSignupRequestDto.getPassword())) //TODO: encrypted password
+                .password(bCryptPasswordEncoder.encode(passengerSignupRequestDto.getPassword())) // TODO: encrypted
+                                                                                                 // password
                 .name(passengerSignupRequestDto.getName())
                 .phoneNumber(passengerSignupRequestDto.getPhoneNumber())
                 .build();
-        Passenger newPassenger=passengerRepository.save(passenger);
-//        PassengerDto passengerDto = PassengerDto.from(newPassenger);
-//        return passengerDto;
+        Passenger newPassenger = passengerRepository.save(passenger);
+        // PassengerDto passengerDto = PassengerDto.from(newPassenger);
+        // return passengerDto;
         return PassengerDto.from(newPassenger);
     }
+
 }

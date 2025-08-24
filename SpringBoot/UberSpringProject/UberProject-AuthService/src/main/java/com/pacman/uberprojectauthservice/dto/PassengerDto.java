@@ -15,11 +15,11 @@ public class PassengerDto {
     private String name;
     private String email;
     private String phoneNumber;
-    private String password; //encrypted password
+    private String password; // encrypted password
     private Date createdAt;
 
-    public static PassengerDto  from(Passenger passenger){
-         PassengerDto fromPassengerDto=PassengerDto.builder()
+    public static PassengerDto from(Passenger passenger) {
+        return PassengerDto.builder()
                 .id(passenger.getId())
                 .name(passenger.getName())
                 .email(passenger.getEmail())
@@ -27,6 +27,5 @@ public class PassengerDto {
                 .password(passenger.getPassword())
                 .createdAt(passenger.getCreatedAt())
                 .build();
-         return fromPassengerDto;
     }
 }
