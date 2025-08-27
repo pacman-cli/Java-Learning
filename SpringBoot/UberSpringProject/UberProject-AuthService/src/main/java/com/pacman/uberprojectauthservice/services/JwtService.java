@@ -23,7 +23,7 @@ public class JwtService implements CommandLineRunner {
     private String SECRET;
 
     // This method will create a brand-new JWT token for the given user based on payload.
-    private String createToken(Map<String, Object> payload, String email) {// on the jwt website there is a tool to
+    public String createToken(Map<String, Object> payload, String email) {// on the jwt website there is a tool to
         // generate the token, and there we saw
         // information was stored in JSON format
         // for that we'll be using a map
@@ -39,8 +39,12 @@ public class JwtService implements CommandLineRunner {
                 .compact();
     }
 
+    public String createToken(String email) {
+        return createToken(new HashMap<>(), email);
+    }
+
     //    This Java method is used to extract and parse JWT (JSON Web Token) claims/payload from a JWT token string
-    private Claims extractAllPayloads(String token) {
+    public Claims extractAllPayloads(String token) {
         return Jwts.parser()
                 .setSigningKey(getSignKey())
                 .build()
@@ -50,16 +54,16 @@ public class JwtService implements CommandLineRunner {
 
     //This Java code defines a **generic utility method** for extracting specific claims from JWT tokens
     //Generics in java: Generics let you write type-safe, reusable code.
-    private <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
+    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllPayloads(token);
         return claimsResolver.apply(claims);
     }
 
-    private Date extractExpiration(String token) {
+    public Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
 
-    private String extractEmail(String token) {
+    public String extractEmail(String token) {
         return extractClaim(token, Claims::getSubject);
     }
 
@@ -69,17 +73,17 @@ public class JwtService implements CommandLineRunner {
      * @param token JWT token to be checked
      * @return true if the token has expired, false otherwise
      */
-    private Boolean isTokenExpired(String token) {
+    public Boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date(System.currentTimeMillis()));
     }
 
     //secret key
-    private Key getSignKey() {
+    public Key getSignKey() {
         return Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
     }
 
     //Validate email and expiration
-    private Boolean validateToken(String token, String email) {
+    public Boolean validateToken(String token, String email) {
         final String userEmailFetchedFromToken = extractEmail(token);
         return (userEmailFetchedFromToken.equals(email)) && !isTokenExpired(token);
     }
@@ -95,7 +99,7 @@ public class JwtService implements CommandLineRunner {
 //        return (String) claims.get(payloadKey);
 //    }
 
-    private Object extractPayload(String token, String payloadKey) {
+    public Object extractPayload(String token, String payloadKey) {
         Claims claims = extractAllPayloads(token);
         return (Object) claims.get(payloadKey);
     }
@@ -106,11 +110,11 @@ public class JwtService implements CommandLineRunner {
         mp.put("email", "puspo@gmail.com");
         mp.put("phoneNumber", "+919999999999");
         String token = createToken(mp, "puspo@gmail.com");
-        System.out.println("Generated Token:" + token);
-        System.out.println("Token Expiry:" + extractExpiration(token));
-        System.out.println("Token Email:" + extractEmail(token));
-        System.out.println("Token Phone:" + extractPayload(token, "phoneNumber").toString());
-        System.out.println("Token Valid:" + validateToken(token, "puspo"));
+//        System.out.println("Generated Token:" + token);
+//        System.out.println("Token Expiry:" + extractExpiration(token));
+//        System.out.println("Token Email:" + extractEmail(token));
+//        System.out.println("Token Phone:" + extractPayload(token, "phoneNumber").toString());
+//        System.out.println("Token Valid:" + validateToken(token, "puspo"));
 
     }
 }

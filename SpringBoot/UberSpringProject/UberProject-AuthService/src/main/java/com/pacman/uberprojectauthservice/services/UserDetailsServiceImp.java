@@ -3,6 +3,7 @@ package com.pacman.uberprojectauthservice.services;
 import com.pacman.uberprojectauthservice.helpers.AuthPassengerDetatails;
 import com.pacman.uberprojectauthservice.models.Passenger;
 import com.pacman.uberprojectauthservice.repositories.PassengerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,12 +16,13 @@ import java.util.Optional;
  */
 //Whenever spring security needs to fetch a user by the unique identifier, it will call this class
 @Service
-public class UserDetailsImp implements UserDetailsService {
-    private final PassengerRepository passengerRepository;
+public class UserDetailsServiceImp implements UserDetailsService {
+    @Autowired
+    private PassengerRepository passengerRepository;
 
-    public UserDetailsImp(PassengerRepository passengerRepository) {
-        this.passengerRepository = passengerRepository;
-    }
+//    public UserDetailsServiceImp(PassengerRepository passengerRepository) {
+//        this.passengerRepository = passengerRepository;
+//    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
