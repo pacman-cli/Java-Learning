@@ -22,7 +22,8 @@ public class JwtService implements CommandLineRunner {
     @Value("${jwt.secret}")
     private String SECRET;
 
-    // This method will create a brand-new JWT token for the given user based on payload.
+    // This method will create a brand-new JWT token for the given user based on
+    // payload.
     public String createToken(Map<String, Object> payload, String email) {// on the jwt website there is a tool to
         // generate the token, and there we saw
         // information was stored in JSON format
@@ -32,18 +33,19 @@ public class JwtService implements CommandLineRunner {
 
         return Jwts.builder()
                 .claims(payload)
-                .subject(email) //replaced username with email because email is unique
+                .subject(email) // replaced username with email because email is unique
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(expiryDate)
                 .signWith(getSignKey())
                 .compact();
     }
 
-    public String createToken(String email) {
-        return createToken(new HashMap<>(), email);
+    public String createToken(Object object) {
+        return createToken(new HashMap<>(), object.toString());
     }
 
-    //    This Java method is used to extract and parse JWT (JSON Web Token) claims/payload from a JWT token string
+    // This Java method is used to extract and parse JWT (JSON Web Token)
+    // claims/payload from a JWT token string
     public Claims extractAllPayloads(String token) {
         return Jwts.parser()
                 .setSigningKey(getSignKey())
@@ -52,8 +54,9 @@ public class JwtService implements CommandLineRunner {
                 .getBody();
     }
 
-    //This Java code defines a **generic utility method** for extracting specific claims from JWT tokens
-    //Generics in java: Generics let you write type-safe, reusable code.
+    // This Java code defines a **generic utility method** for extracting specific
+    // claims from JWT tokens
+    // Generics in java: Generics let you write type-safe, reusable code.
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllPayloads(token);
         return claimsResolver.apply(claims);
@@ -77,27 +80,27 @@ public class JwtService implements CommandLineRunner {
         return extractExpiration(token).before(new Date(System.currentTimeMillis()));
     }
 
-    //secret key
+    // secret key
     public Key getSignKey() {
         return Keys.hmacShaKeyFor(SECRET.getBytes(StandardCharsets.UTF_8));
     }
 
-    //Validate email and expiration
+    // Validate email and expiration
     public Boolean validateToken(String token, String email) {
         final String userEmailFetchedFromToken = extractEmail(token);
         return (userEmailFetchedFromToken.equals(email)) && !isTokenExpired(token);
     }
 
-//    private String extractPhoneNumber(String token) {
-//        Claims claims = extractAllPayloads(token);
-//        return (String) claims.get("phoneNumber");
-//    }
+    // private String extractPhoneNumber(String token) {
+    // Claims claims = extractAllPayloads(token);
+    // return (String) claims.get("phoneNumber");
+    // }
 
-    //this returns the payload value for a given key in String format
-//    private String extractPayload(String token, String payloadKey) {
-//        Claims claims = extractAllPayloads(token);
-//        return (String) claims.get(payloadKey);
-//    }
+    // this returns the payload value for a given key in String format
+    // private String extractPayload(String token, String payloadKey) {
+    // Claims claims = extractAllPayloads(token);
+    // return (String) claims.get(payloadKey);
+    // }
 
     public Object extractPayload(String token, String payloadKey) {
         Claims claims = extractAllPayloads(token);
@@ -110,11 +113,12 @@ public class JwtService implements CommandLineRunner {
         mp.put("email", "puspo@gmail.com");
         mp.put("phoneNumber", "+919999999999");
         String token = createToken(mp, "puspo@gmail.com");
-//        System.out.println("Generated Token:" + token);
-//        System.out.println("Token Expiry:" + extractExpiration(token));
-//        System.out.println("Token Email:" + extractEmail(token));
-//        System.out.println("Token Phone:" + extractPayload(token, "phoneNumber").toString());
-//        System.out.println("Token Valid:" + validateToken(token, "puspo"));
+        System.out.println("Generated Token:" + token);
+        // System.out.println("Token Expiry:" + extractExpiration(token));
+        System.out.println("Token Email:" + extractEmail(token));
+        // System.out.println("Token Phone:" + extractPayload(token,
+        // "phoneNumber").toString());
+        // System.out.println("Token Valid:" + validateToken(token, "puspo"));
 
     }
 }

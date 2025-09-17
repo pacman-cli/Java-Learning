@@ -1,6 +1,11 @@
 package com.pacman.uberprojectauthservice.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Data
 @Getter
@@ -9,6 +14,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthRequestDto {
-    private String email;
-    private String password;
+  private String email;
+  private String password;
 }

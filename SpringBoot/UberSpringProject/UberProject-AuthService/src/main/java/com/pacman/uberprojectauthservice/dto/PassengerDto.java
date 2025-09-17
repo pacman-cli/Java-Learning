@@ -1,31 +1,31 @@
 package com.pacman.uberprojectauthservice.dto;
 
 import com.pacman.uberprojectauthservice.models.Passenger;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-@Getter
-@Setter
+@Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class PassengerDto {
-    private Long id;
-    private String name;
-    private String email;
-    private String phoneNumber;
-    private String password; // encrypted password
-    private Date createdAt;
+  private Long id;
+  private String name;
+  private String email;
+  private String phoneNumber;
+  private Date createdAt;
 
-    public static PassengerDto from(Passenger passenger) {
-        return PassengerDto.builder()
-                .id(passenger.getId())
-                .name(passenger.getName())
-                .email(passenger.getEmail())
-                .phoneNumber(passenger.getPhoneNumber())
-                .password(passenger.getPassword())
-                .createdAt(passenger.getCreatedAt())
-                .build();
-    }
+  public static PassengerDto from(Passenger passenger) {
+    return PassengerDto.builder()
+        .id(passenger.getId())
+        .name(passenger.getName())
+        .email(passenger.getEmail())
+        .phoneNumber(passenger.getPhoneNumber())
+        .createdAt(passenger.getCreatedAt())
+        .build();
+  }
 }

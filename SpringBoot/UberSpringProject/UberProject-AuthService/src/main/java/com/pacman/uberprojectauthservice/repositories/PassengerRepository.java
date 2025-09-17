@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface PassengerRepository extends JpaRepository<Passenger, Long> {
-//    List<Passenger> findPassengerByEmail(String email);
-
     Optional<Passenger> findPassengerByEmail(String email);
+
+    boolean existsByEmail(String email);
 }

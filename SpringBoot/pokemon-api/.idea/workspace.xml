@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b9f2453a-ef14-4f73-9c95-d831d70e8921" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/java/com/pacman/uberprojectauthservice/configurations/SpringSecurity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/java/com/pacman/uberprojectauthservice/configurations/SpringSecurity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/java/com/pacman/uberprojectauthservice/controllers/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/java/com/pacman/uberprojectauthservice/controllers/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/java/com/pacman/uberprojectauthservice/dto/AuthRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/java/com/pacman/uberprojectauthservice/dto/AuthRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/java/com/pacman/uberprojectauthservice/dto/AuthResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/java/com/pacman/uberprojectauthservice/dto/AuthResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/java/com/pacman/uberprojectauthservice/dto/PassengerDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/java/com/pacman/uberprojectauthservice/dto/PassengerDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/java/com/pacman/uberprojectauthservice/dto/PassengerSignupRequestDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/java/com/pacman/uberprojectauthservice/dto/PassengerSignupRequestDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/java/com/pacman/uberprojectauthservice/models/BaseModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/java/com/pacman/uberprojectauthservice/models/BaseModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/java/com/pacman/uberprojectauthservice/models/Booking.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/java/com/pacman/uberprojectauthservice/models/Booking.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/java/com/pacman/uberprojectauthservice/models/Driver.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/java/com/pacman/uberprojectauthservice/models/Driver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/java/com/pacman/uberprojectauthservice/models/Passenger.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/java/com/pacman/uberprojectauthservice/models/Passenger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/java/com/pacman/uberprojectauthservice/repositories/PassengerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/java/com/pacman/uberprojectauthservice/repositories/PassengerRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/java/com/pacman/uberprojectauthservice/services/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/java/com/pacman/uberprojectauthservice/services/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/java/com/pacman/uberprojectauthservice/services/JwtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/java/com/pacman/uberprojectauthservice/services/JwtService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../UberSpringProject/UberProject-AuthService/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pacman/pokemonapi/PokemonApiApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pacman/pokemonapi/adapter/persistence/PokemonEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pacman/pokemonapi/adapter/persistence/UserEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pacman/pokemonapi/config/CorsConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pacman/pokemonapi/config/DataSeeder.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pacman/pokemonapi/controller/AuthController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pacman/pokemonapi/controller/PokemonController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pacman/pokemonapi/dto/PokemonDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pacman/pokemonapi/enums/PokemonType.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pacman/pokemonapi/mapper/PokemonMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pacman/pokemonapi/model/Pokemon.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pacman/pokemonapi/repository/PokemonRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pacman/pokemonapi/repository/UserRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pacman/pokemonapi/service/PokemonService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/pacman/pokemonapi/service/UserService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/pacman/pokemonapi/PokemonApiApplicationTests.java" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FormatOnSaveOptions">
+    <option name="myAllFileTypesSelected" value="true" />
+    <option name="mySelectedFileTypes">
+      <set />
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="GoLibraries">
+    <option name="indexEntireGoPath" value="true" />
+  </component>
+  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
+  <component name="KubernetesApiProvider"><![CDATA[{
+  "isMigrated": true
+}]]></component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="/opt/homebrew/Cellar/php/8.4.10/bin/php" />
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 3
+}]]></component>
+  <component name="ProjectId" id="32b0t4510hpSlboKBxXYjFu9gVk" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Gradle.Build pokemon-api.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.go.formatter.settings.were.checked": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "Spring Boot.PokemonApiApplication.executor": "Run",
+    "git-widget-placeholder": "main",
+    "go.import.settings.migrated": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/puspo/JavaCourse/SpringBoot/pokemon-api/src/main/resources",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "actions.on.save",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.pacman.pokemonapi.dto" />
+      <recent name="com.pacman.pokemonapi.model" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="AZURE_FUNCTION_SUPPORT" factoryName="Run Functions">
+      <option name="appName" />
+      <option name="appServicePlanName" />
+      <option name="appServicePlanResourceGroup" />
+      <option name="appSettingsKey" value="5c8d8082-f48f-4355-9e40-04017bd8adca" />
+      <option name="artifact" />
+      <option name="debugOptions" />
+      <option name="deployment" />
+      <option name="deploymentStagingDirectoryPath" />
+      <option name="funcPath" />
+      <option name="functionHostArguments" />
+      <option name="hostJsonPath" />
+      <option name="insightsName" />
+      <option name="instrumentationKey" />
+      <option name="javaVersion" />
+      <option name="localSettingsJsonPath" />
+      <option name="moduleName" />
+      <option name="os" />
+      <option name="pricingTier" />
+      <option name="providerMap">
+        <map />
+      </option>
+      <option name="region" />
+      <option name="resourceGroup" />
+      <option name="stagingFolder" />
+      <option name="subscription" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
+      <module name="pokemon-api" />
+      <working_directory value="$PROJECT_DIR$" />
+      <go_parameters value="-i" />
+      <kind />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="GoTestRunConfiguration" factoryName="Go Test">
+      <module name="pokemon-api" />
+      <working_directory value="$PROJECT_DIR$" />
+      <go_parameters value="-i" />
+      <kind />
+      <directory value="$PROJECT_DIR$" />
+      <filePath value="$PROJECT_DIR$" />
+      <framework value="gotest" />
+      <method v="2" />
+    </configuration>
+    <configuration name="PokemonApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="pokemon-api.main" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.pacman.pokemonapi.PokemonApiApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.25557.131" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b9f2453a-ef14-4f73-9c95-d831d70e8921" name="Changes" comment="" />
+      <created>1757674175594</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1757674175594</updated>
+      <workItem from="1757674177552" duration="23048000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VgoProject">
+    <integration-enabled>false</integration-enabled>
+    <settings-migrated>true</settings-migrated>
+  </component>
+</project>
