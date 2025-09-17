@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Firebase Auth + Spring Boot Register/Login Test</title>
+    <!-- Firebase SDKs for App + Auth -->
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+  </head>
+  <body>
+    <h1>Firebase Auth + Spring Boot Test</h1>
+
+    <!-- Input fields for email + password + display name -->
+    <div>
+      <label>Email:</label>
+      <input type="email" id="email" placeholder="Enter email" />
+      <br />
+      <label>Password:</label>
+      <input type="password" id="password" placeholder="Enter password" />
+      <br />
+      <label>Display Name:</label>
+      <input type="text" id="displayName" placeholder="Enter display name" />
+      <br />
+      <label>Photo URL:</label>
+      <input
+        type="text"
+        id="photoUrl"
+        placeholder="Enter photo URL (optional)"
+      />
+      <br />
+
+      <!-- Buttons -->
+      <button id="register">Register</button>
+      <button id="login">Login</button>
+      <button id="logout">Logout</button>
+      <button id="callApi">Call /api/user</button>
+    </div>
+
+    <!-- Token display -->
+    <div>
+      <p><strong>Token:</strong></p>
+      <pre id="token"></pre>
+    </div>
+
+    <!-- Error display -->
+    <div>
+      <p><strong>Error:</strong></p>
+      <pre id="error"></pre>
+    </div>
+
+    <script>
+      // 1️⃣ Firebase project configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyDroXHyknyr4DiBnJTezMAVDau3CvEQ6j0",
+        authDomain: "sad-project-e6d4d.firebaseapp.com",
+        projectId: "sad-project-e6d4d",
+        storageBucket: "sad-project-e6d4d.firebasestorage.app",
+        messagingSenderId: "1081773846551",
+        appId: "1:1081773846551:web:24b14e6f38459fca29ac52",
+        measurementId: "G-L93BRPSKBX",
+      };
+
+      // 2️⃣ Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+
+      let currentToken = "";
+
+      // // ---------------- REGISTER ----------------
+      // document.getElementById("register").onclick = () => {
+      //   const email = document.getElementById("email").value;
+      //   const password = document.getElementById("password").value;
+      //   const displayName = document.getElementById("displayName").value;
+      //   const photoUrl = document.getElementById("photoUrl").value;
+
+      //   // 1️⃣ Create user with Firebase Authentication
+      //   auth
+      //     .createUserWithEmailAndPassword(email, password)
+      //     .then((userCredential) => {
+      //       const user = userCredential.user;
+      //       console.log("User registered:", user);
+
+      //       // 2️⃣ Update profile (name + photo)
+      //       return user.updateProfile({
+      //         displayName: displayName,
+      //         photoURL: photoUrl || null,
+      //       });
+      //     })
+      //     .then(() => {
+      //       // 3️⃣ Send email verification
+      //       const user = auth.currentUser;
+      //       return user.sendEmailVerification();
+      //     })
+      //     .then(() => {
+      //       alert(
+      //         "✅ Registration successful! A verification email has been sent to your Gmail. Please check your inbox."
+      //       );
+      //     })
+      //     .catch((error) => {
+      //       document.getElementById("error").innerText =
+      //         "Register Error: " + error.code + " | " + error.message;
+      //       console.error("Register Error:", error);
+      //     });
+      // };
+
+      // ---------------- LOGIN ----------------
+      document.getElementById("login").onclick = () => {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        auth
+          .signInWithEmailAndPassword(email, password)
+          .then((userCredential) => {
+            const user = userCredential.user;
+
+            // 1️⃣ Check if email is verified
+            if (!user.emailVerified) {
+              alert(
+                "⚠️ Your email is not verified. Please check your Gmail and verify before accessing the app."
+              );
+              document.getElementById("token").innerText = "";
+              currentToken = "";
+              return Promise.reject("Email not verified"); // stop login flow
+            }
+
+            // 2️⃣ Email verified → get ID token
+            return user.getIdToken();
+          })
+          .then((idToken) => {
+            currentToken = idToken; // store token
+            document.getElementById("token").innerText = idToken;
+            document.getElementById("error").innerText = "";
+            console.log("Login successful, token:", idToken);
+            alert("✅ Login successful! Your email is verified.");
+          })
+          .catch((error) => {
+            // Show login or verification error
+            if (error !== "Email not verified") {
+              document.getElementById("error").innerText =
+                "Login Error: " + error.code + " | " + error.message;
+              console.error("Login Error:", error);
+            }
+          });
+      };
+      // ---------------- REGISTER ----------------
+      document.getElementById("register").onclick = () => {
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const displayName = document.getElementById("displayName").value;
+        const photoUrl = document.getElementById("photoUrl").value;
+
+        // 1️⃣ Create user with Firebase Authentication
+        auth
+          .createUserWithEmailAndPassword(email, password)
+          .then((userCredential) => {
+            const user = userCredential.user;
+            console.log("User registered:", user);
+
+            // 2️⃣ Update user profile (name + photo)
+            return user
+              .updateProfile({
+                displayName: displayName,
+                photoURL: photoUrl || null,
+              })
+              .then(() => user); // Pass the user object to next then
+          })
+          .then((user) => {
+            // 3️⃣ Define the actionCodeSettings with redirect URL
+            const actionCodeSettings = {
+              url: "http://localhost:8000/login", // <-- Where user will land after clicking verification button
+              handleCodeInApp: true, // Optional, can be true for web/mobile apps
+            };
+
+            // 4️⃣ Send verification email with clickable button
+            return user.sendEmailVerification(actionCodeSettings);
+          })
+          .then(() => {
+            // 5️⃣ Notify user
+            alert(
+              "✅ Registration successful! A verification email has been sent to your Gmail. Click the button in the email to verify your account."
+            );
+          })
+          .catch((error) => {
+            document.getElementById("error").innerText =
+              "Register Error: " + error.code + " | " + error.message;
+            console.error("Register Error:", error);
+          });
+      };
+
+      // ---------------- CALL SPRING BOOT API ----------------
+      document.getElementById("callApi").onclick = () => {
+        if (!currentToken) {
+          alert("Please login/register first to get a token!");
+          return;
+        }
+
+        fetch("http://localhost:8080/api/user", {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + currentToken,
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Unauthorized or error: " + response.status);
+            }
+            return response.text();
+          })
+          .then((data) => {
+            alert("API Response: " + data);
+            console.log("API Response:", data);
+          })
+          .catch((err) => {
+            document.getElementById("error").innerText =
+              "API Error: " + err.message;
+            console.error("API Error:", err);
+          });
+      };
+    </script>
+  </body>
+</html>
