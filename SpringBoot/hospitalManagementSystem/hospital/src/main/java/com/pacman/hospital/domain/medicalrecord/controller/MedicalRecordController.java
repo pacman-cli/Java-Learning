@@ -1,5 +1,6 @@
 package com.pacman.hospital.domain.medicalrecord.controller;
 
+import com.pacman.hospital.common.storage.StorageService;
 import com.pacman.hospital.domain.medicalrecord.dto.MedicalRecordDto;
 import com.pacman.hospital.domain.medicalrecord.service.MedicalRecordService;
 import jakarta.validation.Valid;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.List;
 
@@ -15,9 +17,11 @@ import java.util.List;
 @RequestMapping("/api/medical-records")
 public class MedicalRecordController {
     private final MedicalRecordService medicalRecordService;
+    private final StorageService storageService;
 
-    public MedicalRecordController(MedicalRecordService medicalRecordService) {
+    public MedicalRecordController(MedicalRecordService medicalRecordService, StorageService storageService) {
         this.medicalRecordService = medicalRecordService;
+        this.storageService = storageService;
     }
 
     @PostMapping
@@ -29,17 +33,39 @@ public class MedicalRecordController {
         return ResponseEntity.created(location).body(created);
     }
 
-    // Optional: upload file for a record (controller should delegate to a StorageService you implement)
     @PostMapping("/{id}/upload")
-    public ResponseEntity<MedicalRecordDto> uploadFile(
+    public ResponseEntity<?> uploadFile(
             @PathVariable Long id,
-            @RequestParam("file") MultipartFile file) {
-        // NOTE: For now, placeholder — implement StorageService to store file and update filePath on record
-//         String path = storageService.store(file);
-//         MedicalRecordDto dto = new MedicalRecordDto();
-//         dto.setFilePath(path);
-//         MedicalRecordDto updated = medicalRecordService.updateRecord(id, dto);
-        return ResponseEntity.status(501).build(); // Not implemented
+            @RequestParam("file") MultipartFile file
+    ) {
+
+        // Basic validation
+        if (file == null || file.isEmpty()) {
+            return ResponseEntity.badRequest().body("File is required and must not be empty.");
+        }
+
+        String storedPath; // Path where the file is stored
+        try {
+            // StorageService.store expects a (MultipartFile, String subfolder)
+            storedPath = storageService.store(file, id.toString()); // Store in a subfolder named after the record ID
+        } catch (IOException ex) {
+            // log the error in real code
+            return ResponseEntity.status(500).body("Failed to store file: " + ex.getMessage());
+        }
+
+        // Update the medical record with the stored file path
+        MedicalRecordDto dto = new MedicalRecordDto();
+        dto.setFilePath(storedPath); // Assuming MedicalRecordDto has a field 'filePath' to store the path
+
+        MedicalRecordDto updated; // The updated record to return
+        try {
+            updated = medicalRecordService.updateRecord(id, dto); // Update the record with the new file path
+        } catch (Exception ex) {
+            // If updating the DB fails, consider removing the stored file or otherwise handling cleanup.
+            return ResponseEntity.status(500).body("File stored but failed to update record: " + ex.getMessage());
+        }
+
+        return ResponseEntity.ok(updated);
     }
 
     @GetMapping("/{id}")
