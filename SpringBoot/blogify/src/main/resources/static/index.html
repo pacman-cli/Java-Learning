@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blogify - Your Personal Blog</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-logo">
+          <i class="fas fa-blog"></i>
+          <span>Blogify</span>
+        </div>
+        <div class="nav-menu" id="nav-menu">
+          <a href="#" class="nav-link" onclick="showHome()">
+            <i class="fas fa-home"></i> Home
+          </a>
+          <a
+            href="#"
+            class="nav-link"
+            onclick="showCreatePost()"
+            id="create-post-link"
+            style="display: none"
+          >
+            <i class="fas fa-plus"></i> Create Post
+          </a>
+          <a
+            href="#"
+            class="nav-link"
+            onclick="showProfile()"
+            id="profile-link"
+            style="display: none"
+          >
+            <i class="fas fa-user"></i> Profile
+          </a>
+          <a href="#" class="nav-link" onclick="showLogin()" id="login-link">
+            <i class="fas fa-sign-in-alt"></i> Login
+          </a>
+          <a
+            href="#"
+            class="nav-link"
+            onclick="logout()"
+            id="logout-link"
+            style="display: none"
+          >
+            <i class="fas fa-sign-out-alt"></i> Logout
+          </a>
+        </div>
+        <div class="hamburger" onclick="toggleMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div class="container">
+      <!-- Login/Register Section -->
+      <div id="auth-section" class="section">
+        <div class="auth-container">
+          <div class="auth-tabs">
+            <button class="tab-button active" onclick="showLoginForm()">
+              Login
+            </button>
+            <button class="tab-button" onclick="showRegisterForm()">
+              Register
+            </button>
+          </div>
+
+          <!-- Login Form -->
+          <div id="login-form" class="auth-form">
+            <h2><i class="fas fa-sign-in-alt"></i> Login</h2>
+            <form id="loginForm">
+              <div class="form-group">
+                <label for="loginUsername">Username</label>
+                <input
+                  type="text"
+                  id="loginUsername"
+                  name="username"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <input
+                  type="password"
+                  id="loginPassword"
+                  name="password"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn-primary">Login</button>
+            </form>
+          </div>
+
+          <!-- Register Form -->
+          <div id="register-form" class="auth-form" style="display: none">
+            <h2><i class="fas fa-user-plus"></i> Register</h2>
+            <form id="registerForm">
+              <div class="form-group">
+                <label for="registerUsername">Username</label>
+                <input
+                  type="text"
+                  id="registerUsername"
+                  name="username"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="registerEmail">Email</label>
+                <input type="email" id="registerEmail" name="email" required />
+              </div>
+              <div class="form-group">
+                <label for="registerPassword">Password</label>
+                <input
+                  type="password"
+                  id="registerPassword"
+                  name="password"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn-primary">Register</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Home Section -->
+      <div id="home-section" class="section" style="display: none">
+        <div class="welcome-header">
+          <h1><i class="fas fa-home"></i> Welcome to Blogify</h1>
+          <p>Discover amazing stories and share your thoughts</p>
+        </div>
+
+        <div class="blog-posts" id="blog-posts">
+          <!-- Blog posts will be loaded here -->
+        </div>
+      </div>
+
+      <!-- Create Post Section -->
+      <div id="create-post-section" class="section" style="display: none">
+        <div class="create-post-container">
+          <h2><i class="fas fa-plus"></i> Create New Post</h2>
+          <form id="createPostForm">
+            <div class="form-group">
+              <label for="postTitle">Title</label>
+              <input type="text" id="postTitle" name="title" required />
+            </div>
+            <div class="form-group">
+              <label for="postContent">Content</label>
+              <textarea
+                id="postContent"
+                name="content"
+                rows="10"
+                required
+              ></textarea>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn-primary">
+                <i class="fas fa-save"></i> Publish Post
+              </button>
+              <button type="button" class="btn-secondary" onclick="showHome()">
+                <i class="fas fa-times"></i> Cancel
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Post Detail Section -->
+      <div id="post-detail-section" class="section" style="display: none">
+        <div class="post-detail-container" id="post-detail">
+          <!-- Post details and comments will be loaded here -->
+        </div>
+      </div>
+
+      <!-- Profile Section -->
+      <div id="profile-section" class="section" style="display: none">
+        <div class="profile-container">
+          <h2><i class="fas fa-user"></i> My Profile</h2>
+          <div id="user-info">
+            <!-- User information will be loaded here -->
+          </div>
+          <div class="user-posts">
+            <h3>My Posts</h3>
+            <div id="user-posts-list">
+              <!-- User's posts will be loaded here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loading" class="loading-spinner" style="display: none">
+      <i class="fas fa-spinner fa-spin"></i>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
