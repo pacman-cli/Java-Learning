@@ -1,6 +1,7 @@
 package com.pacman.hospital.domain.medicalrecord.service;
 
 import com.pacman.hospital.domain.medicalrecord.dto.MedicalRecordDto;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface MedicalRecordService {
     void deleteRecord(Long id);
 
     List<MedicalRecordDto> getRecordsForPatient(Long patientId);
+
+    MedicalRecordDto attachFileToRecord(Long recordId, MultipartFile file);
 }

@@ -4,6 +4,7 @@ import com.pacman.hospital.common.storage.StorageService;
 import com.pacman.hospital.domain.medicalrecord.dto.MedicalRecordDto;
 import com.pacman.hospital.domain.medicalrecord.service.MedicalRecordService;
 import jakarta.validation.Valid;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -90,5 +91,33 @@ public class MedicalRecordController {
     public ResponseEntity<Void> deleteRecord(@PathVariable Long id) {
         medicalRecordService.deleteRecord(id);
         return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Single upload handler for attaching a file to an existing medical record. Note: consumes multipart/form-data so
+     * Swagger will render the file picker.
+     */
+    @PostMapping(
+            path = "/{id}/upload",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE //this will make swagger show the file picker
+    )
+    public ResponseEntity<?> uploadFile(
+            @Valid @PathVariable Long id,
+            @RequestParam("file") MultipartFile file,
+            UriComponentsBuilder uriComponentsBuilder
+    ) {
+        if (file == null || file.isEmpty()) {
+            return ResponseEntity.badRequest().body("File is required and must not be empty.");
+        }
+        try {
+            MedicalRecordDto medicalRecordDto = medicalRecordService.attachFileToRecord(id, file);
+            URI location =
+                    uriComponentsBuilder.path("/api/medical-records/{id}").buildAndExpand(medicalRecordDto.getId()).toUri(); // Location of the updated record
+//            return ResponseEntity.created(location).body(medicalRecordDto);
+            return ResponseEntity.ok().location(location).body(medicalRecordDto);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("File could not be attached to record: " + e.getMessage());
+        }
+
     }
 }
