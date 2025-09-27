@@ -36,7 +36,7 @@ _From fundamental OOP concepts to cutting-edge AI integration and microservices 
 ### 📊 **Repository Stats**
 
 ```
-📁 25+ Projects        🚀 10+ Advanced Apps      🎯 Core Java Mastery
+📁 Projects            🚀 Advanced Apps          🎯 Core Java Mastery
 🌱 Spring Boot Expert  🤖 AI Integration         🏗️ Microservices
 📚 Design Patterns     🔐 Security & JWT         💾 Database Design
 ```
