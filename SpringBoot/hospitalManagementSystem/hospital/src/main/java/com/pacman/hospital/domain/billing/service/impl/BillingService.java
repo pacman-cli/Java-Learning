@@ -14,4 +14,6 @@ public interface BillingService {
     void deleteBilling(Long id);
 
     List<BillingDto> getAllBilling();
+
+    BillingDto markAsPaid(Long id, String paymentMethod);
 }

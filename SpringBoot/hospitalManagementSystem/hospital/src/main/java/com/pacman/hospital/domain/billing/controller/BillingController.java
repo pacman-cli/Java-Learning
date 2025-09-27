@@ -8,6 +8,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/billings")
@@ -54,5 +55,16 @@ public class BillingController {
     public ResponseEntity<Void> deleteBilling(@PathVariable Long id) {
         billingService.deleteBilling(id);
         return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Mark bill as paid. Accepts optional JSON body: {"paymentMethod":"CARD"}
+     */
+    public ResponseEntity<BillingDto> payBill(
+            @PathVariable Long id,
+            @RequestBody(required = false) Map<String, String> paymentInfo
+    ) {
+        String paymentMethod = (paymentInfo != null) ? paymentInfo.get("paymentMethod") : null;
+        return ResponseEntity.ok(billingService.markAsPaid(id, paymentMethod));
     }
 }

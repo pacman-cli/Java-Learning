@@ -39,4 +39,14 @@ public class Billing {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "appointment_id")
     private Appointment appointment;
+
+    //adding more columns for better billing management
+    @Enumerated(EnumType.STRING)
+    private BillingStatus status = BillingStatus.PENDING;
+
+    @Column(length = 1000)
+    private String description; // brief description or notes about the billing
+
+    @Column(name = "paid_at")
+    private LocalDateTime paidAt; // timestamp when the bill was paid
 }

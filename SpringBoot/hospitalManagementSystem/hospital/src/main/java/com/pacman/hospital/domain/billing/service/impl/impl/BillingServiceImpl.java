@@ -4,6 +4,7 @@ import com.pacman.hospital.domain.appointment.repository.AppointmentRepository;
 import com.pacman.hospital.domain.billing.dto.BillingDto;
 import com.pacman.hospital.domain.billing.mapper.BillingMapper;
 import com.pacman.hospital.domain.billing.model.Billing;
+import com.pacman.hospital.domain.billing.model.BillingStatus;
 import com.pacman.hospital.domain.billing.repository.BillingRepository;
 import com.pacman.hospital.domain.billing.service.impl.BillingService;
 import com.pacman.hospital.domain.patient.repository.PatientRepository;
@@ -11,6 +12,7 @@ import com.pacman.hospital.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -87,5 +89,16 @@ public class BillingServiceImpl implements BillingService {
                 .stream()
                 .map(billingMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public BillingDto markAsPaid(Long id, String paymentMethod) {
+        Billing existing = billingRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Billing not found with id: " + id));
+
+        existing.setStatus(BillingStatus.PAID);
+        existing.setPaymentMethod(paymentMethod != null ? paymentMethod : existing.getPaymentMethod());
+        existing.setPaidAt(LocalDateTime.now());
+        Billing updated = billingRepository.save(existing);
+        return billingMapper.toDto(updated);
     }
 }

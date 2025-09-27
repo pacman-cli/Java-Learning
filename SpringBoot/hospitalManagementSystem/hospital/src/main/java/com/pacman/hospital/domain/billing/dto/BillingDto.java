@@ -1,8 +1,6 @@
 package com.pacman.hospital.domain.billing.dto;
 
-import com.pacman.hospital.domain.appointment.model.Appointment;
-import com.pacman.hospital.domain.patient.model.Patient;
-import jakarta.persistence.*;
+import com.pacman.hospital.domain.billing.model.BillingStatus;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
@@ -31,4 +29,11 @@ public class BillingDto {
     private Long patientId;
 
     private Long appointmentId;
+
+    private BillingStatus status;
+
+    private String description;
+
+    private LocalDateTime paidAt;
+
 }
