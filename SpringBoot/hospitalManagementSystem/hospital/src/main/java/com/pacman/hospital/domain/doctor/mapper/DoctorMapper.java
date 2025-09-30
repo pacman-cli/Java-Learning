@@ -2,7 +2,6 @@ package com.pacman.hospital.domain.doctor.mapper;
 
 import com.pacman.hospital.domain.doctor.dto.DoctorDto;
 import com.pacman.hospital.domain.doctor.model.Doctor;
-import org.mapstruct.*;
 import org.springframework.stereotype.Component;
 
 //

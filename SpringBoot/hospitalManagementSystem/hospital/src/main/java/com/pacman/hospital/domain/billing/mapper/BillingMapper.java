@@ -21,6 +21,7 @@ public class BillingMapper {
         billingDto.setDescription(billing.getDescription());
         billingDto.setStatus(billing.getStatus());
         billingDto.setPaidAt(billing.getPaidAt());
+        billingDto.setInsuranceId(billing.getInsurance() != null ? billing.getInsurance().getId() : null); //new
 
         if (billing.getPatient() != null) {  // avoid null pointer exception
             billingDto.setPatientId(billing.getPatient().getId());
@@ -28,6 +29,9 @@ public class BillingMapper {
         if (billing.getAppointment() != null) {
             billingDto.setAppointmentId(billing.getAppointment().getId());
         }
+        billingDto.setCoveredAmount(billing.getCoveredAmount());
+        billingDto.setPatientPayable(billing.getPatientPayable());
+
         return billingDto;
     }
 
@@ -44,6 +48,8 @@ public class BillingMapper {
                 .description(billingDto.getDescription())
                 .status(billingDto.getStatus() != null ? billingDto.getStatus() : BillingStatus.PENDING) // default to PENDING if not provided
                 .paidAt(billingDto.getPaidAt())
+                .coveredAmount(billingDto.getCoveredAmount())
+                .patientPayable(billingDto.getPatientPayable())
                 .build();
     }
 
@@ -65,6 +71,12 @@ public class BillingMapper {
         }
         if (billingDto.getPaidAt() != null) {
             entity.setPaidAt(billingDto.getPaidAt());
+        }
+        if (billingDto.getCoveredAmount() != null) {
+            entity.setCoveredAmount(billingDto.getCoveredAmount());
+        }
+        if (billingDto.getPatientPayable() != null) {
+            entity.setPatientPayable(billingDto.getPatientPayable());
         }
         // patient and appointment updates handled in service
     }

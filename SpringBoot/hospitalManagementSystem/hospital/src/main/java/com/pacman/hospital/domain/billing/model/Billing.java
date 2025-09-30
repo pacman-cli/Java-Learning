@@ -1,6 +1,7 @@
 package com.pacman.hospital.domain.billing.model;
 
 import com.pacman.hospital.domain.appointment.model.Appointment;
+import com.pacman.hospital.domain.insurance.model.Insurance;
 import com.pacman.hospital.domain.patient.model.Patient;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -49,4 +50,14 @@ public class Billing {
 
     @Column(name = "paid_at")
     private LocalDateTime paidAt; // timestamp when the bill was paid
+
+    @ManyToOne
+    @JoinColumn(name = "insurance_id")
+    private Insurance insurance;
+
+    @Column(name = "covered_amount", precision = 38, scale = 2)
+    private BigDecimal coveredAmount;
+
+    @Column(name = "patient_payable", precision = 38, scale = 2)
+    private BigDecimal patientPayable;
 }

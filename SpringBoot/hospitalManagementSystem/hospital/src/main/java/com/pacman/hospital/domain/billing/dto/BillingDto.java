@@ -36,4 +36,8 @@ public class BillingDto {
 
     private LocalDateTime paidAt;
 
+    private Long insuranceId;
+    private BigDecimal coveredAmount;
+    private BigDecimal patientPayable;
+
 }

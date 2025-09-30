@@ -11,6 +11,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/doctors")
 public class DoctorController {
 
@@ -22,10 +23,10 @@ public class DoctorController {
 
     @PostMapping
     public ResponseEntity<DoctorDto> createDoctor(@Valid @RequestBody DoctorDto doctorDto,
-                                       UriComponentsBuilder uriComponentsBuilder) {
+                                                  UriComponentsBuilder uriComponentsBuilder) {
         DoctorDto newDoctor = doctorService.createDoctor(doctorDto);
-        URI loaction = uriComponentsBuilder.path("/api/docotor/{id}").buildAndExpand(newDoctor.getId()).toUri();
-         return ResponseEntity.created(loaction).body(newDoctor);
+        URI loaction = uriComponentsBuilder.path("/api/docotors/{id}").buildAndExpand(newDoctor.getId()).toUri();
+        return ResponseEntity.created(loaction).body(newDoctor);
     }
 
     @GetMapping

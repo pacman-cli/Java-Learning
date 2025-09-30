@@ -1,7 +1,6 @@
 package com.pacman.hospital.domain.laboratory.controller;
 
 import com.pacman.hospital.domain.laboratory.dto.LabTestDto;
-import com.pacman.hospital.domain.laboratory.model.LabTest;
 import com.pacman.hospital.domain.laboratory.service.LabTestService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;

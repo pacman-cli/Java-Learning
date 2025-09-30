@@ -11,9 +11,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/patients")
 public class PatientController {
     private final PatientService patientService;
@@ -26,9 +26,9 @@ public class PatientController {
 
     @PostMapping
     public ResponseEntity<PatientDto> createPatient(@Valid @RequestBody PatientDto patientDto, UriComponentsBuilder uriComponentsBuilder) {
-         PatientDto newPatient = patientService.createPatient(patientDto);
+        PatientDto newPatient = patientService.createPatient(patientDto);
         URI loaction = uriComponentsBuilder.path("/api/patients/{id}").buildAndExpand(newPatient.getId()).toUri();
-         return ResponseEntity.created(loaction).body(newPatient);
+        return ResponseEntity.created(loaction).body(newPatient);
     }
 
     @GetMapping
