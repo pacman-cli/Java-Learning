@@ -1,13 +1,16 @@
 package com.puspo.scalablekafkaapp.kafkaminionginx.service;
 
 import com.puspo.scalablekafkaapp.kafkaminionginx.entity.FileMetadata;
+import com.puspo.scalablekafkaapp.kafkaminionginx.kafka.service.UploadEventPublisher;
 import com.puspo.scalablekafkaapp.kafkaminionginx.repository.FileMetadataRepository;
 import io.minio.GetPresignedObjectUrlArgs;
 import io.minio.MinioClient;
+import io.minio.PutObjectArgs;
 import io.minio.http.Method;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -17,6 +20,7 @@ import java.util.UUID;
 public class FileService {
     private final MinioClient minioClient;
     private final FileMetadataRepository fileMetadataRepository;
+    private final UploadEventPublisher uploadEventPublisher;
 
     @Value("${minio.bucket-name}")
     private String bucketName;
@@ -55,9 +59,47 @@ public class FileService {
         FileMetadata existingFile = fileMetadataRepository.findById(id).orElseThrow();
         if (existingFile.getStatus() == FileMetadata.Status.PENDING) {
             existingFile.setStatus(FileMetadata.Status.UPLOADED);
-            return fileMetadataRepository.save(existingFile);
+            fileMetadataRepository.save(existingFile);
+            // now we can publish to Kafka
+            uploadEventPublisher.publish(existingFile);
+            return existingFile;
         } else {
             throw new IllegalStateException("File is already uploaded");
         }
     }
+
+
+    public FileMetadata directUpload(MultipartFile file) throws Exception {
+        String originalName = file.getOriginalFilename();
+        String contentType = file.getContentType();
+        String storageName = java.util.UUID.randomUUID() + "_" + originalName;
+
+        // Upload to MinIO (replace with your MinIO logic)
+        minioClient.putObject(
+                io.minio.PutObjectArgs.builder()
+                        .bucket(bucketName)
+                        .object(storageName)
+                        .stream(file.getInputStream(), file.getSize(), -1)
+                        .contentType(contentType)
+                        .build()
+        );
+
+        FileMetadata metadata = FileMetadata.builder()
+                .storageName(storageName)
+                .originalName(originalName)
+                .contentType(contentType)
+                .size(file.getSize())
+                .uploadedAt(java.time.LocalDateTime.now())
+                .status(FileMetadata.Status.UPLOADED)
+                .build();
+
+        fileMetadataRepository.save(metadata);
+
+        // Optionally publish event
+        uploadEventPublisher.publish(metadata);
+
+        return metadata;
+    }
+
+
 }
