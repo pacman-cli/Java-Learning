@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <title>Firebase Auth + Spring Boot Register/Login Test</title>
@@ -50,12 +50,13 @@
     <script>
       // 1️⃣ Firebase project configuration
       const firebaseConfig = {
-      authDomain: "sad-project-e6d4d.firebaseapp.com",
+        apiKey: "",
+        authDomain: "",
         projectId: "sad-project-e6d4d",
-        storageBucket: "sad-project-e6d4d.firebasestorage.app",
-        messagingSenderId: "1081773846551",
-        appId: "1:1081773846551:web:24b14e6f38459fca29ac52",
-        measurementId: "G-L93BRPSKBX",
+        storageBucket: "",
+        messagingSenderId: "",
+        appId: "",
+        measurementId: "",
       };
 
       // 2️⃣ Initialize Firebase
@@ -114,7 +115,7 @@
             // 1️⃣ Check if email is verified
             if (!user.emailVerified) {
               alert(
-                "⚠️ Your email is not verified. Please check your Gmail and verify before accessing the app."
+                "⚠️ Your email is not verified. Please check your Gmail and verify before accessing the app.",
               );
               document.getElementById("token").innerText = "";
               currentToken = "";
@@ -175,7 +176,7 @@
           .then(() => {
             // 5️⃣ Notify user
             alert(
-              "✅ Registration successful! A verification email has been sent to your Gmail. Click the button in the email to verify your account."
+              "✅ Registration successful! A verification email has been sent to your Gmail. Click the button in the email to verify your account.",
             );
           })
           .catch((error) => {
