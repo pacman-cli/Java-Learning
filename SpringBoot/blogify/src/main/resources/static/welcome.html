@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to Blogify</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .welcome-container {
+        text-align: center;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 3rem;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      h1 {
+        color: #333;
+        margin-bottom: 1rem;
+        font-size: 2.5rem;
+      }
+      .logo {
+        font-size: 4rem;
+        color: #667eea;
+        margin-bottom: 1rem;
+      }
+      p {
+        color: #666;
+        font-size: 1.2rem;
+        margin-bottom: 2rem;
+      }
+      .btn {
+        display: inline-block;
+        padding: 1rem 2rem;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        text-decoration: none;
+        border-radius: 10px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        margin: 0 0.5rem;
+      }
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+      }
+      .btn-secondary {
+        background: #6c757d;
+      }
+      .btn-secondary:hover {
+        background: #5a6268;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="welcome-container">
+      <div class="logo">📝</div>
+      <h1>Welcome to Blogify</h1>
+      <p>Your personal blogging platform</p>
+      <div>
+        <a href="/index.html" class="btn"> 🚀 Open Blog App </a>
+        <a href="/swagger-ui.html" class="btn btn-secondary">
+          📚 API Documentation
+        </a>
+      </div>
+    </div>
+  </body>
+</html>
