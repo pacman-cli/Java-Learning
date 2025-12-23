@@ -42,9 +42,14 @@ import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Map;
+
+@Slf4j
 @RestController
 @RequestMapping("/api/files")
 @RequiredArgsConstructor
@@ -90,4 +95,11 @@ public class FilePresignController {
     public FileMetadata upload(@RequestPart("file") MultipartFile file) throws Exception {
         return fileService.directUpload(file);
     }
+
+    @PostMapping("/thumbnail-ready")
+    public ResponseEntity<String> handleThumbnailCallback(@RequestBody Map<String, Object> data) {
+        log.info("✅ Thumbnail ready callback received: {}", data);
+        return ResponseEntity.ok("Received thumbnail callback successfully");
+    }
+
 }

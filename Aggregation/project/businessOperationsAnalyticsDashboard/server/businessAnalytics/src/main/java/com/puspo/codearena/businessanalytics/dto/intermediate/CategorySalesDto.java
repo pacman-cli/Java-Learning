@@ -1,12 +1,16 @@
 package com.puspo.codearena.businessanalytics.dto.intermediate;
 
+import java.math.BigDecimal;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
-import java.math.BigDecimal;
 @Getter
+@Setter
 @AllArgsConstructor
 public class CategorySalesDto {
     private String categoryName;
-    private BigDecimal TotalRevenue;
+    private BigDecimal totalRevenue;
+
 }

@@ -25,7 +25,7 @@ public class Billing {
     private Long id;
 
     @Column(name = "amount", nullable = false)
-    private BigDecimal amount;
+    private BigDecimal amount; // total amount to be paid
 
     @Column(name = "billing_date", nullable = false)
     private LocalDateTime billingDate;
@@ -56,8 +56,8 @@ public class Billing {
     private Insurance insurance;
 
     @Column(name = "covered_amount", precision = 38, scale = 2)
-    private BigDecimal coveredAmount;
+    private BigDecimal coveredAmount; // amount covered by insurance
 
     @Column(name = "patient_payable", precision = 38, scale = 2)
-    private BigDecimal patientPayable;
+    private BigDecimal patientPayable; // amount to be paid by patient
 }

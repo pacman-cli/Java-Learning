@@ -65,10 +65,9 @@ public class SecurityConfig {
                         .permitAll()
                         // Public API endpoints
                         .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
-                        .requestMatchers("/api/posts").permitAll() // Allow anonymous viewing of posts list
-                        .requestMatchers("/api/posts/{id}").permitAll() // Allow anonymous viewing of individual posts
-                        .requestMatchers("/api/comments/posts/{postId}").permitAll() // Allow anonymous viewing of
-                                                                                     // comments
+                        .requestMatchers("/api/posts", "/api/posts/*").permitAll() // Allow anonymous viewing
+                        .requestMatchers("/api/comments/posts/*").permitAll() // Allow anonymous viewing of
+                                                                              // comments
                         // Protected endpoints - More specific patterns should come before general ones
                         .requestMatchers("/api/posts/{id}/comments").authenticated() // Post-specific comment endpoints
                                                                                      // (if any)

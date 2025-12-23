@@ -5,7 +5,7 @@ import com.pacman.hospital.domain.pharmacy.mapper.MedicineMapper;
 import com.pacman.hospital.domain.pharmacy.model.Medicine;
 import com.pacman.hospital.domain.pharmacy.repository.MedicineRepository;
 import com.pacman.hospital.domain.pharmacy.service.MedicineService;
-import com.pacman.hospital.exception.ResourceNotFoundException;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

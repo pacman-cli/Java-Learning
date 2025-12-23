@@ -3,11 +3,15 @@ package com.pacman.hospital;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.Collections;
+
 @SpringBootApplication
 public class HospitalApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(HospitalApplication.class, args);
+        SpringApplication app = new SpringApplication(HospitalApplication.class);
+        app.setDefaultProperties(Collections.singletonMap("server.port", "9090"));
+        app.run(args);
     }
 
 }

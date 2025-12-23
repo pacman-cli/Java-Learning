@@ -6,6 +6,7 @@ import com.puspo.codearena.userservice.user.profile.dto.UserDto;
 import com.puspo.codearena.userservice.user.profile.dto.UserStatsDto;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface UserService {
@@ -42,7 +43,7 @@ public interface UserService {
     /**
      * Get all active users
      */
-    List<UserDto> getALlActiveUsers();
+    List<UserDto> getAllActiveUsers();
 
     /**
      * Search users by username

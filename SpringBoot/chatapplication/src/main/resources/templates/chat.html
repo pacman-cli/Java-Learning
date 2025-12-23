@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Real-Time Chat Application</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
+
+
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center">Real-Time Chat Application</h1>
+    <div id="chat" class="border p-3 rounded mb-3" style="height: 400px; overflow-y: auto;">
+
+    </div>
+    <div class="input-group mb-3">
+        <input id="senderInput" type="text" class="form-control" placeholder="Type your name...">
+    </div>
+    <div class="input-group mb-3">
+        <input id="messageInput" type="text" class="form-control" placeholder="Type a message...">
+        <div class="input-group-append">
+            <button id="sendMessage" class="btn btn-primary">Send</button>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    function setConnected(connected) {
+        document.getElementById('sendMessage').disabled = !connected;
+    }
+
+    function connect() {
+        var socket = new SockJS('/chat');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function (frame) {
+            setConnected(true);
+            stompClient.subscribe('/topic/messages', function (message) {
+                showMessage(JSON.parse(message.body));
+            });
+        })
+    }
+
+    function showMessage(message) {
+        var messageDiv = document.getElementById('chat');
+        var messageElement = document.createElement('div'); // Create a <div> element
+        messageElement.textContent = message.sender + ": " + message.content;
+        // messageElement.class = "border border-primary rounded p-2 m-2";
+        messageElement.className = "border border-primary rounded p-2 m-2";
+
+        messageDiv.appendChild(messageElement);
+        messageDiv.scrollTop = messageDiv.scrollHeight; //for auto scroll to bottom
+    }
+
+    function sendMessage() {
+        var sender = document.getElementById('senderInput').value;
+        var content = document.getElementById('messageInput').value;
+        var chatMessage = {
+            'sender': sender,
+            'content': content
+
+        }
+        // showMessage(chatMessage);
+        stompClient.send("/app/sendMessage", {}, JSON.stringify(chatMessage));
+        document.getElementById('messageInput').value = ''; //clear input field
+    }
+
+    document.getElementById('sendMessage').onclick = sendMessage;
+    window.onload = connect;
+</script>
+</html>

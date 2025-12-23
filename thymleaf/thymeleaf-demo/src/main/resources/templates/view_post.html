@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${post.title}">View Post</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+        .container {
+            max-width: 700px;
+            margin: auto;
+        }
+        .back-link {
+            display: block;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="/posts" class="back-link">⬅ Back to Posts</a>
+    <h1 th:text="${post.title}">Title</h1>
+    <p><strong>Author:</strong> <span th:text="${post.author}"></span></p>
+    <p><em th:text="${#temporals.format(post.createdAt, 'dd MMM yyyy HH:mm')}"></em></p>
+    <hr>
+    <p th:text="${post.content}"></p>
+</div>
+</body>
+</html>
+
+
+<!--🧠 Explanation-->
+
+<!--Displays a single post using ${post} (passed from controller)-->
+
+<!--Uses #temporals.format() to format LocalDateTime-->
+
+<!--Provides a link back to the list of posts-->

@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:portfolio;DB_CLOSE_DELAY=-1;MODE=MySQL
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: false
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+cors:
+  allowed-origins: ${ALLOWED_ORIGINS:http://localhost:3000}

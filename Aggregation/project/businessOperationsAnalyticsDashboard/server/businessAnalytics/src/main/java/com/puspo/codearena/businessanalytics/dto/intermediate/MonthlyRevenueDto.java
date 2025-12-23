@@ -1,11 +1,22 @@
 package com.puspo.codearena.businessanalytics.dto.intermediate;
 
-import lombok.AllArgsConstructor;
+import java.math.BigDecimal;
+
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
-@AllArgsConstructor
+@Setter
 public class MonthlyRevenueDto {
     private String month;
-    private Double revenue;
+    private BigDecimal revenue;
+
+    public MonthlyRevenueDto() {
+    }
+
+    // Constructor matching JPQL query
+    public MonthlyRevenueDto(String month, BigDecimal revenue) {
+        this.month = month;
+        this.revenue = revenue;
+    }
 }

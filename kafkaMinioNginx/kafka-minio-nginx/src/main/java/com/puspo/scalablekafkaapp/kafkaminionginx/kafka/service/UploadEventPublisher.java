@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UploadEventPublisher {
+
     public final KafkaTemplate<String, UploadEvent> kafkaTemplate;
     public final String topic = "upload-event";
 
@@ -20,11 +21,11 @@ public class UploadEventPublisher {
     public void publish(FileMetadata fileMetadata) {
         // Create an UploadEvent object from the provided file metadata
         UploadEvent uploadEvent = new UploadEvent(
-                fileMetadata.getId(),
-                fileMetadata.getStorageName(),
-                fileMetadata.getOriginalName(),
-                fileMetadata.getContentType(),
-                fileMetadata.getSize()
+            fileMetadata.getId(),
+            fileMetadata.getStorageName(),
+            fileMetadata.getOriginalName(),
+            fileMetadata.getContentType(),
+            fileMetadata.getSize()
         );
         // Send the UploadEvent to the configured Kafka topic
         kafkaTemplate.send(topic, uploadEvent);

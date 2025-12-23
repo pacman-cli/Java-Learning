@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #0b0f1a;
+  --fg: #e5e7eb;
+}
+
+.gradient-bg {
+  background-image: radial-gradient(1200px 600px at 10% -20%, rgba(124, 58, 237, 0.25), transparent 60%), radial-gradient(800px 400px at 100% 0%, rgba(0, 229, 255, 0.2), transparent 60%), radial-gradient(1000px 500px at 50% 100%, rgba(185, 255, 102, 0.15), transparent 60%);
+}
+
+.glass {
+  @apply bg-white/5 backdrop-blur-md border border-white/10;
+}
+
+.hover-3d {
+  transform-style: preserve-3d;
+  perspective: 900px;
+}
+
+.hover-3d:hover .hover-3d-child {
+  transform: translateZ(18px);
+}

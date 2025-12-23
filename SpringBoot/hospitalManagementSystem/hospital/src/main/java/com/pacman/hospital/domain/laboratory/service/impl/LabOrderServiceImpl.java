@@ -12,14 +12,13 @@ import com.pacman.hospital.domain.laboratory.repository.LabTestRepository;
 import com.pacman.hospital.domain.laboratory.service.LabOrderService;
 import com.pacman.hospital.domain.patient.repository.PatientRepository;
 import com.pacman.hospital.exception.ResourceNotFoundException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @Transactional
@@ -32,7 +31,14 @@ public class LabOrderServiceImpl implements LabOrderService {
     private final LabOrderMapper labOrderMapper;
     private final StorageService storageService;
 
-    public LabOrderServiceImpl(LabTestRepository labTestRepository, PatientRepository patientRepository, AppointmentRepository appointmentRepository, LabOrderRepository labOrderRepository, LabOrderMapper labOrderMapper, StorageService storageService) {
+    public LabOrderServiceImpl(
+        LabTestRepository labTestRepository,
+        PatientRepository patientRepository,
+        AppointmentRepository appointmentRepository,
+        LabOrderRepository labOrderRepository,
+        LabOrderMapper labOrderMapper,
+        StorageService storageService
+    ) {
         this.labTestRepository = labTestRepository;
         this.patientRepository = patientRepository;
         this.appointmentRepository = appointmentRepository;
@@ -43,20 +49,39 @@ public class LabOrderServiceImpl implements LabOrderService {
 
     @Override
     public LabOrderDto createOrder(LabOrderDto dto) {
-        LabTest test = labTestRepository.findById(dto.getLabTestId())
-                .orElseThrow(() -> new ResourceNotFoundException("LabTest not found: " + dto.getLabTestId()));
-        var patient = patientRepository.findById(dto.getPatientId())
-                .orElseThrow(() -> new ResourceNotFoundException("Patient not found: " + dto.getPatientId()));
+        LabTest test = labTestRepository
+            .findById(dto.getLabTestId())
+            .orElseThrow(() ->
+                new ResourceNotFoundException(
+                    "LabTest not found: " + dto.getLabTestId()
+                )
+            );
+        var patient = patientRepository
+            .findById(dto.getPatientId())
+            .orElseThrow(() ->
+                new ResourceNotFoundException(
+                    "Patient not found: " + dto.getPatientId()
+                )
+            );
 
         LabOrder e = new LabOrder();
         e.setLabTest(test);
         e.setPatient(patient);
         if (dto.getAppointmentId() != null) {
-            var ap = appointmentRepository.findById(dto.getAppointmentId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Appointment not found: " + dto.getAppointmentId()));
+            var ap = appointmentRepository
+                .findById(dto.getAppointmentId())
+                .orElseThrow(() ->
+                    new ResourceNotFoundException(
+                        "Appointment not found: " + dto.getAppointmentId()
+                    )
+                );
             e.setAppointment(ap);
         }
-        e.setOrderedAt(dto.getOrderedAt() != null ? dto.getOrderedAt() : LocalDateTime.now());
+        e.setOrderedAt(
+            dto.getOrderedAt() != null
+                ? dto.getOrderedAt()
+                : LocalDateTime.now()
+        );
         e.setStatus(LabOrderStatus.ORDERED);
         e.setNotes(dto.getNotes());
         LabOrder saved = labOrderRepository.save(e);
@@ -65,19 +90,26 @@ public class LabOrderServiceImpl implements LabOrderService {
 
     @Override
     public LabOrderDto updateOrder(Long id, LabOrderDto dto) {
-        LabOrder existing =
-                labOrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("LabOrder not found: " + id));
+        LabOrder existing = labOrderRepository
+            .findById(id)
+            .orElseThrow(() ->
+                new ResourceNotFoundException("LabOrder not found: " + id)
+            );
         if (dto.getNotes() != null) existing.setNotes(dto.getNotes());
         if (dto.getLabTestId() != null) {
-            LabTest test = labTestRepository.findById(dto.getLabTestId()).orElseThrow(() -> new ResourceNotFoundException("LabTest " +
-                    "not found: " + dto.getLabTestId()));
+            LabTest test = labTestRepository
+                .findById(dto.getLabTestId())
+                .orElseThrow(() ->
+                    new ResourceNotFoundException(
+                        "LabTest " + "not found: " + dto.getLabTestId()
+                    )
+                );
             existing.setLabTest(test);
         }
         if (dto.getStatus() != null) {
             try {
                 existing.setStatus(LabOrderStatus.valueOf(dto.getStatus()));
-            } catch (IllegalArgumentException ignored) {
-            }
+            } catch (IllegalArgumentException ignored) {}
         }
         LabOrder saved = labOrderRepository.save(existing);
         return labOrderMapper.toDto(saved);
@@ -86,8 +118,15 @@ public class LabOrderServiceImpl implements LabOrderService {
     @Override
     @Transactional(readOnly = true)
     public LabOrderDto getOrderById(Long id) {
-        return labOrderMapper.toDto(labOrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("LabOrder not " +
-                "found: " + id)));
+        return labOrderMapper.toDto(
+            labOrderRepository
+                .findById(id)
+                .orElseThrow(() ->
+                    new ResourceNotFoundException(
+                        "LabOrder not " + "found: " + id
+                    )
+                )
+        );
     }
 
     @Override
@@ -97,13 +136,32 @@ public class LabOrderServiceImpl implements LabOrderService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<LabOrderDto> getOrdersForPatient(Long patientId) {
-        return labOrderRepository.findByPatientId(patientId).stream().map(labOrderMapper::toDto).collect(Collectors.toList());
+    public List<LabOrderDto> getAll() {
+        return labOrderRepository
+            .findAll()
+            .stream()
+            .map(labOrderMapper::toDto)
+            .collect(Collectors.toList());
     }
 
     @Override
-    public LabOrderDto attachReport(Long id, MultipartFile file) throws IOException {
-        LabOrder order = labOrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("LabOrder not found: " + id));
+    @Transactional(readOnly = true)
+    public List<LabOrderDto> getOrdersForPatient(Long patientId) {
+        return labOrderRepository
+            .findByPatientId(patientId)
+            .stream()
+            .map(labOrderMapper::toDto)
+            .collect(Collectors.toList());
+    }
+
+    @Override
+    public LabOrderDto attachReport(Long id, MultipartFile file)
+        throws IOException {
+        LabOrder order = labOrderRepository
+            .findById(id)
+            .orElseThrow(() ->
+                new ResourceNotFoundException("LabOrder not found: " + id)
+            );
         String path = storageService.store(file, "lab-reports");
         order.setReportPath(path);
         order.setStatus(LabOrderStatus.COMPLETED);
@@ -113,7 +171,11 @@ public class LabOrderServiceImpl implements LabOrderService {
 
     @Override
     public LabOrderDto changeStatus(Long id, String status) {
-        LabOrder order = labOrderRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("LabOrder not found: " + id));
+        LabOrder order = labOrderRepository
+            .findById(id)
+            .orElseThrow(() ->
+                new ResourceNotFoundException("LabOrder not found: " + id)
+            );
         try {
             LabOrderStatus s = LabOrderStatus.valueOf(status);
             order.setStatus(s);

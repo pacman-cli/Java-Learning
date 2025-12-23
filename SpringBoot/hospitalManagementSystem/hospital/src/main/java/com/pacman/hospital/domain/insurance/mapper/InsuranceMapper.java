@@ -2,7 +2,7 @@ package com.pacman.hospital.domain.insurance.mapper;
 
 import com.pacman.hospital.domain.insurance.dto.InsuranceDto;
 import com.pacman.hospital.domain.insurance.model.Insurance;
-import com.pacman.hospital.domain.patient.model.Patient;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -33,4 +33,3 @@ public class InsuranceMapper {
         return e;
     }
 }
-

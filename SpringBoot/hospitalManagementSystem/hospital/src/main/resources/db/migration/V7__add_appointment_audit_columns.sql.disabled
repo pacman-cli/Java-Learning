@@ -1,0 +1,33 @@
+-- Add missing columns to appointments table to match the Appointment entity
+
+ALTER TABLE appointments
+    ADD COLUMN notes VARCHAR(1000) NULL AFTER reason,
+    ADD COLUMN duration_minutes INT DEFAULT 30 NULL AFTER notes,
+    ADD COLUMN consultation_fee DECIMAL(8, 2) NULL AFTER duration_minutes,
+    ADD COLUMN is_emergency BOOLEAN DEFAULT FALSE NOT NULL AFTER consultation_fee,
+    ADD COLUMN appointment_type VARCHAR(50) NULL AFTER is_emergency,
+    ADD COLUMN room_number VARCHAR(20) NULL AFTER appointment_type,
+    ADD COLUMN symptoms VARCHAR(1000) NULL AFTER room_number,
+    ADD COLUMN diagnosis VARCHAR(1000) NULL AFTER symptoms,
+    ADD COLUMN prescription VARCHAR(2000) NULL AFTER diagnosis,
+    ADD COLUMN follow_up_required BOOLEAN DEFAULT FALSE NULL AFTER prescription,
+    ADD COLUMN follow_up_date DATETIME NULL AFTER follow_up_required,
+    ADD COLUMN cancellation_reason VARCHAR(500) NULL AFTER follow_up_date,
+    ADD COLUMN cancelled_at DATETIME NULL AFTER cancellation_reason,
+    ADD COLUMN cancelled_by VARCHAR(50) NULL AFTER cancelled_at,
+    ADD COLUMN completed_at DATETIME NULL AFTER cancelled_by,
+    ADD COLUMN checked_in_at DATETIME NULL AFTER completed_at,
+    ADD COLUMN checked_out_at DATETIME NULL AFTER checked_in_at,
+    ADD COLUMN created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP AFTER checked_out_at,
+    ADD COLUMN updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP AFTER created_at,
+    ADD COLUMN created_by VARCHAR(50) NULL AFTER updated_at,
+    ADD COLUMN updated_by VARCHAR(50) NULL AFTER created_by,
+    ADD COLUMN deleted_at DATETIME NULL AFTER updated_by,
+    ADD COLUMN deleted_by VARCHAR(50) NULL AFTER deleted_at;
+
+-- Add indexes for better query performance
+CREATE INDEX idx_appointment_datetime ON appointments(appointment_datetime);
+CREATE INDEX idx_appointment_status ON appointments(status);
+CREATE INDEX idx_appointment_patient ON appointments(patient_id);
+CREATE INDEX idx_appointment_doctor ON appointments(doctor_id);
+CREATE INDEX idx_appointment_created_at ON appointments(created_at);

@@ -1,7 +1,5 @@
 package com.pacman.hospital.domain.insurance.dto;
 
-import com.pacman.hospital.domain.patient.model.Patient;
-import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -13,7 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Builder
 public class InsuranceDto {
-    
+
     private Long id;
 
     private String providerName;

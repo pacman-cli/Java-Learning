@@ -1,7 +1,6 @@
 package com.pacman.hospital.domain.insurance.service;
 
 import com.pacman.hospital.domain.insurance.dto.InsuranceDto;
-import com.pacman.hospital.domain.insurance.model.Insurance;
 
 import java.util.List;
 

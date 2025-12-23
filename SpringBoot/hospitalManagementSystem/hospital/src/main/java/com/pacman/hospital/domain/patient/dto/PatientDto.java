@@ -3,20 +3,21 @@ package com.pacman.hospital.domain.patient.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class PatientDto {
+
     private Long id;
+
+    private Long userId;
 
     @NotBlank(message = "Full name is required")
     @Size(max = 255)

@@ -1,0 +1,236 @@
+-- Add audit columns to patients and doctors tables to match entity models
+-- This migration adds the missing audit columns (especially deleted_at) before creating indexes
+
+-- ===============================
+-- = PATIENTS TABLE
+-- ===============================
+
+-- Add created_at column (if it doesn't exist)
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'patients'
+                   AND COLUMN_NAME = 'created_at');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE patients ADD COLUMN created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP',
+    'SELECT ''Column created_at already exists in patients table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add updated_at column (if it doesn't exist)
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'patients'
+                   AND COLUMN_NAME = 'updated_at');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE patients ADD COLUMN updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP',
+    'SELECT ''Column updated_at already exists in patients table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add created_by column (if it doesn't exist)
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'patients'
+                   AND COLUMN_NAME = 'created_by');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE patients ADD COLUMN created_by VARCHAR(50) NULL',
+    'SELECT ''Column created_by already exists in patients table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add updated_by column (if it doesn't exist)
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'patients'
+                   AND COLUMN_NAME = 'updated_by');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE patients ADD COLUMN updated_by VARCHAR(50) NULL',
+    'SELECT ''Column updated_by already exists in patients table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add deleted_at column (if it doesn't exist) - THIS IS THE KEY FIX
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'patients'
+                   AND COLUMN_NAME = 'deleted_at');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE patients ADD COLUMN deleted_at DATETIME NULL',
+    'SELECT ''Column deleted_at already exists in patients table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add deleted_by column (if it doesn't exist)
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'patients'
+                   AND COLUMN_NAME = 'deleted_by');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE patients ADD COLUMN deleted_by VARCHAR(50) NULL',
+    'SELECT ''Column deleted_by already exists in patients table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- ===============================
+-- = DOCTORS TABLE
+-- ===============================
+
+-- Add created_at column (if it doesn't exist)
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'doctors'
+                   AND COLUMN_NAME = 'created_at');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE doctors ADD COLUMN created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP',
+    'SELECT ''Column created_at already exists in doctors table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add updated_at column (if it doesn't exist)
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'doctors'
+                   AND COLUMN_NAME = 'updated_at');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE doctors ADD COLUMN updated_at DATETIME NULL ON UPDATE CURRENT_TIMESTAMP',
+    'SELECT ''Column updated_at already exists in doctors table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add created_by column (if it doesn't exist)
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'doctors'
+                   AND COLUMN_NAME = 'created_by');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE doctors ADD COLUMN created_by VARCHAR(50) NULL',
+    'SELECT ''Column created_by already exists in doctors table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add updated_by column (if it doesn't exist)
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'doctors'
+                   AND COLUMN_NAME = 'updated_by');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE doctors ADD COLUMN updated_by VARCHAR(50) NULL',
+    'SELECT ''Column updated_by already exists in doctors table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add deleted_at column (if it doesn't exist) - THIS IS THE KEY FIX
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'doctors'
+                   AND COLUMN_NAME = 'deleted_at');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE doctors ADD COLUMN deleted_at DATETIME NULL',
+    'SELECT ''Column deleted_at already exists in doctors table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add deleted_by column (if it doesn't exist)
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'doctors'
+                   AND COLUMN_NAME = 'deleted_by');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE doctors ADD COLUMN deleted_by VARCHAR(50) NULL',
+    'SELECT ''Column deleted_by already exists in doctors table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- ===============================
+-- = CREATE INDEXES (after columns exist)
+-- ===============================
+
+-- Patients indexes
+SET @index_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS
+                     WHERE TABLE_SCHEMA = 'hospital_db'
+                     AND TABLE_NAME = 'patients'
+                     AND INDEX_NAME = 'idx_patient_created_at');
+
+SET @sql = IF(@index_exists = 0,
+    'CREATE INDEX idx_patient_created_at ON patients(created_at)',
+    'SELECT ''Index idx_patient_created_at already exists''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+SET @index_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS
+                     WHERE TABLE_SCHEMA = 'hospital_db'
+                     AND TABLE_NAME = 'patients'
+                     AND INDEX_NAME = 'idx_patient_deleted_at');
+
+SET @sql = IF(@index_exists = 0,
+    'CREATE INDEX idx_patient_deleted_at ON patients(deleted_at)',
+    'SELECT ''Index idx_patient_deleted_at already exists''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Doctors indexes
+SET @index_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS
+                     WHERE TABLE_SCHEMA = 'hospital_db'
+                     AND TABLE_NAME = 'doctors'
+                     AND INDEX_NAME = 'idx_doctor_created_at');
+
+SET @sql = IF(@index_exists = 0,
+    'CREATE INDEX idx_doctor_created_at ON doctors(created_at)',
+    'SELECT ''Index idx_doctor_created_at already exists''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+SET @index_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS
+                     WHERE TABLE_SCHEMA = 'hospital_db'
+                     AND TABLE_NAME = 'doctors'
+                     AND INDEX_NAME = 'idx_doctor_deleted_at');
+
+SET @sql = IF(@index_exists = 0,
+    'CREATE INDEX idx_doctor_deleted_at ON doctors(deleted_at)',
+    'SELECT ''Index idx_doctor_deleted_at already exists''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;

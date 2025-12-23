@@ -1,6 +1,5 @@
 package com.pacman.hospital.domain.invoice.repository;
 
-import aj.org.objectweb.asm.commons.Remapper;
 import com.pacman.hospital.domain.invoice.model.Invoice;
 import com.pacman.hospital.domain.invoice.model.InvoiceStatus;
 import org.springframework.data.jpa.repository.JpaRepository;

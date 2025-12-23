@@ -1,40 +1,51 @@
 package com.pacman.hospital.domain.patient.controller;
 
 import com.pacman.hospital.domain.patient.dto.PatientDto;
-import com.pacman.hospital.domain.patient.mapper.PatientMapper;
-import com.pacman.hospital.domain.patient.model.Patient;
 import com.pacman.hospital.domain.patient.service.PatientService;
 import jakarta.validation.Valid;
+import java.net.URI;
+import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
-import java.util.List;
-
 @RestController
-@CrossOrigin
 @RequestMapping("/api/patients")
 public class PatientController {
-    private final PatientService patientService;
-    private final PatientMapper patientMapper;
 
-    public PatientController(PatientService patientService, PatientMapper patientMapper) {
+    private final PatientService patientService;
+
+    public PatientController(PatientService patientService) {
         this.patientService = patientService;
-        this.patientMapper = patientMapper;
     }
 
     @PostMapping
-    public ResponseEntity<PatientDto> createPatient(@Valid @RequestBody PatientDto patientDto, UriComponentsBuilder uriComponentsBuilder) {
+    public ResponseEntity<PatientDto> createPatient(
+        @Valid @RequestBody PatientDto patientDto,
+        UriComponentsBuilder uriComponentsBuilder
+    ) {
         PatientDto newPatient = patientService.createPatient(patientDto);
-        URI loaction = uriComponentsBuilder.path("/api/patients/{id}").buildAndExpand(newPatient.getId()).toUri();
-        return ResponseEntity.created(loaction).body(newPatient);
+        URI location = uriComponentsBuilder
+            .path("/api/patients/{id}")
+            .buildAndExpand(newPatient.getId())
+            .toUri();
+        return ResponseEntity.created(location).body(newPatient);
     }
 
     @GetMapping
     public ResponseEntity<List<PatientDto>> getAllPatients() {
         List<PatientDto> patients = patientService.getAllPatients();
         return ResponseEntity.ok(patients);
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<PatientDto>> searchPatients(
+        @RequestParam(value = "q", required = false) String q,
+        Pageable pageable
+    ) {
+        return ResponseEntity.ok(patientService.searchPatients(q, pageable));
     }
 
     @GetMapping("/{id}")
@@ -45,8 +56,8 @@ public class PatientController {
 
     @PutMapping("/{id}")
     public ResponseEntity<PatientDto> updatePatient(
-            @PathVariable Long id,
-            @Valid @RequestBody PatientDto dto
+        @PathVariable Long id,
+        @Valid @RequestBody PatientDto dto
     ) {
         PatientDto updated = patientService.updatePatient(id, dto);
         return ResponseEntity.ok(updated);
@@ -56,5 +67,16 @@ public class PatientController {
     public ResponseEntity<Void> deletePatient(@PathVariable Long id) {
         patientService.deletePatient(id);
         return ResponseEntity.noContent().build();
+    }
+
+    /**
+     * Get patient by user ID (for logged-in patient users)
+     */
+    @GetMapping("/by-user/{userId}")
+    public ResponseEntity<PatientDto> getPatientByUserId(
+        @PathVariable Long userId
+    ) {
+        PatientDto patientDto = patientService.getPatientByUserId(userId);
+        return ResponseEntity.ok(patientDto);
     }
 }

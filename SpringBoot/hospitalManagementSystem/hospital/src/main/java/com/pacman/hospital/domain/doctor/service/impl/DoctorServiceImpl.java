@@ -6,6 +6,8 @@ import com.pacman.hospital.domain.doctor.model.Doctor;
 import com.pacman.hospital.domain.doctor.repository.DoctorRepository;
 import com.pacman.hospital.domain.doctor.service.DoctorService;
 import com.pacman.hospital.exception.ResourceNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,5 +66,23 @@ public class DoctorServiceImpl implements DoctorService {
                 .stream()
                 .map(doctorMapper::toDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(readOnly = true) // here q can be full name orspecialization
+    public Page<DoctorDto> searchDoctors(String q, Pageable pageable) { // this is used to search for doctors by name or
+                                                                        // specialization why we using Pageable is part
+                                                                        // of Spring Data’s pagination and sorting
+                                                                        // support. and string for q is used to search
+                                                                        // for doctors by name or specialization
+        if (q == null || q.isBlank()) { // if q is null or blank, return all doctors in the form of dto
+
+            return doctorRepository.findAll(pageable).map(doctorMapper::toDto);
+        }
+        // otherwise return the doctors that match the search criteria in the form of
+        // dto
+        return doctorRepository
+                .findByFullNameContainingIgnoreCaseOrSpecializationContainingIgnoreCase(q, q, pageable)
+                .map(doctorMapper::toDto);
     }
 }

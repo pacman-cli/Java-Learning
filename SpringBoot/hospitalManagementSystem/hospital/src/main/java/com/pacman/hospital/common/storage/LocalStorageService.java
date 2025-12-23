@@ -12,15 +12,15 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.UUID;
+import java.util.Objects;
 
 @Service
 public class LocalStorageService implements StorageService {
     private final Path rootLocation;
 
     public LocalStorageService(@Value("${storage.local.base-dir:uploads}") String baseDir) {
-        this.rootLocation = Paths.get(baseDir).toAbsolutePath().normalize(); //resolve to absolute path
+        this.rootLocation = Paths.get(baseDir).toAbsolutePath().normalize(); // resolve to absolute path
         try {
             // Create directories if they do not exist
             Files.createDirectories(rootLocation);
@@ -31,27 +31,32 @@ public class LocalStorageService implements StorageService {
 
     @Override
     public String store(MultipartFile file, String subfolder) throws IOException {
-        if (file.isEmpty() || file == null) {
+        if (file == null || file.isEmpty()) {
             throw new IOException("File is empty");
         }
-        String original = StringUtils.cleanPath(file.getOriginalFilename()); //original filename
-        String ext = ""; //extension
+        String original = StringUtils.cleanPath(Objects.requireNonNullElse(file.getOriginalFilename(), "")); // original
+                                                                                                             // filename
+                                                                                                             // (nullable-safe)
+        String ext = ""; // extension
 
-        int idx = original.lastIndexOf('.'); //get last index of dot
-        if (idx > 0) { //if dot is found
-            ext = original.substring(idx); //get extension
+        int idx = original.lastIndexOf('.'); // get the last index of dot
+        if (idx > 0) { // if dot is found
+            ext = original.substring(idx); // get extension
         }
 
         String fileName = DateTimeFormatter.ofPattern("yyyyMMddHHmmss")
                 .format(LocalDateTime.now())
-                + "-" + UUID.randomUUID().toString().substring(0, 8) + ext; //generate unique filename with timestamp and random UUID
+                + "-" + UUID.randomUUID().toString().substring(0, 8) + ext; // generate unique filename with timestamp
+                                                                            // and random UUID
 
-        Path folder = (subfolder == null || subfolder.isBlank()) ? rootLocation : rootLocation.resolve(subfolder); //resolve subfolder
-        Files.createDirectories(folder); //create subfolder if not exists
+        Path folder = (subfolder == null || subfolder.isBlank()) ? rootLocation : rootLocation.resolve(subfolder); // resolve
+                                                                                                                   // subfolder
+        Files.createDirectories(folder); // create subfolder if not exists
 
-        Path target = folder.resolve(fileName).normalize(); //resolve target path
+        Path target = folder.resolve(fileName).normalize(); // resolve target path
         try {
-            Files.copy(file.getInputStream(), target, StandardCopyOption.REPLACE_EXISTING); //copy file to target location
+            Files.copy(file.getInputStream(), target, StandardCopyOption.REPLACE_EXISTING); // copy file to target
+                                                                                            // location
         } catch (IOException e) {
             throw new IOException("Failed to store file " + fileName, e);
         }
@@ -62,6 +67,6 @@ public class LocalStorageService implements StorageService {
 
     @Override
     public Path loadPath(String storedPath) {
-        return rootLocation.resolve(storedPath).normalize(); //resolve stored path to absolute path
+        return rootLocation.resolve(storedPath).normalize(); // resolve stored path to absolute path
     }
 }

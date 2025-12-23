@@ -1,0 +1,38 @@
+CREATE TABLE IF NOT EXISTS insurance
+(
+    id               BIGINT AUTO_INCREMENT NOT NULL,
+    provider_name    VARCHAR(255)          NOT NULL,
+    policy_number    VARCHAR(255)          NOT NULL,
+    coverage_details VARCHAR(255)          NOT NULL,
+    valid_from       date                  NOT NULL,
+    valid_to         date                  NOT NULL,
+    patient_id       BIGINT                NOT NULL,
+    coverage_percent DECIMAL(5, 2)         NULL,
+    CONSTRAINT pk_insurance PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS invoices
+(
+    id             BIGINT AUTO_INCREMENT NOT NULL,
+    total_amount   DECIMAL(12, 2)        NOT NULL,
+    amount_due     DECIMAL(12, 2)        NOT NULL,
+    invoice_date   datetime              NOT NULL,
+    status         VARCHAR(20)           NOT NULL,
+    patient_id     BIGINT                NOT NULL,
+    appointment_id BIGINT                NULL,
+    billing_id     BIGINT                NULL,
+    CONSTRAINT pk_invoices PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS payments
+(
+    id               BIGINT AUTO_INCREMENT NOT NULL,
+    invoice_id       BIGINT                NOT NULL,
+    bill_id          BIGINT                NULL,
+    amount           DECIMAL(38, 2)        NOT NULL,
+    payment_method   VARCHAR(255)          NOT NULL,
+    reference_number VARCHAR(255)          NULL,
+    paid_at          datetime              NOT NULL,
+    created_at       datetime              NOT NULL,
+    CONSTRAINT pk_payments PRIMARY KEY (id)
+);

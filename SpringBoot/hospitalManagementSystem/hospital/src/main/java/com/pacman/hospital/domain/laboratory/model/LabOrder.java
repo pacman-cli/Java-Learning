@@ -3,12 +3,11 @@ package com.pacman.hospital.domain.laboratory.model;
 import com.pacman.hospital.domain.appointment.model.Appointment;
 import com.pacman.hospital.domain.patient.model.Patient;
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "lab_orders")
@@ -17,7 +16,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LabOrder {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     // which test from catalog
@@ -38,6 +39,7 @@ public class LabOrder {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
+    @Builder.Default
     private LabOrderStatus status = LabOrderStatus.ORDERED;
 
     @Column(name = "report_path", length = 2000)

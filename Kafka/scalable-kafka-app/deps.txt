@@ -1,0 +1,15 @@
+[INFO] Scanning for projects...
+[ERROR] [ERROR] Some problems were encountered while processing the POMs:
+[ERROR] Malformed POM /Users/puspo/JavaCourse/Kafka/scalable-kafka-app/pom.xml: Unrecognised tag: 'project' (position: START_TAG seen ...pache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">... @33:114)  @ /Users/puspo/JavaCourse/Kafka/scalable-kafka-app/pom.xml, line 33, column 114
+ @ 
+[ERROR] The build could not read 1 project -> [Help 1]
+[ERROR]   
+[ERROR]   The project com.puspo.scalablekafkaapp:scalable-kafka-app:1.0.0 (/Users/puspo/JavaCourse/Kafka/scalable-kafka-app/pom.xml) has 1 error
+[ERROR]     Malformed POM /Users/puspo/JavaCourse/Kafka/scalable-kafka-app/pom.xml: Unrecognised tag: 'project' (position: START_TAG seen ...pache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">... @33:114)  @ /Users/puspo/JavaCourse/Kafka/scalable-kafka-app/pom.xml, line 33, column 114 -> [Help 2]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/ProjectBuildingException
+[ERROR] [Help 2] http://cwiki.apache.org/confluence/display/MAVEN/ModelParseException

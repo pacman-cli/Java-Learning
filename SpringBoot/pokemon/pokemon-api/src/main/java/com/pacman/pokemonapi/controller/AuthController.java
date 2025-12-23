@@ -1,6 +1,6 @@
 package com.pacman.pokemonapi.controller;
 
-import com.pacman.pokemonapi.adapter.persistence.UserEntity;
+import com.pacman.pokemonapi.dto.AuthResponseDto;
 import com.pacman.pokemonapi.dto.UserRequestDto;
 import com.pacman.pokemonapi.dto.UserResponseDto;
 import com.pacman.pokemonapi.service.UserService;
@@ -23,16 +23,34 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<UserResponseDto> signUp(@RequestBody UserRequestDto userRequestDto) {
-        UserResponseDto savedUser = userService.signUp(userRequestDto);
-        return ResponseEntity.ok(savedUser);
+    public ResponseEntity<?> signUp(@RequestBody UserRequestDto userRequestDto) {
+        try {
+            if (userService.findByUsername(userRequestDto.getUsername()).isPresent()) {
+                return ResponseEntity.badRequest().body(
+                        AuthResponseDto.withMessage("Username already exists")
+                );
+            }
+
+            //create new user with encrypted password
+            UserResponseDto createdUser = userService.createUser(userRequestDto);
+            return ResponseEntity.ok(AuthResponseDto.withMessage("User registered successfully."));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(
+                    AuthResponseDto.withMessage("Registration failed: " + e.getMessage())
+            );
+        }
     }
 
-
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UserRequestDto userRequestDto) {
-        UserResponseDto userResponseDto = userService.login(userRequestDto);
-        String token = jwtUtil.generateToken(userResponseDto.getUsername(), userResponseDto.getRole());
-        return ResponseEntity.ok(token);
+    public ResponseEntity<AuthResponseDto> login(@RequestBody UserRequestDto userRequestDto) {
+        try {
+            UserResponseDto userResponseDto = userService.login(userRequestDto);
+            String token = jwtUtil.generateToken(userResponseDto.getUsername(), userResponseDto.getRole());
+            return ResponseEntity.ok(new AuthResponseDto(token));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(
+                    AuthResponseDto.withMessage("Login failed: " + e.getMessage())
+            );
+        }
     }
 }

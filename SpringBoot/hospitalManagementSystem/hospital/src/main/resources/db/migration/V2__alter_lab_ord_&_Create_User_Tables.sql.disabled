@@ -1,0 +1,43 @@
+alter table lab_orders
+    modify column status enum ('CANCELLED','COMPLETED','IN_PROGRESS','ORDERED','SAMPLE_COLLECTED') not null;
+
+-- Create roles table
+CREATE TABLE IF NOT EXISTS roles (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(50) NOT NULL UNIQUE
+);
+
+-- Create users table
+CREATE TABLE IF NOT EXISTS users (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    full_name VARCHAR(100),
+    email VARCHAR(100),
+    enabled BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create user_roles junction table
+CREATE TABLE IF NOT EXISTS user_roles (
+    user_id BIGINT NOT NULL,
+    role_id BIGINT NOT NULL,
+    PRIMARY KEY (user_id, role_id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE CASCADE
+);
+
+-- Insert default roles
+INSERT IGNORE INTO roles (name) VALUES
+('ROLE_PATIENT'),
+('ROLE_DOCTOR'),
+('ROLE_NURSE'),
+('ROLE_PHARMACIST'),
+('ROLE_LAB_TECHNICIAN'),
+('ROLE_ADMIN'),
+('ROLE_RECEPTIONIST'),
+('ROLE_BILLING_STAFF'),
+('ROLE_INSURANCE_STAFF'),
+('ROLE_HOSPITAL_MANAGER'),
+('ROLE_DEPARTMENT_HEAD'),
+('ROLE_SUPER_ADMIN');

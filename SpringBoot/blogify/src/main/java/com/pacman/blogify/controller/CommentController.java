@@ -24,7 +24,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @PostMapping("/posts/{postId}")
-    @Operation(summary = "Create a new comment", description = "Create a new comment on a specific blog post", security = @SecurityRequirement(name = "bearerAuth"))
+    @Operation(summary = "Create a new comment", description = "Create a new comment on a specific blog post", security = @SecurityRequirement(name = "Bearer Authentication"))
     public ResponseEntity<CommentDto> createComment(
             @Parameter(description = "Blog post ID", required = true) @PathVariable Long postId,
             @Valid @RequestBody CommentDto commentDto,
@@ -54,7 +54,7 @@ public class CommentController {
     }
 
     @PutMapping("/{commentId}")
-    @Operation(summary = "Update a comment", description = "Update an existing comment (only by the author)", security = @SecurityRequirement(name = "bearerAuth"))
+    @Operation(summary = "Update a comment", description = "Update an existing comment (only by the author)", security = @SecurityRequirement(name = "Bearer Authentication"))
     public ResponseEntity<CommentDto> updateComment(
             @Parameter(description = "Comment ID", required = true) @PathVariable Long commentId,
             @Valid @RequestBody CommentDto commentDto,
@@ -66,7 +66,7 @@ public class CommentController {
     }
 
     @DeleteMapping("/{commentId}")
-    @Operation(summary = "Delete a comment", description = "Delete an existing comment (only by the author)", security = @SecurityRequirement(name = "bearerAuth"))
+    @Operation(summary = "Delete a comment", description = "Delete an existing comment (only by the author)", security = @SecurityRequirement(name = "Bearer Authentication"))
     public ResponseEntity<Void> deleteComment(
             @Parameter(description = "Comment ID", required = true) @PathVariable Long commentId,
             Authentication authentication) {

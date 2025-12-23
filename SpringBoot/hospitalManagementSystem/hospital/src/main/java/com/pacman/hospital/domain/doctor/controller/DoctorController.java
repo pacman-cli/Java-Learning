@@ -3,6 +3,8 @@ package com.pacman.hospital.domain.doctor.controller;
 import com.pacman.hospital.domain.doctor.dto.DoctorDto;
 import com.pacman.hospital.domain.doctor.service.DoctorService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -11,7 +13,6 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@CrossOrigin
 @RequestMapping("/api/doctors")
 public class DoctorController {
 
@@ -23,15 +24,22 @@ public class DoctorController {
 
     @PostMapping
     public ResponseEntity<DoctorDto> createDoctor(@Valid @RequestBody DoctorDto doctorDto,
-                                                  UriComponentsBuilder uriComponentsBuilder) {
+            UriComponentsBuilder uriComponentsBuilder) {
         DoctorDto newDoctor = doctorService.createDoctor(doctorDto);
-        URI loaction = uriComponentsBuilder.path("/api/docotors/{id}").buildAndExpand(newDoctor.getId()).toUri();
+        URI loaction = uriComponentsBuilder.path("/api/doctors/{id}").buildAndExpand(newDoctor.getId()).toUri();
         return ResponseEntity.created(loaction).body(newDoctor);
     }
 
     @GetMapping
     public ResponseEntity<List<DoctorDto>> getAllDoctors() {
         return ResponseEntity.ok(doctorService.getAllDoctors());
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<DoctorDto>> searchDoctors(
+            @RequestParam(value = "q", required = false) String q,
+            Pageable pageable) {
+        return ResponseEntity.ok(doctorService.searchDoctors(q, pageable));
     }
 
     @GetMapping("/{id}")
@@ -42,8 +50,7 @@ public class DoctorController {
     @PutMapping("/{id}")
     public ResponseEntity<DoctorDto> updateDoctor(
             @PathVariable Long id,
-            @Valid @RequestBody DoctorDto doctorDto
-    ) {
+            @Valid @RequestBody DoctorDto doctorDto) {
         return ResponseEntity.ok(doctorService.updateDoctor(id, doctorDto));
     }
 

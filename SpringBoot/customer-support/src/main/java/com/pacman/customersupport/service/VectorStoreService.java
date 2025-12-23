@@ -21,8 +21,8 @@ public class VectorStoreService {
     private final DocumentChunkRepository documentChunkRepository;
 
     public VectorStoreService(EmbeddingModel embeddingModel, DocumentChunkRepository documentChunkRepository) {
-        // Use the constructor instead of builder
-        this.vectorStore = new SimpleVectorStore(embeddingModel);
+        // Use the constructor instead of the builder
+        this.vectorStore = new SimpleVectorStore(embeddingModel); //save and load embeddings to/from a database
         this.documentChunkRepository = documentChunkRepository;
         // Don't load documents automatically to avoid API calls during startup
     }

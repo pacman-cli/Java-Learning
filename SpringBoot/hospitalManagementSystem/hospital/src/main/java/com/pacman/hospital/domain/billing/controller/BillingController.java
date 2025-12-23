@@ -58,8 +58,18 @@ public class BillingController {
     }
 
     /**
+     * Get billings by patient ID
+     */
+    @GetMapping("/patient/{patientId}")
+    public ResponseEntity<List<BillingDto>> getBillingsByPatient(@PathVariable Long patientId) {
+        List<BillingDto> billings = billingService.getBillingsByPatient(patientId);
+        return ResponseEntity.ok(billings);
+    }
+
+    /**
      * Mark bill as paid. Accepts optional JSON body: {"paymentMethod":"CARD"}
      */
+    @PostMapping("/{id}/pay")
     public ResponseEntity<BillingDto> payBill(
             @PathVariable Long id,
             @RequestBody(required = false) Map<String, String> paymentInfo
@@ -67,4 +77,5 @@ public class BillingController {
         String paymentMethod = (paymentInfo != null) ? paymentInfo.get("paymentMethod") : null;
         return ResponseEntity.ok(billingService.markAsPaid(id, paymentMethod));
     }
+
 }

@@ -1,0 +1,2 @@
+Alter table invoices
+    modify column status enum ('CANCELLED','PAID','PENDING') not null

@@ -3,44 +3,54 @@ package com.pacman.hospital.domain.laboratory.controller;
 import com.pacman.hospital.domain.laboratory.dto.LabOrderDto;
 import com.pacman.hospital.domain.laboratory.service.LabOrderService;
 import jakarta.validation.Valid;
+import java.io.IOException;
+import java.net.URI;
+import java.util.List;
+import java.util.Map;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.io.IOException;
-import java.net.URI;
-import java.util.List;
-import java.util.Map;
-
 @RestController
 @RequestMapping("/api/lab-orders")
 public class LabOrderController {
+
     private final LabOrderService labOrderService;
 
     public LabOrderController(LabOrderService labOrderService) {
         this.labOrderService = labOrderService;
     }
 
+    @GetMapping
+    public ResponseEntity<List<LabOrderDto>> getAllOrders() {
+        return ResponseEntity.ok(labOrderService.getAll());
+    }
+
     @PostMapping
     public ResponseEntity<LabOrderDto> createOrder(
-            @RequestBody @Valid LabOrderDto labOrderDto,
-            UriComponentsBuilder uriComponentsBuilder
+        @RequestBody @Valid LabOrderDto labOrderDto,
+        UriComponentsBuilder uriComponentsBuilder
     ) {
         LabOrderDto created = labOrderService.createOrder(labOrderDto);
-        URI location = uriComponentsBuilder.path("/api/lab-orders/{id}").buildAndExpand(created.getId()).toUri();
+        URI location = uriComponentsBuilder
+            .path("/api/lab-orders/{id}")
+            .buildAndExpand(created.getId())
+            .toUri();
         return ResponseEntity.created(location).body(created);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<LabOrderDto> updateOrder(
-            @PathVariable Long id,
-            @RequestBody @Valid LabOrderDto labOrderDto) {
+        @PathVariable Long id,
+        @RequestBody @Valid LabOrderDto labOrderDto
+    ) {
         LabOrderDto updated = labOrderService.updateOrder(id, labOrderDto);
         return ResponseEntity.ok(updated);
     }
 
+    @GetMapping("/{id}")
     public ResponseEntity<LabOrderDto> getOrderById(@PathVariable Long id) {
         LabOrderDto labOrderDto = labOrderService.getOrderById(id);
         return ResponseEntity.ok(labOrderDto);
@@ -53,22 +63,29 @@ public class LabOrderController {
     }
 
     @GetMapping("/patient/{patientId}")
-    public ResponseEntity<List<LabOrderDto>> getOrdersForPatient(@PathVariable Long patientId) {
-        return ResponseEntity.ok(labOrderService.getOrdersForPatient(patientId));
+    public ResponseEntity<List<LabOrderDto>> getOrdersForPatient(
+        @PathVariable Long patientId
+    ) {
+        return ResponseEntity.ok(
+            labOrderService.getOrdersForPatient(patientId)
+        );
     }
 
-    @PostMapping(value = "/{id}/report", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(
+        value = "/{id}/report",
+        consumes = MediaType.MULTIPART_FORM_DATA_VALUE
+    )
     public ResponseEntity<LabOrderDto> attachReport(
-            @PathVariable Long id,
-            @RequestParam("file") MultipartFile file
+        @PathVariable Long id,
+        @RequestParam("file") MultipartFile file
     ) throws IOException {
         return ResponseEntity.ok(labOrderService.attachReport(id, file));
     }
 
     @PostMapping("/{id}/status")
     public ResponseEntity<LabOrderDto> changeStatus(
-            @PathVariable Long id,
-            @RequestBody Map<String, String> body
+        @PathVariable Long id,
+        @RequestBody Map<String, String> body
     ) {
         String status = body != null ? body.get("status") : null; // Accepts JSON body: {"status":"COMPLETED"}
         return ResponseEntity.ok(labOrderService.changeStatus(id, status));
