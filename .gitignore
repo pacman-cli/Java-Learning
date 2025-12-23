@@ -35,3 +35,23 @@ build/
 ### Environment ###
 .env
 .env.local
+
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+dist/
+build/
+
+# Caches
+.cache/
+*.log
+
+# OS
+.DS_Store
+
+# Env
+.env
+.env.local
+.env.*.local
