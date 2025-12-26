@@ -33,3 +33,5 @@ build/
 .vscode/
 
 safety-map-frontend/
+rabbit-frontend/
+frontend/

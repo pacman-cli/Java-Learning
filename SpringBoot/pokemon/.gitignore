@@ -31,5 +31,6 @@ build/
 
 ### VS Code ###
 .vscode/
-
-safety-map-frontend/
+.codeviz/
+pokemon-frontend/
+frontend/

@@ -1,0 +1,7 @@
+todo-auth/
+node_modules/
+.env
+target/
+.idea/
+.vscode/
+*.log
