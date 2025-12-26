@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Pagination API - Test Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid #e9ecef;
+        }
+
+        .section-title {
+            font-size: 1.5em;
+            color: #667eea;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title::before {
+            content: '●';
+            font-size: 0.8em;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #495057;
+            font-size: 0.95em;
+        }
+
+        input, select, textarea {
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+            padding: 8px 15px;
+            font-size: 0.9em;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            align-items: flex-end;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        th {
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9em;
+            letter-spacing: 0.5px;
+        }
+
+        tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .pagination button {
+            padding: 10px 20px;
+            min-width: 50px;
+        }
+
+        .pagination .page-info {
+            padding: 10px 20px;
+            background: #e9ecef;
+            border-radius: 8px;
+            font-weight: 600;
+            color: #495057;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #e9ecef;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #6c757d;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-10px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #f5c6cb;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 2px solid #bee5eb;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6c757d;
+        }
+
+        .empty-state-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            opacity: 0.3;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .badge-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-warning {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .response-viewer {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .response-viewer pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.85em;
+            white-space: nowrap;
+        }
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            .section {
+                padding: 15px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .controls > * {
+                width: 100%;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #6c757d;
+            border-top: 2px solid #e9ecef;
+        }
+
+        .api-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        .api-links a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .api-links a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1></h1>🚀 Product Pagination API</h1>
+            <p>Visual Testing Dashboard - Test all APIs with ease!</p>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Alert Messages -->
+            <div id="alertSuccess" class="alert alert-success"></div>
+            <div id="alertError" class="alert alert-error"></div>
+            <div id="alertInfo" class="alert alert-info"></div>
+
+            <!-- Statistics -->
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalProducts">0</div>
+                    <div class="stat-label">Total Products</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="currentPage">1</div>
+                    <div class="stat-label">Current Page</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalPages">0</div>
+                    <div class="stat-label">Total Pages</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="itemsPerPage">10</div>
+                    <div class="stat-label">Items Per Page</div>
+                </div>
+            </div>
+
+            <!-- Create Product Section -->
+            <div class="section">
+                <div class="section-title">Create New Product</div>
+                <form id="createForm" onsubmit="createProduct(event)">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="productName">Product Name *</label>
+                            <input type="text" id="productName" name="name" required placeholder="e.g., Laptop">
+                        </div>
+                        <div class="form-group">
+                            <label for="productPrice">Price *</label>
+                            <input type="number" id="productPrice" name="price" step="0.01" min="0.01" required placeholder="e.g., 999.99">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="productDescription">Description (Optional)</label>
+                        <textarea id="productDescription" name="description" placeholder="Enter product description..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary">✨ Create Product</button>
+                </form>
+            </div>
+
+            <!-- Filter and Pagination Controls -->
+            <div class="section">
+                <div class="section-title">Filter & Pagination</div>
+                <div class="controls">
+                    <div class="form-group" style="flex: 1; min-width: 150px;">
+                        <label for="pageSize">Items Per Page</label>
+                        <select id="pageSize" onchange="changePageSize()">
+                            <option value="5">5 items</option>
+                            <option value="10" selected>10 items</option>
+                            <option value="20">20 items</option>
+                            <option value="50">50 items</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="flex: 1; min-width: 150px;">
+                        <label for="sortField">Sort By</label>
+                        <select id="sortField" onchange="loadProducts()">
+                            <option value="id,asc">ID (Oldest First)</option>
+                            <option value="id,desc">ID (Newest First)</option>
+                            <option value="name,asc" selected>Name (A → Z)</option>
+                            <option value="name,desc">Name (Z → A)</option>
+                            <option value="price,asc">Price (Low → High)</option>
+                            <option value="price,desc">Price (High → Low)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>&nbsp;</label>
+                        <button class="btn-success" onclick="loadProducts()">🔄 Refresh</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Table -->
+            <div class="section">
+                <div class="section-title">Products List</div>
+
+                <!-- Loading Spinner -->
+                <div id="loading" class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading products...</p>
+                </div>
+
+                <!-- Products Table -->
+                <div id="productsTableContainer">
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Price</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTableBody">
+                                <!-- Products will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Empty State -->
+                    <div id="emptyState" class="empty-state" style="display: none;">
+                        <div class="empty-state-icon">📦</div>
+                        <h3>No Products Found</h3>
+                        <p>Create your first product using the form above!</p>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div id="paginationContainer" class="pagination">
+                        <!-- Pagination buttons will be added here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- API Response Viewer -->
+            <div class="section">
+                <div class="section-title">Last API Response</div>
+                <button class="btn-secondary" onclick="toggleResponseViewer()">👁️ Toggle Response Viewer</button>
+                <div id="responseViewer" class="response-viewer">
+                    <pre id="responseContent">No API calls yet...</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>🎯 Product Pagination API Testing Dashboard</p>
+            <div class="api-links">
+                <a href="/swagger-ui.html" target="_blank">📚 Swagger UI</a>
+                <a href="/v3/api-docs" target="_blank">📄 API Docs</a>
+                <a href="https://github.com" target="_blank">💻 GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:8080/api/products';
+        let currentPage = 0;
+        let pageSize = 10;
+        let totalPages = 0;
+        let totalElements = 0;
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProducts();
+        });
+
+        // Show alert messages
+        function showAlert(message, type = 'success') {
+            const alertId = type === 'success' ? 'alertSuccess' : (type === 'error' ? 'alertError' : 'alertInfo');
+            const alertElement = document.getElementById(alertId);
+            alertElement.textContent = message;
+            alertElement.style.display = 'block';
+
+            setTimeout(() => {
+                alertElement.style.display = 'none';
+            }, 5000);
+        }
+
+        // Update statistics
+        function updateStats() {
+            document.getElementById('totalProducts').textContent = totalElements;
+            document.getElementById('currentPage').textContent = currentPage + 1;
+            document.getElementById('totalPages').textContent = totalPages;
+            document.getElementById('itemsPerPage').textContent = pageSize;
+        }
+
+        // Show/hide loading
+        function setLoading(isLoading) {
+            document.getElementById('loading').style.display = isLoading ? 'block' : 'none';
+            document.getElementById('productsTableContainer').style.display = isLoading ? 'none' : 'block';
+        }
+
+        // Display API response
+        function displayResponse(response, status) {
+            const viewer = document.getElementById('responseContent');
+            const responseData = {
+                status: status,
+                timestamp: new Date().toISOString(),
+                data: response
+            };
+            viewer.textContent = JSON.stringify(responseData, null, 2);
+        }
+
+        // Toggle response viewer
+        function toggleResponseViewer() {
+            const viewer = document.getElementById('responseViewer');
+            viewer.style.display = viewer.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Create Product
+        async function createProduct(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('productName').value;
+            const price = parseFloat(document.getElementById('productPrice').value);
+            const description = document.getElementById('productDescription').value;
+
+            const productData = {
+                name: name,
+                price: price,
+                description: description || null
+            };
+
+            try {
+                const response = await fetch(API_BASE_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(productData)
+                });
+
+                const data = await response.json();
+                displayResponse(data, response.status);
+
+                if (response.ok) {
+                    showAlert(`✅ Product "${name}" created successfully!`, 'success');
+                    document.getElementById('createForm').reset();
+                    loadProducts();
+                } else {
+                    showAlert(`❌ Error: ${data.message || 'Failed to create product'}`, 'error');
+                }
+            } catch (error) {
+                showAlert(`❌ Error: ${error.message}`, 'error');
+                console.error('Error creating product:', error);
+            }
+        }
+
+        // Load Products
+        async function loadProducts() {
+            setLoading(true);
+
+            const sortField = document.getElementById('sortField').value;
+            const url = `${API_BASE_URL}?page=${currentPage}&size=${pageSize}&sort=${sortField}`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                displayResponse(data, response.status);
+
+                if (response.ok) {
+                    totalElements = data.totalElements;
+                    totalPages = data.totalPages;
+
+                    updateStats();
+                    displayProducts(data.content);
+                    setupPagination(data);
+
+                    if (data.content.length === 0) {
+                        document.getElementById('emptyState').style.display = 'block';
+                        document.querySelector('.table-container').style.display = 'none';
+                        document.getElementById('paginationContainer').style.display = 'none';
+                    } else {
+                        document.getElementById('emptyState').style.display = 'none';
+                        document.querySelector('.table-container').style.display = 'block';
+                        document.getElementById('paginationContainer').style.display = 'flex';
+                    }
+                } else {
+                    showAlert('❌ Failed to load products', 'error');
+                }
+            } catch (error) {
+                showAlert(`❌ Error: ${error.message}`, 'error');
+                console.error('Error loading products:', error);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        // Display products in table
+        function displayProducts(products) {
+            const tbody = document.getElementById('productsTableBody');
+            tbody.innerHTML = '';
+
+            products.forEach(product => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><span class="badge badge-success">#${product.id}</span></td>
+                    <td><strong>${escapeHtml(product.name)}</strong></td>
+                    <td>${escapeHtml(product.description || 'N/A')}</td>
+                    <td><strong>$${product.price.toFixed(2)}</strong></td>
+                    <td class="actions">
+                        <button class="btn-primary" onclick="viewProduct(${product.id})" title="View Details">👁️</button>
+                        <button class="btn-danger" onclick="deleteProduct(${product.id}, '${escapeHtml(product.name)}')" title="Delete">🗑️</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Setup pagination controls
+        function setupPagination(data) {
+            const container = document.getElementById('paginationContainer');
+            container.innerHTML = '';
+
+            // Previous button
+            const prevBtn = document.createElement('button');
+            prevBtn.textContent = '⬅️ Previous';
+            prevBtn.className = 'btn-secondary';
+            prevBtn.disabled = data.first;
+            prevBtn.onclick = () => goToPage(currentPage - 1);
+            container.appendChild(prevBtn);
+
+            // Page info
+            const pageInfo = document.createElement('div');
+            pageInfo.className = 'page-info';
+            pageInfo.textContent = `Page ${currentPage + 1} of ${totalPages || 1}`;
+            container.appendChild(pageInfo);
+
+            // Next button
+            const nextBtn = document.createElement('button');
+            nextBtn.textContent = 'Next ➡️';
+            nextBtn.className = 'btn-secondary';
+            nextBtn.disabled = data.last;
+            nextBtn.onclick = () => goToPage(currentPage + 1);
+            container.appendChild(nextBtn);
+
+            // First page button
+            if (totalPages > 2) {
+                const firstBtn = document.createElement('button');
+                firstBtn.textContent = '⏮️ First';
+                firstBtn.className = 'btn-secondary';
+                firstBtn.disabled = data.first;
+                firstBtn.onclick = () => goToPage(0);
+                container.insertBefore(firstBtn, prevBtn);
+            }
+
+            // Last page button
+            if (totalPages > 2) {
+                const lastBtn = document.createElement('button');
+                lastBtn.textContent = 'Last ⏭️';
+                lastBtn.className = 'btn-secondary';
+                lastBtn.disabled = data.last;
+                lastBtn.onclick = () => goToPage(totalPages - 1);
+                container.appendChild(lastBtn);
+            }
+        }
+
+        // Go to specific page
+        function goToPage(page) {
+            currentPage = page;
+            loadProducts();
+        }
+
+        // Change page size
+        function changePageSize() {
+            pageSize = parseInt(document.getElementById('pageSize').value);
+            currentPage = 0; // Reset to first page
+            loadProducts();
+        }
+
+        // View product details
+        async function viewProduct(id) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/${id}`);
+                const data = await response.json();
+                displayResponse(data, response.status);
+
+                if (response.ok) {
+                    showAlert(`📦 Product Details:\nID: ${data.id}\nName: ${data.name}\nPrice: $${data.price}\nDescription: ${data.description || 'N/A'}`, 'info');
+                    document.getElementById('responseViewer').style.display = 'block';
+                } else {
+                    showAlert('❌ Product not found', 'error');
+                }
+            } catch (error) {
+                showAlert(`❌ Error: ${error.message}`, 'error');
+                console.error('Error viewing product:', error);
+            }
+        }
+
+        // Delete product
+        async function deleteProduct(id, name) {
+            if (!confirm(`Are you sure you want to delete "${name}"?`)) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/${id}`, {
+                    method: 'DELETE'
+                });
+
+                displayResponse({ message: 'Product deleted', id: id }, response.status);
+
+                if (response.ok || response.status === 204) {
+                    showAlert(`✅ Product "${name}" deleted successfully!`, 'success');
+                    loadProducts();
+                } else {
+                    showAlert('❌ Failed to delete product', 'error');
+                }
+            } catch (error) {
+                showAlert(`❌ Error: ${error.message}`, 'error');
+                console.error('Error deleting product:', error);
+            }
+        }
+
+        // Escape HTML to prevent XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>

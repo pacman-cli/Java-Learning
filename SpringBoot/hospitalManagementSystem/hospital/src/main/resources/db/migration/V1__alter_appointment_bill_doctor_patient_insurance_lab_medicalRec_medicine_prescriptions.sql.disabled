@@ -1,0 +1,145 @@
+CREATE TABLE appointments
+(
+    id                   BIGINT AUTO_INCREMENT NOT NULL,
+    appointment_datetime datetime              NOT NULL,
+    status               VARCHAR(255)          NOT NULL,
+    reason               VARCHAR(500)          NULL,
+    patient_id           BIGINT                NOT NULL,
+    doctor_id            BIGINT                NOT NULL,
+    CONSTRAINT pk_appointments PRIMARY KEY (id)
+);
+
+CREATE TABLE billings
+(
+    id             BIGINT AUTO_INCREMENT NOT NULL,
+    amount         DECIMAL               NOT NULL,
+    billing_date   datetime              NOT NULL,
+    payment_method VARCHAR(50)           NULL,
+    patient_id     BIGINT                NOT NULL,
+    appointment_id BIGINT                NULL,
+    status         VARCHAR(255)          NULL,
+    `description`  VARCHAR(1000)         NULL,
+    paid_at        datetime              NULL,
+    CONSTRAINT pk_billings PRIMARY KEY (id)
+);
+
+CREATE TABLE doctors
+(
+    id             BIGINT AUTO_INCREMENT NOT NULL,
+    full_name      VARCHAR(255)          NOT NULL,
+    specialization VARCHAR(255)          NOT NULL,
+    qualifications VARCHAR(255)          NULL,
+    contact_info   VARCHAR(255)          NULL,
+    daily_schedule VARCHAR(2000)         NULL,
+    CONSTRAINT pk_doctors PRIMARY KEY (id)
+);
+
+
+CREATE TABLE lab_orders
+(
+    id             BIGINT        NOT NULL,
+    lab_test_id    BIGINT        NOT NULL,
+    patient_id     BIGINT        NOT NULL,
+    appointment_id BIGINT        NULL,
+    ordered_at     datetime      NOT NULL,
+    status         VARCHAR(20)   NOT NULL,
+    report_path    VARCHAR(2000) NULL,
+    notes          VARCHAR(1000) NULL,
+    CONSTRAINT pk_lab_orders PRIMARY KEY (id)
+);
+
+CREATE TABLE lab_tests
+(
+    id            BIGINT AUTO_INCREMENT NOT NULL,
+    test_name     VARCHAR(255)          NOT NULL,
+    `description` VARCHAR(1000)         NULL,
+    cost          DECIMAL(12, 2)        NOT NULL,
+    CONSTRAINT pk_lab_tests PRIMARY KEY (id)
+);
+
+CREATE TABLE medical_records
+(
+    id          BIGINT AUTO_INCREMENT NOT NULL,
+    record_type VARCHAR(200)          NOT NULL,
+    title       VARCHAR(500)          NULL,
+    content     TEXT                  NULL,
+    file_path   VARCHAR(2000)         NULL,
+    created_at  datetime              NOT NULL,
+    patient_id  BIGINT                NOT NULL,
+    CONSTRAINT pk_medical_records PRIMARY KEY (id)
+);
+
+CREATE TABLE medicines
+(
+    id                 BIGINT AUTO_INCREMENT NOT NULL,
+    name               VARCHAR(255)          NULL,
+    `description`      VARCHAR(255)          NULL,
+    quantity_available INT                   NOT NULL,
+    price              DECIMAL               NULL,
+    expiry_date        date                  NULL,
+    CONSTRAINT pk_medicines PRIMARY KEY (id)
+);
+
+CREATE TABLE patients
+(
+    id                BIGINT AUTO_INCREMENT NOT NULL,
+    full_name         VARCHAR(255)          NOT NULL,
+    date_of_birth     date                  NULL,
+    gender            VARCHAR(255)          NULL,
+    contact_info      VARCHAR(255)          NULL,
+    address           VARCHAR(1000)         NULL,
+    emergency_contact VARCHAR(255)          NULL,
+    CONSTRAINT pk_patients PRIMARY KEY (id)
+);
+
+CREATE TABLE prescriptions
+(
+    id            BIGINT AUTO_INCREMENT NOT NULL,
+    notes         VARCHAR(255)          NULL,
+    prescribed_at datetime              NULL,
+    parent_id     BIGINT                NOT NULL,
+    doctor_id     BIGINT                NOT NULL,
+    medicine_id   BIGINT                NOT NULL,
+    CONSTRAINT pk_prescriptions PRIMARY KEY (id)
+);
+
+ALTER TABLE billings
+    ADD CONSTRAINT uc_billings_appointment UNIQUE (appointment_id);
+
+
+ALTER TABLE lab_orders
+    ADD CONSTRAINT uc_lab_orders_appointment UNIQUE (appointment_id);
+
+ALTER TABLE appointments
+    ADD CONSTRAINT FK_APPOINTMENTS_ON_DOCTOR FOREIGN KEY (doctor_id) REFERENCES doctors (id);
+
+ALTER TABLE appointments
+    ADD CONSTRAINT FK_APPOINTMENTS_ON_PATIENT FOREIGN KEY (patient_id) REFERENCES patients (id);
+
+ALTER TABLE billings
+    ADD CONSTRAINT FK_BILLINGS_ON_APPOINTMENT FOREIGN KEY (appointment_id) REFERENCES appointments (id);
+
+ALTER TABLE billings
+    ADD CONSTRAINT FK_BILLINGS_ON_PATIENT FOREIGN KEY (patient_id) REFERENCES patients (id);
+
+
+ALTER TABLE lab_orders
+    ADD CONSTRAINT FK_LAB_ORDERS_ON_APPOINTMENT FOREIGN KEY (appointment_id) REFERENCES appointments (id);
+
+ALTER TABLE lab_orders
+    ADD CONSTRAINT FK_LAB_ORDERS_ON_LAB_TEST FOREIGN KEY (lab_test_id) REFERENCES lab_tests (id);
+
+ALTER TABLE lab_orders
+    ADD CONSTRAINT FK_LAB_ORDERS_ON_PATIENT FOREIGN KEY (patient_id) REFERENCES patients (id);
+
+ALTER TABLE medical_records
+    ADD CONSTRAINT FK_MEDICAL_RECORDS_ON_PATIENT FOREIGN KEY (patient_id) REFERENCES patients (id);
+
+ALTER TABLE prescriptions
+    ADD CONSTRAINT FK_PRESCRIPTIONS_ON_DOCTOR FOREIGN KEY (doctor_id) REFERENCES doctors (id);
+
+ALTER TABLE prescriptions
+    ADD CONSTRAINT FK_PRESCRIPTIONS_ON_MEDICINE FOREIGN KEY (medicine_id) REFERENCES medicines (id);
+
+ALTER TABLE prescriptions
+    ADD CONSTRAINT FK_PRESCRIPTIONS_ON_PARENT FOREIGN KEY (parent_id) REFERENCES patients (id);

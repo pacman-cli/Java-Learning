@@ -1,0 +1,39 @@
+-- V10__seed_roles.sql
+-- Seed all required roles for the Hospital Management System
+
+-- Insert all roles if they don't exist
+INSERT INTO roles (name) VALUES ('ROLE_PATIENT')
+ON DUPLICATE KEY UPDATE name = name;
+
+INSERT INTO roles (name) VALUES ('ROLE_DOCTOR')
+ON DUPLICATE KEY UPDATE name = name;
+
+INSERT INTO roles (name) VALUES ('ROLE_NURSE')
+ON DUPLICATE KEY UPDATE name = name;
+
+INSERT INTO roles (name) VALUES ('ROLE_PHARMACIST')
+ON DUPLICATE KEY UPDATE name = name;
+
+INSERT INTO roles (name) VALUES ('ROLE_LAB_TECHNICIAN')
+ON DUPLICATE KEY UPDATE name = name;
+
+INSERT INTO roles (name) VALUES ('ROLE_ADMIN')
+ON DUPLICATE KEY UPDATE name = name;
+
+INSERT INTO roles (name) VALUES ('ROLE_RECEPTIONIST')
+ON DUPLICATE KEY UPDATE name = name;
+
+INSERT INTO roles (name) VALUES ('ROLE_BILLING_STAFF')
+ON DUPLICATE KEY UPDATE name = name;
+
+INSERT INTO roles (name) VALUES ('ROLE_INSURANCE_STAFF')
+ON DUPLICATE KEY UPDATE name = name;
+
+INSERT INTO roles (name) VALUES ('ROLE_HOSPITAL_MANAGER')
+ON DUPLICATE KEY UPDATE name = name;
+
+INSERT INTO roles (name) VALUES ('ROLE_DEPARTMENT_HEAD')
+ON DUPLICATE KEY UPDATE name = name;
+
+INSERT INTO roles (name) VALUES ('ROLE_SUPER_ADMIN')
+ON DUPLICATE KEY UPDATE name = name;

@@ -1,0 +1,53 @@
+CREATE TABLE IF NOT EXISTS insurance
+(
+    id               BIGINT AUTO_INCREMENT NOT NULL,
+    provider_name    VARCHAR(255)          NOT NULL,
+    policy_number    VARCHAR(255)          NOT NULL,
+    coverage_details VARCHAR(255)          NOT NULL,
+    valid_from       date                  NOT NULL,
+    valid_to         date                  NOT NULL,
+    patient_id       BIGINT                NOT NULL,
+    coverage_percent DECIMAL(5, 2)         NULL,
+    CONSTRAINT pk_insurance PRIMARY KEY (id)
+);
+
+# ALTER TABLE billings
+#     ADD COLUMN IF NOT EXISTS covered_amount DECIMAL(38, 2) NULL;
+#
+# ALTER TABLE billings
+#     ADD COLUMN IF NOT EXISTS insurance_id BIGINT NULL;
+#
+# ALTER TABLE billings
+#     ADD COLUMN IF NOT EXISTS patient_payable DECIMAL(38, 2) NULL;
+#
+# ALTER TABLE insurance
+#     ADD CONSTRAINT uc_insurance_patient UNIQUE (patient_id);
+#
+# ALTER TABLE insurance
+#     ADD CONSTRAINT uc_insurance_policy_number UNIQUE (policy_number);
+#
+# ALTER TABLE billings
+#     ADD CONSTRAINT FK_BILLINGS_ON_INSURANCE FOREIGN KEY (insurance_id) REFERENCES insurance (id);
+#
+# ALTER TABLE insurance
+#     ADD CONSTRAINT FK_INSURANCE_ON_PATIENT FOREIGN KEY (patient_id) REFERENCES patients (id);
+#
+# ALTER TABLE billings
+#     MODIFY amount DECIMAL;
+#
+# ALTER TABLE medicines
+#     MODIFY price DECIMAL;
+#
+# ALTER TABLE billings
+#     DROP
+#         COLUMN status;
+#
+# ALTER TABLE billings
+#     ADD status VARCHAR(255) NULL;
+#
+# ALTER TABLE lab_orders
+#     DROP
+#         COLUMN status;
+#
+# ALTER TABLE lab_orders
+#     ADD status VARCHAR(20) NOT NULL;

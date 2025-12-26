@@ -1,0 +1,37 @@
+-- Create doctor_working_days table for @ElementCollection mapping
+-- This table stores the working days for each doctor
+
+CREATE TABLE IF NOT EXISTS doctor_working_days
+(
+    doctor_id   BIGINT       NOT NULL,
+    working_day VARCHAR(20)  NOT NULL,
+    CONSTRAINT FK_DOCTOR_WORKING_DAYS_ON_DOCTOR FOREIGN KEY (doctor_id) REFERENCES doctors (id) ON DELETE CASCADE
+);
+
+-- Add index for better query performance using conditional approach
+SET @index_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS
+                     WHERE TABLE_SCHEMA = 'hospital_db'
+                     AND TABLE_NAME = 'doctor_working_days'
+                     AND INDEX_NAME = 'idx_doctor_working_days_doctor_id');
+
+SET @sql = IF(@index_exists = 0,
+    'CREATE INDEX idx_doctor_working_days_doctor_id ON doctor_working_days(doctor_id)',
+    'SELECT ''Index idx_doctor_working_days_doctor_id already exists''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add composite index for checking if a doctor works on a specific day
+SET @index_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS
+                     WHERE TABLE_SCHEMA = 'hospital_db'
+                     AND TABLE_NAME = 'doctor_working_days'
+                     AND INDEX_NAME = 'idx_doctor_working_days_doctor_day');
+
+SET @sql = IF(@index_exists = 0,
+    'CREATE INDEX idx_doctor_working_days_doctor_day ON doctor_working_days(doctor_id, working_day)',
+    'SELECT ''Index idx_doctor_working_days_doctor_day already exists''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;

@@ -1,0 +1,34 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <title>Blog</title>
+</head>
+<body>
+<h1>Latest posts</h1>
+
+<!-- Blog Teasers Section -->
+<section id="blog" class="py-20 bg-gray-50">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold mb-12 text-center">Latest Blog Posts</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div th:each="post : ${blogPosts}" class="bg-white rounded-xl shadow p-6 hover:shadow-xl transition">
+                <h3 class="text-xl font-semibold mb-2" th:text="${post.title}">Blog Post Title</h3>
+                <p class="text-gray-600 mb-4" th:text="${post.summary}">A brief summary of the blog post...</p>
+                <a th:href="@{'/blog/' + ${post.id}}" class="text-blue-600 hover:underline">Read More</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Example of condition -->
+<p th:if="${#lists.isEmpty(posts)}">No posts yet — write the first one!</p>
+</body>
+</html>
+
+
+<!--${posts} — value put into the model by your controller (a list of post objects).-->
+<!--th:each — loop.-->
+<!--th:text — writes escaped text into the element.-->
+<!--th:href="@{...}" — builds links.-->

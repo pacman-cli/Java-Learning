@@ -1,0 +1,68 @@
+CREATE TABLE IF NOT EXISTS invoices
+(
+    id             BIGINT AUTO_INCREMENT NOT NULL,
+    total_amount   DECIMAL(12, 2)        NOT NULL,
+    amount_due     DECIMAL(12, 2)        NOT NULL,
+    invoice_date   datetime              NOT NULL,
+    status         VARCHAR(255)          NOT NULL,
+    patient_id     BIGINT                NOT NULL,
+    appointment_id BIGINT                NULL,
+    billing_id     BIGINT                NULL,
+    CONSTRAINT pk_invoices PRIMARY KEY (id)
+);
+
+# ALTER TABLE billings
+#     ADD covered_amount DECIMAL(38, 2) NULL;
+#
+# ALTER TABLE billings
+#     ADD insurance_id BIGINT NULL;
+#
+# ALTER TABLE billings
+#     ADD patient_payable DECIMAL(38, 2) NULL;
+#
+# ALTER TABLE insurance
+#     ADD CONSTRAINT uc_insurance_patient UNIQUE (patient_id);
+#
+# ALTER TABLE insurance
+#     ADD CONSTRAINT uc_insurance_policy_number UNIQUE (policy_number);
+#
+# ALTER TABLE invoices
+#     ADD CONSTRAINT uc_invoices_appointment UNIQUE (appointment_id);
+#
+# ALTER TABLE invoices
+#     ADD CONSTRAINT uc_invoices_billing UNIQUE (billing_id);
+#
+# ALTER TABLE billings
+#     ADD CONSTRAINT FK_BILLINGS_ON_INSURANCE FOREIGN KEY (insurance_id) REFERENCES insurance (id);
+#
+# ALTER TABLE insurance
+#     ADD CONSTRAINT FK_INSURANCE_ON_PATIENT FOREIGN KEY (patient_id) REFERENCES patients (id);
+#
+# ALTER TABLE invoices
+#     ADD CONSTRAINT FK_INVOICES_ON_APPOINTMENT FOREIGN KEY (appointment_id) REFERENCES appointments (id);
+#
+# ALTER TABLE invoices
+#     ADD CONSTRAINT FK_INVOICES_ON_BILLING FOREIGN KEY (billing_id) REFERENCES billings (id);
+#
+# ALTER TABLE invoices
+#     ADD CONSTRAINT FK_INVOICES_ON_PATIENT FOREIGN KEY (patient_id) REFERENCES patients (id);
+#
+# ALTER TABLE billings
+#     MODIFY amount DECIMAL;
+#
+# ALTER TABLE medicines
+#     MODIFY price DECIMAL;
+#
+# ALTER TABLE billings
+#     DROP
+#         COLUMN status;
+#
+# ALTER TABLE billings
+#     ADD status VARCHAR(255) NULL;
+#
+# ALTER TABLE lab_orders
+#     DROP
+#         COLUMN status;
+#
+# ALTER TABLE lab_orders
+#     ADD status VARCHAR(20) NOT NULL;

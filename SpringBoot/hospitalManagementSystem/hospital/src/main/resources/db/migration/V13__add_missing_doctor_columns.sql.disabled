@@ -1,0 +1,308 @@
+-- Add all missing columns to doctors table to match the Doctor entity model
+-- This migration adds columns that were defined in the entity but missing from the database
+
+-- Add email column
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'doctors'
+                   AND COLUMN_NAME = 'email');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE doctors ADD COLUMN email VARCHAR(100) NULL',
+    'SELECT ''Column email already exists in doctors table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add license_number column
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'doctors'
+                   AND COLUMN_NAME = 'license_number');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE doctors ADD COLUMN license_number VARCHAR(50) NULL UNIQUE',
+    'SELECT ''Column license_number already exists in doctors table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add license_expiry_date column
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'doctors'
+                   AND COLUMN_NAME = 'license_expiry_date');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE doctors ADD COLUMN license_expiry_date DATE NULL',
+    'SELECT ''Column license_expiry_date already exists in doctors table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add department column
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'doctors'
+                   AND COLUMN_NAME = 'department');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE doctors ADD COLUMN department VARCHAR(100) NULL',
+    'SELECT ''Column department already exists in doctors table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add years_of_experience column
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'doctors'
+                   AND COLUMN_NAME = 'years_of_experience');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE doctors ADD COLUMN years_of_experience INT NULL',
+    'SELECT ''Column years_of_experience already exists in doctors table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add date_of_birth column
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'doctors'
+                   AND COLUMN_NAME = 'date_of_birth');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE doctors ADD COLUMN date_of_birth DATE NULL',
+    'SELECT ''Column date_of_birth already exists in doctors table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add address column
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'doctors'
+                   AND COLUMN_NAME = 'address');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE doctors ADD COLUMN address VARCHAR(500) NULL',
+    'SELECT ''Column address already exists in doctors table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add emergency_contact column
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'doctors'
+                   AND COLUMN_NAME = 'emergency_contact');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE doctors ADD COLUMN emergency_contact VARCHAR(20) NULL',
+    'SELECT ''Column emergency_contact already exists in doctors table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add emergency_contact_name column
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'doctors'
+                   AND COLUMN_NAME = 'emergency_contact_name');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE doctors ADD COLUMN emergency_contact_name VARCHAR(100) NULL',
+    'SELECT ''Column emergency_contact_name already exists in doctors table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add salary column
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'doctors'
+                   AND COLUMN_NAME = 'salary');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE doctors ADD COLUMN salary DECIMAL(10, 2) NULL',
+    'SELECT ''Column salary already exists in doctors table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add consultation_fee column
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'doctors'
+                   AND COLUMN_NAME = 'consultation_fee');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE doctors ADD COLUMN consultation_fee DECIMAL(8, 2) NULL',
+    'SELECT ''Column consultation_fee already exists in doctors table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add start_time column
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'doctors'
+                   AND COLUMN_NAME = 'start_time');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE doctors ADD COLUMN start_time TIME NULL',
+    'SELECT ''Column start_time already exists in doctors table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add end_time column
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'doctors'
+                   AND COLUMN_NAME = 'end_time');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE doctors ADD COLUMN end_time TIME NULL',
+    'SELECT ''Column end_time already exists in doctors table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add is_available column
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'doctors'
+                   AND COLUMN_NAME = 'is_available');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE doctors ADD COLUMN is_available BOOLEAN NOT NULL DEFAULT TRUE',
+    'SELECT ''Column is_available already exists in doctors table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add is_active column
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'doctors'
+                   AND COLUMN_NAME = 'is_active');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE doctors ADD COLUMN is_active BOOLEAN NOT NULL DEFAULT TRUE',
+    'SELECT ''Column is_active already exists in doctors table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add bio column
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'doctors'
+                   AND COLUMN_NAME = 'bio');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE doctors ADD COLUMN bio VARCHAR(1000) NULL',
+    'SELECT ''Column bio already exists in doctors table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add languages_spoken column
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'doctors'
+                   AND COLUMN_NAME = 'languages_spoken');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE doctors ADD COLUMN languages_spoken VARCHAR(200) NULL',
+    'SELECT ''Column languages_spoken already exists in doctors table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add awards_certifications column
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'doctors'
+                   AND COLUMN_NAME = 'awards_certifications');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE doctors ADD COLUMN awards_certifications VARCHAR(1000) NULL',
+    'SELECT ''Column awards_certifications already exists in doctors table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add profile_image_url column
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'doctors'
+                   AND COLUMN_NAME = 'profile_image_url');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE doctors ADD COLUMN profile_image_url VARCHAR(500) NULL',
+    'SELECT ''Column profile_image_url already exists in doctors table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add indexes for commonly queried columns
+SET @index_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS
+                     WHERE TABLE_SCHEMA = 'hospital_db'
+                     AND TABLE_NAME = 'doctors'
+                     AND INDEX_NAME = 'idx_doctor_email');
+
+SET @sql = IF(@index_exists = 0,
+    'CREATE INDEX idx_doctor_email ON doctors(email)',
+    'SELECT ''Index idx_doctor_email already exists''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+SET @index_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS
+                     WHERE TABLE_SCHEMA = 'hospital_db'
+                     AND TABLE_NAME = 'doctors'
+                     AND INDEX_NAME = 'idx_doctor_is_available');
+
+SET @sql = IF(@index_exists = 0,
+    'CREATE INDEX idx_doctor_is_available ON doctors(is_available)',
+    'SELECT ''Index idx_doctor_is_available already exists''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+SET @index_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS
+                     WHERE TABLE_SCHEMA = 'hospital_db'
+                     AND TABLE_NAME = 'doctors'
+                     AND INDEX_NAME = 'idx_doctor_is_active');
+
+SET @sql = IF(@index_exists = 0,
+    'CREATE INDEX idx_doctor_is_active ON doctors(is_active)',
+    'SELECT ''Index idx_doctor_is_active already exists''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;

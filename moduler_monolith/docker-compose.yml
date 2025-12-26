@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  # Primary Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: enterprise-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=enterprise_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - enterprise-net
+
+  # Caching Database
+  redis:
+    image: redis:7-alpine
+    container_name: enterprise-redis
+    ports:
+      - "6379:6379"
+    networks:
+      - enterprise-net
+
+volumes:
+  postgres_data:
+
+networks:
+  enterprise-net:
+    driver: bridge

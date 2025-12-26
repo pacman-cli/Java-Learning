@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Post</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+        form {
+            width: 400px;
+            margin: 0 auto;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+<h2>Create a New Blog Post</h2>
+
+<form th:action="@{/posts}" th:object="${post}" method="post">
+    <label>Title:</label>
+    <input type="text" th:field="*{title}" placeholder="Enter post title" required>
+
+    <label>Author:</label>
+    <input type="text" th:field="*{author}" placeholder="Enter author name" required>
+
+    <label>Content:</label>
+    <textarea rows="6" th:field="*{content}" placeholder="Write your post..." required></textarea>
+
+    <button type="submit">Publish</button>
+</form>
+
+<a href="/posts">⬅ Back to Posts</a>
+</body>
+</html>
+
+
+<!--🧠 Explanation-->
+
+<!--th:object="${post}" → binds form fields to a Post object-->
+
+<!--th:field="*{title}" → automatically maps to post.title-->
+
+<!--When submitted, data is sent as a POST request to /posts (handled by controller)-->
+
+<!--On success, it redirects back to /posts-->

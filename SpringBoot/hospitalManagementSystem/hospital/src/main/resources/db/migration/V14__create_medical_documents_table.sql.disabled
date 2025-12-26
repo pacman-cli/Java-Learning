@@ -1,0 +1,50 @@
+-- Create medical_documents table for Document entity
+-- This table stores all medical documents, reports, and files for patients
+
+CREATE TABLE IF NOT EXISTS medical_documents
+(
+    id                      BIGINT AUTO_INCREMENT NOT NULL,
+    file_name               VARCHAR(255)          NOT NULL,
+    original_file_name      VARCHAR(255)          NOT NULL,
+    file_path               VARCHAR(500)          NOT NULL,
+    file_size               BIGINT                NOT NULL,
+    content_type            VARCHAR(100)          NOT NULL,
+    document_type           VARCHAR(50)           NOT NULL,
+    title                   VARCHAR(200)          NULL,
+    description             VARCHAR(1000)         NULL,
+    document_date           DATETIME              NULL,
+    is_confidential         BOOLEAN               NOT NULL DEFAULT FALSE,
+    access_level            VARCHAR(20)           NULL DEFAULT 'PRIVATE',
+    tags                    VARCHAR(500)          NULL,
+    version                 INT                   NOT NULL DEFAULT 1,
+    checksum                VARCHAR(64)           NULL,
+    patient_id              BIGINT                NULL,
+    doctor_id               BIGINT                NULL,
+    related_appointment_id  BIGINT                NULL,
+    created_at              DATETIME              NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at              DATETIME              NULL ON UPDATE CURRENT_TIMESTAMP,
+    created_by              VARCHAR(50)           NULL,
+    updated_by              VARCHAR(50)           NULL,
+    deleted_at              DATETIME              NULL,
+    deleted_by              VARCHAR(50)           NULL,
+    CONSTRAINT pk_medical_documents PRIMARY KEY (id)
+);
+
+-- Add foreign key constraints
+ALTER TABLE medical_documents
+    ADD CONSTRAINT FK_MEDICAL_DOCUMENTS_ON_PATIENT FOREIGN KEY (patient_id) REFERENCES patients (id);
+
+ALTER TABLE medical_documents
+    ADD CONSTRAINT FK_MEDICAL_DOCUMENTS_ON_DOCTOR FOREIGN KEY (doctor_id) REFERENCES doctors (id);
+
+ALTER TABLE medical_documents
+    ADD CONSTRAINT FK_MEDICAL_DOCUMENTS_ON_APPOINTMENT FOREIGN KEY (related_appointment_id) REFERENCES appointments (id);
+
+-- Add indexes for better query performance
+CREATE INDEX idx_document_type ON medical_documents(document_type);
+CREATE INDEX idx_document_patient ON medical_documents(patient_id);
+CREATE INDEX idx_document_doctor ON medical_documents(doctor_id);
+CREATE INDEX idx_document_created_at ON medical_documents(created_at);
+CREATE INDEX idx_document_file_name ON medical_documents(file_name);
+CREATE INDEX idx_document_deleted_at ON medical_documents(deleted_at);
+CREATE INDEX idx_document_is_confidential ON medical_documents(is_confidential);

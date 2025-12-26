@@ -1,0 +1,12 @@
+package com.pacman.todo.map;
+
+import com.pacman.todo.user.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface LocationRepository extends JpaRepository<Location,Long> {
+    List<Location> findByUser(User user);
+}

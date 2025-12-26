@@ -1,0 +1,3 @@
+INDEX VERSION 1.134+/Users/puspo/JavaCourse/SpringBoot/UberProject-AuthService/.jdtls-workspace/.metadata/.plugins/org.eclipse.jdt.core
+1865797976.index
+686787486.index

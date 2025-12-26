@@ -1,0 +1,48 @@
+version: "3.9"
+services:
+  mysql:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: portfolio
+      MYSQL_USER: portfolio
+      MYSQL_PASSWORD: portfolio
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      DB_URL: jdbc:mysql://mysql:3306/portfolio?createDatabaseIfNotExist=true&serverTimezone=UTC
+      DB_USERNAME: portfolio
+      DB_PASSWORD: portfolio
+      ALLOWED_ORIGINS: http://localhost:3000
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_BASE_URL: http://localhost:8080/api
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:8080/api
+      NODE_ENV: production
+    depends_on:
+      backend:
+        condition: service_started
+    ports:
+      - "3000:3000"
+

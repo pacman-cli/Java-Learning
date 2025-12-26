@@ -1,0 +1,295 @@
+-- V9: Seed data for testing doctor portal
+-- This migration adds comprehensive test data for doctors, patients, appointments, lab orders, etc.
+
+-- ===============================
+-- = USERS & ROLES
+-- ===============================
+-- Insert roles if they don't exist (roles table only has: id, name)
+INSERT IGNORE INTO roles (id, name) VALUES
+(1, 'ROLE_ADMIN'),
+(2, 'ROLE_DOCTOR'),
+(3, 'ROLE_PATIENT'),
+(4, 'ROLE_NURSE'),
+(5, 'ROLE_LAB_TECHNICIAN');
+
+-- Insert test users (password: password123)
+-- Password is BCrypt hash of "password123"
+-- Users table has: id, username, password, email, full_name, enabled, created_at
+INSERT INTO users (username, password, email, full_name, enabled, created_at) VALUES
+('dr.smith', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'dr.smith@hospital.com', 'Dr. John Smith', true, NOW()),
+('dr.johnson', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'dr.johnson@hospital.com', 'Dr. Sarah Johnson', true, NOW()),
+('dr.williams', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'dr.williams@hospital.com', 'Dr. Michael Williams', true, NOW()),
+('patient.james', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'james@email.com', 'James Anderson', true, NOW()),
+('patient.mary', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'mary@email.com', 'Mary Taylor', true, NOW()),
+('patient.robert', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'robert@email.com', 'Robert Brown', true, NOW()),
+('patient.patricia', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'patricia@email.com', 'Patricia Davis', true, NOW()),
+('patient.william', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'william@email.com', 'William Martinez', true, NOW()),
+('patient.jennifer', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'jennifer@email.com', 'Jennifer Wilson', true, NOW()),
+('admin.user', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'admin@hospital.com', 'Admin User', true, NOW())
+ON DUPLICATE KEY UPDATE username=username;
+
+-- Assign roles to users
+INSERT INTO user_roles (user_id, role_id)
+SELECT u.id, 2 FROM users u WHERE u.username = 'dr.smith'
+ON DUPLICATE KEY UPDATE user_id=user_id;
+
+INSERT INTO user_roles (user_id, role_id)
+SELECT u.id, 2 FROM users u WHERE u.username = 'dr.johnson'
+ON DUPLICATE KEY UPDATE user_id=user_id;
+
+INSERT INTO user_roles (user_id, role_id)
+SELECT u.id, 2 FROM users u WHERE u.username = 'dr.williams'
+ON DUPLICATE KEY UPDATE user_id=user_id;
+
+INSERT INTO user_roles (user_id, role_id)
+SELECT u.id, 3 FROM users u WHERE u.username = 'patient.james'
+ON DUPLICATE KEY UPDATE user_id=user_id;
+
+INSERT INTO user_roles (user_id, role_id)
+SELECT u.id, 3 FROM users u WHERE u.username = 'patient.mary'
+ON DUPLICATE KEY UPDATE user_id=user_id;
+
+INSERT INTO user_roles (user_id, role_id)
+SELECT u.id, 3 FROM users u WHERE u.username = 'patient.robert'
+ON DUPLICATE KEY UPDATE user_id=user_id;
+
+INSERT INTO user_roles (user_id, role_id)
+SELECT u.id, 3 FROM users u WHERE u.username = 'patient.patricia'
+ON DUPLICATE KEY UPDATE user_id=user_id;
+
+INSERT INTO user_roles (user_id, role_id)
+SELECT u.id, 3 FROM users u WHERE u.username = 'patient.william'
+ON DUPLICATE KEY UPDATE user_id=user_id;
+
+INSERT INTO user_roles (user_id, role_id)
+SELECT u.id, 3 FROM users u WHERE u.username = 'patient.jennifer'
+ON DUPLICATE KEY UPDATE user_id=user_id;
+
+INSERT INTO user_roles (user_id, role_id)
+SELECT u.id, 1 FROM users u WHERE u.username = 'admin.user'
+ON DUPLICATE KEY UPDATE user_id=user_id;
+
+-- ===============================
+-- = DOCTORS
+-- ===============================
+INSERT INTO doctors (
+    full_name, specialization, license_number, contact_info, email,
+    qualifications, years_of_experience, consultation_fee, department,
+    is_active, is_available, start_time, end_time,
+    address, date_of_birth, bio, languages_spoken,
+    created_at, created_by
+) VALUES
+(
+    'Dr. John Smith', 'Cardiology', 'LIC-CARD-001', '+1-555-0101', 'dr.smith@hospital.com',
+    'MD, FACC, Board Certified Cardiologist', 15, 200.00, 'Cardiology',
+    true, true, '09:00:00', '17:00:00',
+    '123 Medical Plaza, Suite 100, Boston, MA', '1978-05-15',
+    'Experienced cardiologist specializing in interventional cardiology and heart disease prevention.',
+    'English, Spanish',
+    NOW(), 'system'
+),
+(
+    'Dr. Sarah Johnson', 'Pediatrics', 'LIC-PEDI-002', '+1-555-0102', 'dr.johnson@hospital.com',
+    'MD, FAAP, Pediatric Specialist', 12, 150.00, 'Pediatrics',
+    true, true, '08:00:00', '16:00:00',
+    '456 Healthcare Blvd, Suite 200, Boston, MA', '1982-08-22',
+    'Dedicated pediatrician with expertise in child development and adolescent medicine.',
+    'English, French',
+    NOW(), 'system'
+),
+(
+    'Dr. Michael Williams', 'Orthopedics', 'LIC-ORTH-003', '+1-555-0103', 'dr.williams@hospital.com',
+    'MD, FAAOS, Orthopedic Surgeon', 18, 250.00, 'Orthopedics',
+    true, true, '10:00:00', '18:00:00',
+    '789 Surgery Center, Suite 300, Boston, MA', '1975-11-10',
+    'Renowned orthopedic surgeon specializing in sports medicine and joint replacement.',
+    'English, German',
+    NOW(), 'system'
+)
+ON DUPLICATE KEY UPDATE full_name=full_name;
+
+-- ===============================
+-- = PATIENTS
+-- ===============================
+INSERT INTO patients (
+    full_name, date_of_birth, gender, contact_info, email, address,
+    blood_type, allergies, medical_history, emergency_contact,
+    emergency_contact_name, emergency_contact_relationship,
+    insurance_provider, insurance_policy_number, is_active,
+    created_at, created_by
+) VALUES
+(
+    'James Anderson', '1985-03-12', 'MALE', '+1-555-0201', 'james@email.com',
+    '100 Patient Street, Apt 4B, Boston, MA',
+    'A+', 'Penicillin, Peanuts', 'Hypertension diagnosed 2020, well controlled with medication',
+    '+1-555-0301', 'Jennifer Anderson', 'Spouse',
+    'Blue Cross Blue Shield', 'BCBS-123456789', true,
+    NOW(), 'system'
+),
+(
+    'Mary Taylor', '1990-07-25', 'FEMALE', '+1-555-0202', 'mary@email.com',
+    '200 Wellness Ave, Unit 12, Boston, MA',
+    'O+', 'Latex', 'Type 2 Diabetes diagnosed 2019, managed with diet and metformin',
+    '+1-555-0302', 'David Taylor', 'Spouse',
+    'Aetna', 'AETNA-987654321', true,
+    NOW(), 'system'
+),
+(
+    'Robert Brown', '1978-11-08', 'MALE', '+1-555-0203', 'robert@email.com',
+    '300 Recovery Road, Boston, MA',
+    'B+', 'None known', 'Previous MI in 2021, currently on aspirin and statin therapy',
+    '+1-555-0303', 'Linda Brown', 'Sister',
+    'United Healthcare', 'UHC-456789123', true,
+    NOW(), 'system'
+),
+(
+    'Patricia Davis', '2010-04-18', 'FEMALE', '+1-555-0204', 'patricia@email.com',
+    '400 Family Lane, Boston, MA',
+    'AB+', 'Dust mites', 'Asthma since age 5, uses albuterol inhaler as needed',
+    '+1-555-0304', 'Susan Davis', 'Mother',
+    'Cigna', 'CIGNA-789123456', true,
+    NOW(), 'system'
+),
+(
+    'William Martinez', '1995-09-30', 'MALE', '+1-555-0205', 'william@email.com',
+    '500 Health Plaza, Boston, MA',
+    'O-', 'Shellfish', 'Recent knee injury from sports, undergoing physical therapy',
+    '+1-555-0305', 'Maria Martinez', 'Mother',
+    'Blue Cross Blue Shield', 'BCBS-321654987', true,
+    NOW(), 'system'
+),
+(
+    'Jennifer Wilson', '1988-12-15', 'FEMALE', '+1-555-0206', 'jennifer@email.com',
+    '600 Care Court, Boston, MA',
+    'A-', 'Sulfa drugs', 'Pregnant (second trimester), no complications',
+    '+1-555-0306', 'Thomas Wilson', 'Spouse',
+    'Aetna', 'AETNA-654987321', true,
+    NOW(), 'system'
+)
+ON DUPLICATE KEY UPDATE full_name=full_name;
+
+-- ===============================
+-- = APPOINTMENTS
+-- ===============================
+-- Get doctor and patient IDs for appointments
+SET @doctor1_id = (SELECT id FROM doctors WHERE license_number = 'LIC-CARD-001' LIMIT 1);
+SET @doctor2_id = (SELECT id FROM doctors WHERE license_number = 'LIC-PEDI-002' LIMIT 1);
+SET @doctor3_id = (SELECT id FROM doctors WHERE license_number = 'LIC-ORTH-003' LIMIT 1);
+
+SET @patient1_id = (SELECT id FROM patients WHERE email = 'james@email.com' LIMIT 1);
+SET @patient2_id = (SELECT id FROM patients WHERE email = 'mary@email.com' LIMIT 1);
+SET @patient3_id = (SELECT id FROM patients WHERE email = 'robert@email.com' LIMIT 1);
+SET @patient4_id = (SELECT id FROM patients WHERE email = 'patricia@email.com' LIMIT 1);
+SET @patient5_id = (SELECT id FROM patients WHERE email = 'william@email.com' LIMIT 1);
+SET @patient6_id = (SELECT id FROM patients WHERE email = 'jennifer@email.com' LIMIT 1);
+
+-- Insert appointments with various statuses
+INSERT INTO appointments (
+    doctor_id, patient_id, appointment_datetime, reason, status,
+    duration_minutes, consultation_fee, appointment_type, is_emergency, notes,
+    created_at, created_by
+) VALUES
+-- Today's appointments
+(@doctor1_id, @patient3_id, CONCAT(CURDATE(), ' 10:00:00'), 'Follow-up for cardiac health', 'CONFIRMED', 30, 200.00, 'FOLLOW_UP', false, 'Patient recovering well from previous MI', NOW(), 'system'),
+(@doctor2_id, @patient4_id, CONCAT(CURDATE(), ' 11:00:00'), 'Asthma check-up', 'CONFIRMED', 30, 150.00, 'ROUTINE', false, 'Regular asthma management visit', NOW(), 'system'),
+(@doctor3_id, @patient5_id, CONCAT(CURDATE(), ' 14:00:00'), 'Knee pain evaluation', 'SCHEDULED', 45, 250.00, 'CONSULTATION', false, 'Sports injury follow-up', NOW(), 'system'),
+
+-- Tomorrow's appointments
+(@doctor1_id, @patient1_id, DATE_ADD(CONCAT(CURDATE(), ' 09:00:00'), INTERVAL 1 DAY), 'Blood pressure check', 'SCHEDULED', 30, 200.00, 'ROUTINE', false, 'Routine hypertension follow-up', NOW(), 'system'),
+(@doctor2_id, @patient4_id, DATE_ADD(CONCAT(CURDATE(), ' 10:30:00'), INTERVAL 1 DAY), 'Vaccination', 'SCHEDULED', 20, 150.00, 'VACCINATION', false, 'Annual flu shot', NOW(), 'system'),
+(@doctor3_id, @patient5_id, DATE_ADD(CONCAT(CURDATE(), ' 15:00:00'), INTERVAL 1 DAY), 'Physical therapy consultation', 'SCHEDULED', 45, 250.00, 'FOLLOW_UP', false, 'PT progress review', NOW(), 'system'),
+
+-- Past appointments (completed)
+(@doctor1_id, @patient3_id, DATE_SUB(CONCAT(CURDATE(), ' 10:00:00'), INTERVAL 7 DAY), 'Cardiac stress test', 'COMPLETED', 60, 200.00, 'DIAGNOSTIC', false, 'Stress test showed good cardiac function', DATE_SUB(NOW(), INTERVAL 7 DAY), 'system'),
+(@doctor2_id, @patient4_id, DATE_SUB(CONCAT(CURDATE(), ' 11:00:00'), INTERVAL 14 DAY), 'Initial consultation', 'COMPLETED', 45, 150.00, 'CONSULTATION', false, 'New patient evaluation completed', DATE_SUB(NOW(), INTERVAL 14 DAY), 'system'),
+(@doctor3_id, @patient5_id, DATE_SUB(CONCAT(CURDATE(), ' 14:00:00'), INTERVAL 30 DAY), 'Knee MRI review', 'COMPLETED', 30, 250.00, 'FOLLOW_UP', false, 'MRI results discussed, PT recommended', DATE_SUB(NOW(), INTERVAL 30 DAY), 'system'),
+
+-- Cancelled appointments
+(@doctor1_id, @patient2_id, DATE_SUB(CONCAT(CURDATE(), ' 13:00:00'), INTERVAL 3 DAY), 'Diabetes consultation', 'CANCELLED', 30, 200.00, 'CONSULTATION', false, NULL, DATE_SUB(NOW(), INTERVAL 3 DAY), 'system'),
+
+-- Next week appointments
+(@doctor1_id, @patient1_id, DATE_ADD(CONCAT(CURDATE(), ' 09:30:00'), INTERVAL 7 DAY), 'Medication review', 'SCHEDULED', 30, 200.00, 'FOLLOW_UP', false, 'Review BP medication effectiveness', NOW(), 'system'),
+(@doctor2_id, @patient6_id, DATE_ADD(CONCAT(CURDATE(), ' 10:00:00'), INTERVAL 7 DAY), 'Prenatal check-up', 'SCHEDULED', 30, 150.00, 'ROUTINE', false, 'Second trimester prenatal visit', NOW(), 'system'),
+(@doctor3_id, @patient5_id, DATE_ADD(CONCAT(CURDATE(), ' 15:30:00'), INTERVAL 7 DAY), 'Knee progress check', 'SCHEDULED', 30, 250.00, 'FOLLOW_UP', false, 'Evaluate PT progress', NOW(), 'system'),
+
+-- Additional past appointments for better history
+(@doctor1_id, @patient1_id, DATE_SUB(CONCAT(CURDATE(), ' 09:00:00'), INTERVAL 60 DAY), 'Annual physical', 'COMPLETED', 45, 200.00, 'ROUTINE', false, 'Annual checkup completed, all vitals normal', DATE_SUB(NOW(), INTERVAL 60 DAY), 'system'),
+(@doctor2_id, @patient4_id, DATE_SUB(CONCAT(CURDATE(), ' 14:00:00'), INTERVAL 90 DAY), 'Growth check', 'COMPLETED', 30, 150.00, 'ROUTINE', false, 'Growth and development on track', DATE_SUB(NOW(), INTERVAL 90 DAY), 'system');
+
+-- ===============================
+-- = LAB TESTS
+-- ===============================
+INSERT INTO lab_tests (test_name, description, cost) VALUES
+('Complete Blood Count (CBC)', 'Measures different components of blood including RBC, WBC, platelets', 45.00),
+('Lipid Panel', 'Measures cholesterol and triglyceride levels', 65.00),
+('HbA1c Test', 'Measures average blood sugar levels over 3 months', 55.00),
+('Thyroid Function Test (TSH)', 'Measures thyroid hormone levels', 75.00),
+('Comprehensive Metabolic Panel', 'Measures glucose, electrolytes, and kidney function', 85.00),
+('Urinalysis', 'Analyzes urine for various health indicators', 30.00),
+('Chest X-Ray', 'Radiographic imaging of chest and lungs', 150.00),
+('ECG/EKG', 'Electrocardiogram to measure heart electrical activity', 100.00),
+('Blood Glucose Test', 'Measures current blood sugar level', 25.00),
+('Vitamin D Test', 'Measures vitamin D levels in blood', 80.00),
+('Liver Function Test', 'Measures liver enzymes and function', 70.00),
+('Kidney Function Test', 'Measures creatinine and BUN levels', 60.00)
+ON DUPLICATE KEY UPDATE test_name=test_name;
+
+-- ===============================
+-- = LAB ORDERS
+-- ===============================
+SET @test_cbc = (SELECT id FROM lab_tests WHERE test_name = 'Complete Blood Count (CBC)' LIMIT 1);
+SET @test_lipid = (SELECT id FROM lab_tests WHERE test_name = 'Lipid Panel' LIMIT 1);
+SET @test_hba1c = (SELECT id FROM lab_tests WHERE test_name = 'HbA1c Test' LIMIT 1);
+SET @test_glucose = (SELECT id FROM lab_tests WHERE test_name = 'Blood Glucose Test' LIMIT 1);
+SET @test_ecg = (SELECT id FROM lab_tests WHERE test_name = 'ECG/EKG' LIMIT 1);
+SET @test_thyroid = (SELECT id FROM lab_tests WHERE test_name = 'Thyroid Function Test (TSH)' LIMIT 1);
+SET @test_liver = (SELECT id FROM lab_tests WHERE test_name = 'Liver Function Test' LIMIT 1);
+
+SET @appt1 = (SELECT id FROM appointments WHERE doctor_id = @doctor1_id AND patient_id = @patient3_id AND status = 'CONFIRMED' LIMIT 1);
+SET @appt2 = (SELECT id FROM appointments WHERE doctor_id = @doctor2_id AND patient_id = @patient4_id AND status = 'CONFIRMED' LIMIT 1);
+SET @appt_completed = (SELECT id FROM appointments WHERE doctor_id = @doctor1_id AND patient_id = @patient3_id AND status = 'COMPLETED' LIMIT 1);
+
+-- Get next available ID for lab_orders
+SET @next_lab_order_id = (SELECT COALESCE(MAX(id), 0) + 1 FROM lab_orders);
+
+INSERT INTO lab_orders (
+    id, lab_test_id, patient_id, appointment_id, ordered_at, status, notes
+) VALUES
+(@next_lab_order_id, @test_cbc, @patient1_id, NULL, DATE_SUB(NOW(), INTERVAL 2 DAY), 'COMPLETED', 'Routine annual physical exam'),
+(@next_lab_order_id + 1, @test_lipid, @patient3_id, @appt1, DATE_SUB(NOW(), INTERVAL 1 DAY), 'IN_PROGRESS', 'Cardiac health monitoring'),
+(@next_lab_order_id + 2, @test_hba1c, @patient2_id, NULL, NOW(), 'ORDERED', 'Diabetes management follow-up'),
+(@next_lab_order_id + 3, @test_glucose, @patient2_id, NULL, DATE_SUB(NOW(), INTERVAL 5 DAY), 'COMPLETED', 'Fasting blood sugar check'),
+(@next_lab_order_id + 4, @test_ecg, @patient3_id, @appt_completed, DATE_SUB(NOW(), INTERVAL 7 DAY), 'COMPLETED', 'Post-MI cardiac evaluation'),
+(@next_lab_order_id + 5, @test_thyroid, @patient6_id, NULL, DATE_SUB(NOW(), INTERVAL 3 DAY), 'SAMPLE_COLLECTED', 'Prenatal thyroid screening'),
+(@next_lab_order_id + 6, @test_liver, @patient1_id, NULL, DATE_SUB(NOW(), INTERVAL 10 DAY), 'COMPLETED', 'Annual health screening'),
+(@next_lab_order_id + 7, @test_cbc, @patient4_id, @appt2, NOW(), 'ORDERED', 'Routine pediatric checkup');
+
+-- ===============================
+-- = SUMMARY
+-- ===============================
+-- This seed data provides:
+-- - 3 doctors (Cardiology, Pediatrics, Orthopedics) with different schedules
+-- - 6 patients with various conditions and demographics
+-- - 15 appointments (past, present, future with various statuses)
+-- - 12 different lab test types
+-- - 8 lab orders with different statuses (ORDERED, SAMPLE_COLLECTED, IN_PROGRESS, COMPLETED)
+-- - All necessary user accounts and roles
+
+-- Default login credentials (all use password: password123):
+-- Doctors:
+--   - dr.smith / password123 (Cardiologist)
+--   - dr.johnson / password123 (Pediatrician)
+--   - dr.williams / password123 (Orthopedic Surgeon)
+--
+-- Patients:
+--   - patient.james / password123 (James Anderson - Hypertension)
+--   - patient.mary / password123 (Mary Taylor - Diabetes)
+--   - patient.robert / password123 (Robert Brown - Post-MI)
+--   - patient.patricia / password123 (Patricia Davis - Asthma)
+--   - patient.william / password123 (William Martinez - Knee Injury)
+--   - patient.jennifer / password123 (Jennifer Wilson - Pregnant)
+--
+-- Admin:
+--   - admin.user / password123
+
+SELECT 'Seed data migration completed successfully!' as Status;

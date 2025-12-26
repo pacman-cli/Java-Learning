@@ -1,0 +1,83 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.puspo.scalablekafkaapp</groupId>
+    <artifactId>scalable-kafka-app</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>shared-libs/common</module>
+        <module>shared-libs/security</module>
+        <module>shared-libs/messaging</module>
+        <module>shared-libs/logging</module>
+
+        <module>services/user-service</module>
+        <module>services/order-service</module>
+        <module>services/inventory-service</module>
+
+        <module>gateway</module>
+        <module>config-server</module>
+    </modules>
+
+    <properties>
+        <java.version>17</java.version>
+        <spring.boot.version>3.2.0</spring.boot.version>
+    </properties>
+
+    <project xmlns="http://maven.apache.org/POM/4.0.0"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+        <modelVersion>4.0.0</modelVersion>
+
+        <parent>
+            <groupId>com.puspo.scalablekafkaapp</groupId>
+            <artifactId>scalable-kafka-app</artifactId>
+            <version>1.0.0</version>
+            <relativePath>../pom.xml</relativePath>
+        </parent>
+
+        <artifactId>config-server</artifactId>
+        <packaging>jar</packaging>
+
+        <dependencies>
+            <!-- Config Server -->
+            <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-config-server -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-config-server</artifactId>
+                <version>5.0.0-M3</version>
+            </dependency>
+
+            <!-- Spring Boot Web -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+            </dependency>
+        </dependencies>
+    </project>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>2023.0.3</version> <!-- match Boot 3.2.x -->
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

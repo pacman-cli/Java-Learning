@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  db:
+    image: mysql:8.0
+    container_name: s3demo-db
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: s3demo
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+  app:
+    build: .
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/s3demo?useSSL=false&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: example
+      AWS_REGION: eu-north-1
+      AWS_S3_BUCKET: aws-demo-bucket2310304
+      # AWS credentials: set in your environment or use AWS profile/role. Avoid embedding.
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+volumes:
+  db_data:

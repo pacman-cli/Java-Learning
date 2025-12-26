@@ -1,0 +1,72 @@
+-- Add missing insurance-related columns to billings table
+-- These columns are required by the Billing entity but were commented out in previous migrations
+
+-- Add insurance_id column if it doesn't exist
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'billings'
+                   AND COLUMN_NAME = 'insurance_id');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE billings ADD COLUMN insurance_id BIGINT NULL',
+    'SELECT ''Column insurance_id already exists in billings table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add covered_amount column if it doesn't exist
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'billings'
+                   AND COLUMN_NAME = 'covered_amount');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE billings ADD COLUMN covered_amount DECIMAL(38, 2) NULL',
+    'SELECT ''Column covered_amount already exists in billings table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add patient_payable column if it doesn't exist
+SET @col_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.COLUMNS
+                   WHERE TABLE_SCHEMA = 'hospital_db'
+                   AND TABLE_NAME = 'billings'
+                   AND COLUMN_NAME = 'patient_payable');
+
+SET @sql = IF(@col_exists = 0,
+    'ALTER TABLE billings ADD COLUMN patient_payable DECIMAL(38, 2) NULL',
+    'SELECT ''Column patient_payable already exists in billings table''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add foreign key constraint for insurance_id if it doesn't exist
+SET @fk_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+                  WHERE TABLE_SCHEMA = 'hospital_db'
+                  AND TABLE_NAME = 'billings'
+                  AND CONSTRAINT_NAME = 'FK_BILLINGS_ON_INSURANCE');
+
+SET @sql = IF(@fk_exists = 0,
+    'ALTER TABLE billings ADD CONSTRAINT FK_BILLINGS_ON_INSURANCE FOREIGN KEY (insurance_id) REFERENCES insurance (id)',
+    'SELECT ''Foreign key FK_BILLINGS_ON_INSURANCE already exists''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+
+-- Add indexes for better query performance
+SET @index_exists = (SELECT COUNT(*) FROM INFORMATION_SCHEMA.STATISTICS
+                     WHERE TABLE_SCHEMA = 'hospital_db'
+                     AND TABLE_NAME = 'billings'
+                     AND INDEX_NAME = 'idx_billing_insurance');
+
+SET @sql = IF(@index_exists = 0,
+    'CREATE INDEX idx_billing_insurance ON billings(insurance_id)',
+    'SELECT ''Index idx_billing_insurance already exists''');
+
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;

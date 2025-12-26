@@ -1,0 +1,198 @@
+# Application Configuration
+spring:
+  application:
+    name: zedcode-backend
+
+  # Profile Configuration
+  profiles:
+    active: dev
+
+  # Database Configuration
+  datasource:
+    url: jdbc:h2:mem:zedcodedb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    # For PostgreSQL (Production):
+    # url: jdbc:postgresql://localhost:5432/zedcodedb
+    # driver-class-name: org.postgresql.Driver
+    # username: your_username
+    # password: your_password
+
+    # For MySQL:
+    # url: jdbc:mysql://localhost:3306/zedcodedb?useSSL=false&serverTimezone=UTC
+    # driver-class-name: com.mysql.cj.jdbc.Driver
+    # username: your_username
+    # password: your_password
+
+  # JPA/Hibernate Configuration
+  jpa:
+    hibernate:
+      ddl-auto: update # Options: create, create-drop, update, validate, none
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.H2Dialect
+        # For PostgreSQL: org.hibernate.dialect.PostgreSQLDialect
+        # For MySQL: org.hibernate.dialect.MySQL8Dialect
+        jdbc:
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
+    open-in-view: false
+
+  # H2 Console Configuration (Development Only)
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        web-allow-others: false
+
+  # Jackson Configuration
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+      indent-output: true
+    deserialization:
+      fail-on-unknown-properties: false
+    default-property-inclusion: non_null
+    time-zone: UTC
+
+  # Servlet Configuration
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+# Server Configuration
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: on_param
+    include-exception: false
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+
+# Logging Configuration
+logging:
+  level:
+    root: INFO
+    com.zedcode: DEBUG
+    org.springframework.web: INFO
+    org.hibernate: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: logs/application.log
+    max-size: 10MB
+    max-history: 30
+
+# Application-Specific Configuration
+app:
+  name: ZedCode Backend
+  version: 1.0.0
+  api:
+    version: v1
+  cors:
+    allowed-origins: http://localhost:3000,http://localhost:4200
+    allowed-methods: GET,POST,PUT,DELETE,PATCH,OPTIONS
+    allowed-headers: "*"
+    exposed-headers: Authorization
+    allow-credentials: true
+    max-age: 3600
+  jwt:
+    secret: YourSuperSecretKeyForJWTTokenGenerationChangeMeInProduction123456789
+    expiration: 86400000 # 24 hours in milliseconds
+    refresh-expiration: 604800000 # 7 days in milliseconds
+  pagination:
+    default-page-size: 10
+    max-page-size: 100
+
+# Actuator Configuration (for monitoring)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: when-authorized
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+
+# Springdoc OpenAPI Configuration (Swagger)
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+    operations-sorter: method
+    tags-sorter: alpha
+  show-actuator: false
+
+---
+# Development Profile
+spring:
+  config:
+    activate:
+      on-profile: dev
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+logging:
+  level:
+    com.zedcode: DEBUG
+
+---
+# Production Profile
+spring:
+  config:
+    activate:
+      on-profile: prod
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: validate
+  h2:
+    console:
+      enabled: false
+
+logging:
+  level:
+    com.zedcode: INFO
+    root: WARN
+
+server:
+  error:
+    include-stacktrace: never
+    include-exception: false
+
+---
+# Test Profile
+spring:
+  config:
+    activate:
+      on-profile: test
+  datasource:
+    url: jdbc:h2:mem:testdb
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
