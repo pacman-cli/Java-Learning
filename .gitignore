@@ -67,3 +67,4 @@ build/
 .augment/rules/byterover-rules.md
 
 client/
+Kafka/scalable-kafka-app/frontend/
