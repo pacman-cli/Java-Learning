@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Service
 public class CourseService {
-    private List<Course> courseList= new ArrayList<>();
+    private final List<Course> courseList= new ArrayList<>();
 
     public void createCourse(Course course) {
         courseList.add(course);
